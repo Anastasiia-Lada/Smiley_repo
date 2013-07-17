@@ -82,7 +82,7 @@
 	 *  - Android
 	 *  - AndroidEmulator
 	 */
-	"platform":"Android",
+	"platform":"iOS",
 
 	/**
 	 * @cfg  deviceType
@@ -96,7 +96,7 @@
 	 *  - iPad
 	 *  - Universal
 	 */
-	"deviceType":"Universal",
+	"deviceType":"iPad",
 
 	/**
 	 * @cfg  certificatePath
@@ -166,6 +166,7 @@
 	 * This is orientations that this application can run.
 	 */
 	"orientations": [
-		"portrait"
+		"portrait",
+		"landscape"
 	]
 }

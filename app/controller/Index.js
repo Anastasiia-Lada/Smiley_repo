@@ -157,7 +157,7 @@ Ext.define('smiley360.controller.Index', {
     {
         var me = this;
         Ext.getCmp('login_btn').setText('Login!!!');
-        smiley360.services.authenticate(login, password,
+        smiley360.services.authenticateservice(login, password,
 			function (response) {
 			    if (response.success) {
 			        isLogined = true;
