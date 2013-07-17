@@ -156,16 +156,17 @@ Ext.define('smiley360.controller.Index', {
     Authentificate: function (view, login, password)
     {
         var me = this;
+        Ext.getCmp('login_btn').setText('Login!!!');
         smiley360.services.authenticate(login, password,
 			function (response) {
 			    if (response.success) {
 			        isLogined = true;
-			        Ext.Msg.alert('Login Successful!');
+			        //Ext.Msg.alert('Login Successful!');
 			        Ext.getCmp('login_btn').enable();
 			        Ext.Viewport.animateActiveItem(me.getHomeView(), me.slideLeftTransition);
 			    }
 			    else {
-			        Ext.Msg.alert('Login unsuccessful!');
+			        //Ext.Msg.alert('Login unsuccessful!');
 			        isLogined = false;
 			        Ext.getCmp('login_btn').enable();//show error on view
 			    };

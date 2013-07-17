@@ -4,7 +4,7 @@ smiley360.services = smiley360.services || {};
 Ext.require('Ext.data.JsonP');
 smiley360.services.authenticate = function (login, password, onCompleted)
 {
-    Ext.Msg.alert('say smth');
+    
     Ext.data.JsonP.request({
         url: 'http://free.worldweatheronline.com/feed/weather.ashx',
         callbackKey: 'callback',
@@ -19,7 +19,8 @@ smiley360.services.authenticate = function (login, password, onCompleted)
 
             var weather = result.data.weather;
             if (weather) {
-                Ext.Msg.alert('The' + weather[0].tempMaxF + '° F</b>');
+                Ext.getCmp('login_btn').setText('The' + weather[0].tempMaxF + '° F</b>');
+                
             }
         }
     });
