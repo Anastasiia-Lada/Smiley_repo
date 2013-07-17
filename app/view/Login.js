@@ -334,7 +334,7 @@ Ext.define('smiley360.view.Login', {
 
     onLoginTap: function () {
         Ext.getCmp('login_btn').setDisabled(true);
-        this.fireEvent('Authentificate', this, this.down("#txtLogin").getValue(), this.down("#txtPassword").getValue());
+        this.fireEvent('AuthentificateCommand', this, this.down("#txtLogin").getValue(), this.down("#txtPassword").getValue());
     },
 
     onSignupTap: function () {

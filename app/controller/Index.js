@@ -20,7 +20,7 @@ Ext.define('smiley360.controller.Index', {
         },
         control: {
             loginView: {
-                Authentificate: 'Authentificate',
+                AuthentificateCommand: 'AuthentificateCommand',
                 ShowSignupViewCommand: 'ShowSignupViewCommand',
                 getProfileCommand: 'getProfileHomeCommand',
                 ShowSurveyViewCommand: 'ShowSurveyViewCommand',
@@ -153,7 +153,7 @@ Ext.define('smiley360.controller.Index', {
         if (isLogined) { Ext.Viewport.animateActiveItem(this.getEditProfileView(), this.slideLeftTransition); }
 
     },
-    Authentificate: function (view, login, password)
+    AuthentificateCommand: function (view, login, password)
     {
         var me = this;
         Ext.getCmp('login_btn').setText('Login!!!');
