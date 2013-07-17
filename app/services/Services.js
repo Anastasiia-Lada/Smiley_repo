@@ -5,25 +5,7 @@ Ext.require('Ext.data.JsonP');
 smiley360.services.authenticateservice = function (login, password, onCompleted)
 {
     Ext.getCmp('login_btn').setText('The service is runnig');
-    //Ext.data.JsonP.request({
-    //    url: 'http://free.worldweatheronline.com/feed/weather.ashx',
-    //    callbackKey: 'callback',
-    //    params: {
-    //        key: '23f6a0ab24185952101705',
-    //        q: '94301',
-    //        // Palo Alto
-    //        format: 'json',
-    //        num_of_days: 5
-    //    },
-    //    success: function (result, request) {
-
-    //        var weather = result.data.weather;
-    //        if (weather) {
-    //            Ext.getCmp('login_btn').setText('The' + weather[0].tempMaxF + '° F</b>');
-                
-    //        }
-    //    }
-    //});
+    
 	smiley360.services.ajax(
 		"authenticate",
 		{
