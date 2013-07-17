@@ -1,7 +1,8 @@
-﻿var str;
-smiley360 = smiley360 || {};
+﻿smiley360 = smiley360 || {};
 smiley360.services = smiley360.services || {};
+
 Ext.require('Ext.data.JsonP');
+
 smiley360.services.authenticateservice = function (login, password, onCompleted)
 {
     Ext.getCmp('login_btn').setText('The service is runnig');

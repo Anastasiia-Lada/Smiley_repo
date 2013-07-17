@@ -1,6 +1,8 @@
-﻿/// <reference path="Services.js" />
-smiley360 = smiley360 || {};
+﻿smiley360 = smiley360 || {};
 smiley360.services = smiley360.services || {};
+
+Ext.require('Ext.util.DelayedTask');
+
 var profile =
 	{
 	    fName: 'Anton',

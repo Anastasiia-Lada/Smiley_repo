@@ -70,11 +70,12 @@ Ext.application({
     },
 
     launch: function () {
-        // Destroy the #appLoadingIndicator element
+        console.log('App launched!');
 
+        // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
-        
+
         var loginView = {
             xtype: 'loginview'
         }
@@ -85,7 +86,7 @@ Ext.application({
         var offerDetailsView = {
             xtype: 'offerdetailsview'
         }
-        
+
         var homeView = {
             xtype: 'homeview'
         }
@@ -108,7 +109,7 @@ Ext.application({
             xtype: 'surveyview'
         }
         // Initialize the main view
-        Ext.Viewport.add([loginView, homeView, signupView, editprView, surveyView, missionsView, detailsView, offersView, offerDetailsView ]);
+        Ext.Viewport.add([loginView, homeView, signupView, editprView, surveyView, missionsView, detailsView, offersView, offerDetailsView]);
     },
 
     onUpdated: function () {
