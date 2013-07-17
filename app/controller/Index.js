@@ -168,6 +168,7 @@ Ext.define('smiley360.controller.Index', {
 
     AuthentificateCommand: function (view, login, password) {
         var me = this;
+        Ext.Msg.alert('AuthentificateCommand!');
 
         smiley360.services.authenticateservice(login, password,
             function (response) {
@@ -304,21 +305,23 @@ Ext.define('smiley360.controller.Index', {
     },
 
     doServicesLoad: function (mock) {
-        var servicesPath = "../app/services/Services.js";
+        var servicesPath = "app/services/Services.js";
 
         if (mock == true) {
-            servicesPath = "../app/services/Services.mock.js";
+            servicesPath = "app/services/Services.mock.js";
         }
 
         var onload = function () {
             // do something onload
             //console.log(Ext.Loader.history);
             console.log("Services load is done!!!");
+            Ext.Msg.alert("Services load is done!!!");
         }
 
         var onerror = function () {
             // do something onerror
             console.log("Services load error!!!");
+            Ext.Msg.alert("Services load error!!!");
         }
 
         Ext.Loader.injectScriptElement(servicesPath, onload, onerror, this);
@@ -335,11 +338,11 @@ Ext.define('smiley360.controller.Index', {
     launch: function () {
         //================================
         console.log('Index launched!');
+        Ext.Msg.alert('Index launched!');
         //================================
         this.callParent(arguments);
         this.doServicesLoad(false); //insert [true] for debug mode
     }
-
 });
 
 /* Global models and methods */
