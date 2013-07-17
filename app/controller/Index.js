@@ -161,12 +161,13 @@ Ext.define('smiley360.controller.Index', {
 			    if (response.success) {
 			        isLogined = true;
 			        Ext.Msg.alert('Login Successful!');
-			        Ext.getCmp('login_btn').setDisabled(false);
+			        Ext.getCmp('login_btn').enable();
 			        Ext.Viewport.animateActiveItem(me.getHomeView(), me.slideLeftTransition);
 			    }
 			    else {
 			        Ext.Msg.alert('Login unsuccessful!');
-			        isLogined = false;//show error on view
+			        isLogined = false;
+			        Ext.getCmp('login_btn').enable();//show error on view
 			    };
 			});
         //if (Ext.getCmp('login_btn').getDisabled() == false) {  };
@@ -297,7 +298,6 @@ Ext.define('smiley360.controller.Index', {
         Ext.require('Ext.util.DelayedTask');
         if (Debug_ == true) {
             url = "../app/services/Services.mock.js";
-
             Ext.require('Ext.util.DelayedTask');
         }
 
