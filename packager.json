@@ -82,7 +82,7 @@
 	 *  - Android
 	 *  - AndroidEmulator
 	 */
-	"platform":"iOS",
+	"platform":"Android",
 
 	/**
 	 * @cfg  deviceType
@@ -96,7 +96,7 @@
 	 *  - iPad
 	 *  - Universal
 	 */
-	"deviceType":"iPad",
+	"deviceType":"Universal",
 
 	/**
 	 * @cfg  certificatePath
