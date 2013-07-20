@@ -23,6 +23,7 @@ var profile =
 	    address_status: '0',
 	    isComplete: '0',
 	};
+
 smiley360.services.authenticate = function (login, password, onCompleted) {
     if (login == '1234@outofchaos.com' && password == '123456') {
         onCompleted(
@@ -34,7 +35,7 @@ smiley360.services.authenticate = function (login, password, onCompleted) {
         onCompleted(smiley360.services.fault());
     }
 }
-/*getProfile*/
+
 smiley360.services.getProfile = function (memberID, onCompleted) {
     if (memberID == 249) {
         onCompleted(
@@ -110,7 +111,7 @@ smiley360.services.setUserProfile = function () {
     return profile;
 }
 smiley360.services.getUserProfile = function () {
-    
+
     return profile;
 }
 /*getSpecialOffers*/
@@ -140,7 +141,7 @@ smiley360.services.getProfileData = function () {
                  { Value: 'Male', ID: 1 },
                  { Value: 'Female', ID: 2 }
 	    ],
-	    editMember_stateOptions:[
+	    editMember_stateOptions: [
                  { Value: 'Arizona', ID: 1 },
                  { Value: 'New Mexico', ID: 2 },
 	             { Value: 'New York', ID: 3 },
@@ -149,23 +150,23 @@ smiley360.services.getProfileData = function () {
                  { Value: 'Indiana', ID: 6 },
                  { Value: 'Virginia', ID: 7 },
 	    ],
-	    editMember_countryOptions :[
+	    editMember_countryOptions: [
                  { Value: 'USA', ID: 1 },
                  { Value: 'Other', ID: 2 },
 	    ],
-	    editMember_marriageStatusOptions :[
+	    editMember_marriageStatusOptions: [
                  { Value: 'Single', ID: 1 },
                  { Value: 'Married', ID: 2 },
 	    ],
-	    editMember_haveChildrenOptions : [
+	    editMember_haveChildrenOptions: [
                  { Value: 'Yes, I have children.', ID: 1 },
                  { Value: 'No, I haven\'t children.', ID: 2 },
 	    ],
-	    editMember_numberChildrenOptions :[
+	    editMember_numberChildrenOptions: [
                  { Value: '1', ID: 1 },
                  { Value: '2', ID: 2 },
 	    ],
-	    editMember_householdIncomeOptions :[
+	    editMember_householdIncomeOptions: [
                  { Value: '10000-20000', ID: 1 },
                  { Value: '20000-30000', ID: 2 },
 	    ],
@@ -175,7 +176,7 @@ smiley360.services.getProfileData = function () {
                  { Value: 'White\\Caucasian', ID: 3 },
                  { Value: 'Hispanic or Latino', ID: 4 },
                  { Value: 'Native American or Alaskan Native', ID: 5 },
-                 { Value: 'I prefer not to specify', ID: 6 },                 
+                 { Value: 'I prefer not to specify', ID: 6 },
 	    ],
 	};
     return profiledata;

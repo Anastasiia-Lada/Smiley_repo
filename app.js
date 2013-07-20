@@ -23,7 +23,7 @@ Ext.Loader.setPath({
 Ext.application({
     name: 'smiley360',
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox', 'Ext.data.Validations', 'smiley360.model.SignupModel'
     ],
     controllers: ['Index'],
     views: [
@@ -47,6 +47,14 @@ Ext.application({
         'OfferDetails',
         'OfferRemove',
         'ReviewForFender',
+		'Connect',
+		'Browse',
+		'BrowseInstruments',
+		'Brand',
+		'BrandImage',
+		'Share',
+        'ContactUs',
+        'TermsOfUse',
     ],
 
     icon: {
@@ -75,11 +83,15 @@ Ext.application({
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
 
-
+        var shareView = {
+        	xtype: 'shareview'
+        }
         var loginView = {
             xtype: 'loginview'
         }
-
+        var brandView = {
+        	xtype: 'brandview'
+        }
         var offersView = {
             xtype: 'offersview'
         }
@@ -108,8 +120,17 @@ Ext.application({
         var surveyView = {
             xtype: 'surveyview'
         }
+        var browseView = {
+        	xtype: 'browseview'
+        }
+        var connectView = {
+        	xtype: 'connectview'
+        }
+        var browseInstrumentsView = {
+        	xtype: 'browseinstrumentsview'
+        }
         // Initialize the main view
-        Ext.Viewport.add([loginView, homeView, signupView, editprView, surveyView, missionsView, detailsView, offersView, offerDetailsView]);
+        Ext.Viewport.add([loginView, homeView, signupView, editprView, surveyView, missionsView, detailsView, offersView, offerDetailsView, browseView, connectView, browseInstrumentsView,brandView, shareView]);
     },
 
     onUpdated: function () {

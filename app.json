@@ -45,12 +45,6 @@
             "path": "app.js",
             "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
             "update": "delta",
-     /*   }, {
-            "path": "app/services/Services.js",
-            "update": "delta",
-        }, {
-            "path": "app/services/Services.mock.js",
-            "update": "delta" */
         }],
 
     /**
@@ -74,6 +68,9 @@
             "update": "delta"
         }, {
             "path": "resources/css/rating.css",
+            "update": "delta"
+        }, {
+            "path": "resources/css/level.css",
             "update": "delta"
         }, {
             "path": "resources/css/smiley.css",

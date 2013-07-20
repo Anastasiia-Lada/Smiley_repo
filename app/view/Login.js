@@ -9,6 +9,7 @@ Ext.define('smiley360.view.Login', {
     ],
     alias: 'widget.loginview',
     config: {
+        id: 'xLoginView',
         cls: 'page-bg',
         title: 'Login',
         padding: '15px',
@@ -32,7 +33,8 @@ Ext.define('smiley360.view.Login', {
                 name: 'txtUserName',
                 cls: 'cust-input cust-input-user',
                 clearIcon: false,
-                required: true
+                required: true,
+                value: '1234@outofchaos.com',
             }, {
                 xtype: 'passwordfield',
                 maxHeight: '20px',
@@ -42,14 +44,15 @@ Ext.define('smiley360.view.Login', {
                 name: 'txtPassword',
                 cls: 'cust-input cust-input-pwd',
                 clearIcon: false,
-                required: true
+                required: true,
+                value: '123456',
             }, {
                 xtype: 'spacer',
                 height: '12px'
             }, {
                 xtype: 'button',
                 itemId: 'xLogin',
-                id:'login_btn',
+                id: 'login_btn',
                 cls: 'cust-btn login-btn',
                 text: 'LOG IN'
             }, {
@@ -66,6 +69,25 @@ Ext.define('smiley360.view.Login', {
                 xtype: 'spacer',
                 cls: 'clear',
                 height: '27px'
+            }, {
+                xtype: 'button',
+                text: 'LOG IN WITH FACEBOOK',
+                ui: 'action',
+                listeners: {
+                    tap: function () {
+                        this.up('#xLoginView').doLoginWithFacebook();
+                    }
+                }
+            }, {
+                xtype: 'label',
+                listeners: {
+                    initialize: function () {
+                        this.setHtml(document.location);
+                    }
+                }
+            }, {
+                xtype: 'container',
+                id: 'xFacebookInfo',
             }, {
                 xtype: 'panel',
                 layout: 'hbox',
@@ -155,6 +177,26 @@ Ext.define('smiley360.view.Login', {
                     }
                 }, {
                     xtype: 'button',
+                    text: 'C',
+                    width: '40px',
+                    ui: 'action',
+                    listeners: {
+                        tap: function () {
+                            Ext.widget('contactusview').show();
+                        }
+                    }
+                }, {
+                    xtype: 'button',
+                    text: 'T',
+                    width: '40px',
+                    ui: 'action',
+                    listeners: {
+                        tap: function () {
+                            Ext.widget('termsofuseview').show();
+                        }
+                    }
+                }, {
+                    xtype: 'button',
                     text: 'OA',
                     width: '55px',
                     ui: 'action',
@@ -233,19 +275,64 @@ Ext.define('smiley360.view.Login', {
             }, {
                 xtype: 'panel',
                 layout: 'hbox',
-                items: [{
+                items: [
+					{
+					    xtype: 'button',
+					    itemId: 'xConnect',
+					    text: 'C',
+					    width: '50px',
+					    ui: 'confirm',
+					    tap: ''
+					}, {
+					    xtype: 'button',
+					    itemId: 'xBrowse',
+					    text: 'B',
+					    width: '50px',
+					    ui: 'confirm',
+					    tap: 'onxBrowse'
+					},
+                {
                     xtype: 'button',
-                    //style: 'background-color: #3f4b4e !important;',
-                    itemId: 'xBrowse',
-                    hidden: 'true',
-                    text: 'B',
-                    width: '50px',
+                    itemId: 'xBrowseInstruments',
+                    text: 'B_I',
+                    width: '70px',
                     ui: 'confirm',
-                    tap: 'onxBrowse'
-                }],
+                    tap: 'onxBrowseInstruments'
+                }, {
+                    xtype: 'button',
+                    itemId: 'xBrand',
+                    text: 'Br',
+                    width: '70px',
+                    ui: 'confirm',
+                    tap: 'onxBrand'
+                }, {
+                	xtype: 'button',
+                	itemId: 'xShare',
+                	hidden: true,
+                	text: 'Sh',
+                	width: '70px',
+                	ui: 'confirm',
+                	tap: 'onxShare'
+                }, ],
             }],
         }],
         listeners: [{
+        	delegate: "#xShare",
+        	fn: "onShareTap",
+        	event: "tap",
+        }, {
+            delegate: "#xBrand",
+            fn: "onBrandTap",
+            event: "tap",
+        }, {
+            delegate: "#xConnect",
+            fn: "onConnectTap",
+            event: "tap",
+        }, {
+            delegate: "#xBrowseInstruments",
+            fn: "onBrowseInstrumentsTap",
+            event: "tap",
+        }, {
             delegate: "#xBrowse",
             fn: "onBrowseTap",
             event: "tap",
@@ -289,7 +376,30 @@ Ext.define('smiley360.view.Login', {
             event: "tap",
         }]
     },
-
+    onShareTap: function () {
+    	//================================
+    	console.log("onShareTap");
+    	//================================
+    	this.fireEvent('onShareTapCommand', this);
+    },
+    onBrandTap: function () {
+        //================================
+        console.log("onBrandTap");
+        //================================
+        this.fireEvent('onBrandTapCommand', this);
+    },
+    onConnectTap: function () {
+        //================================
+        console.log("onConnectTap");
+        //================================
+        this.fireEvent('onConnectTapCommand', this);
+    },
+    onBrowseInstrumentsTap: function () {
+        //================================
+        console.log("onBrowseTap");
+        //================================
+        this.fireEvent('onBrowseInstrumentsTapCommand', this);
+    },
     onBrowseTap: function () {
         //================================
         console.log("onBrowseTap");
@@ -366,5 +476,62 @@ Ext.define('smiley360.view.Login', {
             passwordData: Ext.getCmp('txtPassword').getValue()
         };
         //smiley360.authenticate(getView, getData.loginData, getData.passwordData);
-    }
+    },
+
+    doLoginWithFacebook: function () {
+        console.log('doLoginWithFacebook');
+        // run once with current status and whenever the status changes
+        FB.getLoginStatus(this.checkFacebookStatus);
+        FB.Event.subscribe('auth.statusChange', this.checkFacebookStatus);
+    },
+
+    checkFacebookStatus: function (response) {
+        //button = document.getElementById('fb-auth');
+        //userInfo = document.getElementById('user-info');
+        console.log('checkFacebookStatus:' + response);
+
+        function showUserInfo(response, info) {
+            if (response.authResponse) {
+                var accessToken = response.authResponse.accessToken;
+                var userInfoHtml = '<img src="https://graph.facebook.com/' + info.id + '/picture"><br />';
+
+                for (var oneField in info) {
+                    userInfoHtml += oneField + ': ' + info[oneField] + '<br />';
+                }
+
+                Ext.getCmp('xFacebookInfo').setHtml(userInfoHtml);
+                // Your Access Token: " + accessToken);
+            }
+        }
+
+        if (response.authResponse) {
+            //user is already logged in and connected
+            FB.api('/me', function (info) {
+                showUserInfo(response, info);
+            });
+
+            //button.onclick = function () {
+            //    FB.logout(function (response) {
+            //        logout(response);
+            //    });
+            //};
+        } else {
+            //user is not connected to your app or logged out
+            //button.innerHTML = 'Login';
+            //button.onclick = function () {
+            //    showLoader(true);
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    FB.api('/me', function (info) {
+                        showUserInfo(response, info);
+                    });
+                } else {
+                    //user cancelled login or did not grant authorization
+                    //showLoader(false);
+                }
+            }, {
+                scope: 'email,user_birthday,user_location,user_hometown'
+            });
+        }
+    },
 });
