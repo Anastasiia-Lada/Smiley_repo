@@ -7,7 +7,7 @@ Ext.define('smiley360.view.Offers', {
         'Ext.Video'
     ],
     config: {
-
+		id: 'xOfferView',
         tabBarPosition: 'bottom',
         cls: 'cust-tabbar normal-page-bg',
         items: [
@@ -30,7 +30,12 @@ Ext.define('smiley360.view.Offers', {
 							    ui: 'plain',
 							    iconCls: 'back-btn',
 							    iconMask: true,
-							    itemId: 'backBtn'
+							    itemId: 'backBtn',
+							    listeners: {
+							    	tap: function () {
+							    		this.up('#xMissionView').fireEvent('backButtonCommandOffers', this);
+							    	}
+							    }
 							},
 							{ xtype: 'spacer' },
 							{
@@ -295,10 +300,6 @@ Ext.define('smiley360.view.Offers', {
 									    style: 'background-color: #efecea;',
 									    cls: 'has-shadow',
 									},
-
-
-									
-
                                 ]
                             },//end second
                             {
@@ -531,11 +532,6 @@ Ext.define('smiley360.view.Offers', {
 									    height: '10px',
 									    style: 'background: transparent;'
 									},
-                                    //{
-                                    //    xtype: 'spacer',
-                                    //    height: '14px',
-                                    //    style: 'background-color: #efecea; margin: 0px 2px;',
-                                    //},
                                 ],
                             },//end last
 
@@ -739,36 +735,15 @@ Ext.define('smiley360.view.Offers', {
                 ]
             }
         ],
-        listeners: [
-			{
-			    delegate: "#backBtn",
-			    event: "tap",
-			    fn: "onBackButtonTap"
-			},
-            //{
-            //    delegate: '#editprofileLabel',
-            //    fn: 'oneditLabel',
-            //    element: 'element',
-            //    event: 'painted',
-            //},
-            {
-                delegate: "#gotoeditprofileBtn",
-                event: "tap",
-                fn: "onGoToProfileTap",
-            },
-
-        ]
+        listeners: {
+        	show: function () {
+        		console.log('Offer view showed!');
+        		//this.setUserLevel();
+        		//this.setWhatsHappening();
+        		//this.setSpecialOffers();
+        	},
+        },
+		//place listeners there
     },
-    onBackButtonTap: function () {
-        console.log('back button tapped');
-        this.fireEvent('backButtonCommandOffers', this);
-    },
-    onGoToProfileTap: function () {
-        console.log('GoToProfile button tapped');
-        this.fireEvent('GoToProfileCommand', this);
-    },
-    oneditLabel: function () {
-        console.log("oneditLabel");
-        this.fireEvent('oneditLabelCommand', this);
-    },
+	//place functions there
 });
