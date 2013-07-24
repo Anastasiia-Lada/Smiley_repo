@@ -5,7 +5,8 @@ Ext.define('smiley360.view.Connect', {
 	requires: [
         'Ext.carousel.Carousel',
         'Ext.TitleBar',
-        'Ext.Video'
+        'Ext.Video',
+		'Ext.field.Search'
 	],
 	config: {
 		cls: 'normal-page-bg',

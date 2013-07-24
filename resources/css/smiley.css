@@ -820,10 +820,10 @@
 	background: url(../images/arrow_connect.png) no-repeat 98% center;
 }
 
-.x-field-search.cust-input-search .x-field-input:before {
+/*.x-field-search.cust-input-search .x-field-input:before {
 	width: 0;
 	height: 0;
-}
+}*/
 
 .x-field-search.cust-input-search .x-field-input .x-form-field {
 	margin: 0px;

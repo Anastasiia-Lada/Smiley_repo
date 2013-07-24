@@ -75,7 +75,7 @@ Ext.define('smiley360.view.Browse', {
                     {
                     	xtype: 'container',
                     	layout: 'hbox',
-                    	id: 'missions-cont',
+                    	//id: 'missions-cont',
                     	style: 'box-shadow: 0px 1px 2px rgba(0,0,0,0.5);',
                     	items: [{
                     		xtype: 'container',
@@ -1335,13 +1335,13 @@ Ext.define('smiley360.view.Browse', {
 		if (Ext.getCmp(id).getCls() == 'has-shadow browse_container') {
 			Ext.getCmp(id).setCls('has-shadow after_browse_container');
 			Ext.getCmp('x' + id + '_panel_browse').show();
-			Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
+			//Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
 			Ext.getCmp('x' + id + 'Label').setCls('after_browse_text');
 		}
 		else {
 			Ext.getCmp(id).setCls('has-shadow browse_container');
 			Ext.getCmp('x' + id + '_panel_browse').hide();
-			Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
+			//Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
 			Ext.getCmp('x' + id + 'Label').setCls('browse_text');
 		}
 	},
