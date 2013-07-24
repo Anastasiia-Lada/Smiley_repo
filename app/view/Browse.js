@@ -1336,13 +1336,13 @@ Ext.define('smiley360.view.Browse', {
 			Ext.getCmp(id).setCls('has-shadow after_browse_container');
 			Ext.getCmp('x' + id + '_panel_browse').show();
 			//Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
-			Ext.getCmp('x' + id + 'Label').setCls('after_browse_text');
+			//Ext.getCmp('x' + id + 'Label').setCls('after_browse_text');
 		}
 		else {
 			Ext.getCmp(id).setCls('has-shadow browse_container');
 			Ext.getCmp('x' + id + '_panel_browse').hide();
 			//Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
-			Ext.getCmp('x' + id + 'Label').setCls('browse_text');
+			//Ext.getCmp('x' + id + 'Label').setCls('browse_text');
 		}
 	},
 	onBackButtonTap: function () {
