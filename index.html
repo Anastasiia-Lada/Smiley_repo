@@ -57,26 +57,66 @@
 		}
 	</style>
 	<!-- The line below must be kept intact for Sencha Command to build your application -->
-	<!--<script>
-		var test;
-		if (test != 1) {
-			window.location = "http://localhost:25453/go_test.html";
-			test = 1;
+	<script>
+		function setCookie(name, value, expires, path, domain, secure) {
+			document.cookie = name + "=" + escape(value) +
+			  ((expires) ? "; expires=" + expires : "") +
+			  ((path) ? "; path=" + path : "") +
+			  ((domain) ? "; domain=" + domain : "") +
+			  ((secure) ? "; secure" : "");
+		};
+
+
+		function getCookie(name) {
+			var cookie = " " + document.cookie;
+			var search = " " + name + "=";
+			var setStr = null;
+			var offset = 0;
+			var end = 0;
+			if (cookie.length > 0) {
+				offset = cookie.indexOf(search);
+				if (offset != -1) {
+					offset += search.length;
+					end = cookie.indexOf(";", offset)
+					if (end == -1) {
+						end = cookie.length;
+					}
+					setStr = unescape(cookie.substring(offset, end));
+				}
+			}
+			return (setStr);
+		};
+		var head = document.getElementsByTagName('head').item(0);
+		var script = document.createElement('script');
+		script.setAttribute('id', 'microloader');
+		script.setAttribute('type', 'text/javascript');
+		script.setAttribute('src', 'touch/microloader/development.js');
+
+		//function goToTest() {
+		//	if (getCookie('helloKey') == "newcook") {
+		//		alert('old window');// head.appendChild(script);
+		//	}
+		//	else {
+		//		setCookie('helloKey', "newcook");
+		//		window.location = 'http://173.18.18.52/go_test.html';
+		//	};
+		//}
+		function goToTest() {
+
+			window.location = 'http://173.18.18.52/go_test.html';
 		}
 
-	</script>-->
-	<script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>
-	<script type="text/javascript">
-		window.addEventListener("message", showToken, false);
-
-		function showToken(event) {
-			alert(event.data);
-		}
 	</script>
+
+
 </head>
 <body>
+	<input type="button" value="GoToTest" onclick="goToTest()">
+	<!--<script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>-->		
 	<div id="appLoadingIndicator">
-		<div></div>
+		<div>
+			<!--<button value="GoToTest" onclick="goToTest()"></button>-->
+		</div>
 	</div>
 </body>
 </html>
