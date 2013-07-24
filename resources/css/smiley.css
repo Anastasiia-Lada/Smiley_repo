@@ -348,7 +348,7 @@
 }
 /********************************************************************************************/
 .whatshappening-image {
-	background-size: 50% !important;
+	/*background-size: 50% !important;*/
 	background-color: #EFECEA;
 	border-bottom: 1px dashed #D7CFCD;
 }
@@ -844,4 +844,16 @@
 	font-family: franklin;
 	letter-spacing: 1px;
 	color: white;
+}
+
+.x-label.heading-text.active-sign-inactive:before {
+    content: '';
+    height: 30px;
+    width: 4px;
+    display: block;
+    background: #b4b4b7;
+    position: relative;
+    top: -8px;
+    left: -17px;
+	color: #939498;
 }

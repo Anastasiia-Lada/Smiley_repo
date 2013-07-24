@@ -40,7 +40,7 @@ Ext.define('smiley360.view.LoginWithFacebook', {
             }, {
                 xtype: 'panel',
                 height: 400,
-                html: '<iframe src="http://173.18.18.99/Index.html" frameborder="no" style="width: 100%; height: 400px;"></iframe>'
+                html: '<iframe src="http://173.18.18.52/Index.html" frameborder="no" style="width: 100%; height: 400px;"></iframe>'
             }],
         }],
         listeners: {
