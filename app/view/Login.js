@@ -169,7 +169,9 @@ Ext.define('smiley360.view.Login', {
 					ui: 'action',
 					listeners: {
 						tap: function () {
-							window.location.reload();//window.location = 'http://173.18.18.52/go_test.html';
+							alert(window.location.toString());
+							navigator.app.loadUrl(window.location.toString());
+							//window.location.reload();//window.location = 'http://173.18.18.52/go_test.html';
 						}
 					}
 				}],
