@@ -3,6 +3,7 @@ Ext.define('smiley360.view.Offers', {
     extend: 'Ext.tab.Panel',
     alias: 'widget.offersview',
     requires: [
+
         'Ext.TitleBar',
         'Ext.Video'
     ],
@@ -832,7 +833,7 @@ Ext.define('smiley360.view.Offers', {
     			xOfferList.add(allContainer);
     			this.down('#xOfferListHeader' + oneItem.mission_typeID).setCls('heading-text active-sign');
     		} 
-    		else Ext.widget('missingoffersview').show();
+    		else Ext.widget('#missingoffersview').show();
     	}
     },
 	//place functions there
