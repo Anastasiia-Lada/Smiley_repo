@@ -18,8 +18,9 @@ Ext.Loader.setPath({
     'Ext': 'touch/src',
     'smiley360': 'app'
 });
-//</debug>
+Ext.onReady(function () { alert('OnReady1') });
 
+//</debug>
 Ext.application({
     name: 'smiley360',
     requires: [

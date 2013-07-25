@@ -449,16 +449,19 @@ Ext.define('smiley360.controller.Index', {
 		//================================
 		console.log("Index initialized!");
 		//================================
-		this.callParent(arguments);
+		//this.callParent(arguments);
+		alert('Index initialized!');
 	},
 
 	launch: function () {
 		//================================
 		console.log('Index launched!');
 		//================================
+		alert('Index launched!');
 		this.callParent(arguments);
 		this.doConfigLoad();
 		this.doServicesLoad(false); //insert [true] for debug mode
+
 	}
 });
 

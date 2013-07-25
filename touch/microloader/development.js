@@ -43,5 +43,5 @@
 
         write('<script src="'+path+'"></'+'script>');
     }
-
+    alert('development.js');
 })();
