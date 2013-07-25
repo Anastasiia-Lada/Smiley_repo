@@ -422,6 +422,7 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xAutoPict',
                                                     	src: 'resources/images/auto_c.png',
                                                     	height: 50,
                                                     	width: '100%',
@@ -429,6 +430,7 @@ Ext.define('smiley360.view.Browse', {
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xAutoLabel',
                                                      	html: 'Automotive',
                                                      	cls: 'browse_text',
                                                      	//style: 'text-align: center; font-size:1.25em; padding: 10px; word-wrap: break-all; color:#413f40; font-family: \'din bold\';',
@@ -452,6 +454,7 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xBabyPict',
                                                     	src: 'resources/images/baby_c.png',
                                                     	height: 40,
                                                     	width: '70%',
@@ -459,6 +462,7 @@ Ext.define('smiley360.view.Browse', {
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xBabyLabel',
                                                      	html: 'Baby',
                                                      	cls: 'browse_text',
                                                      },
@@ -481,6 +485,7 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xClothesPict',
                                                     	src: 'resources/images/clothes_c.png',
                                                     	height: 50,
                                                     	width: '100%',
@@ -488,6 +493,7 @@ Ext.define('smiley360.view.Browse', {
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xClothesLabel',
                                                      	html: 'Clothing & Accessories',
                                                      	style: 'margin-top: -20px;',
                                                      	cls: 'browse_text',
@@ -564,6 +570,7 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xComputerPict',
                                                     	src: 'resources/images/computer_c.png',
                                                     	height: 50,
                                                     	align: 'center',
@@ -571,6 +578,7 @@ Ext.define('smiley360.view.Browse', {
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xComputerLabel',
                                                      	html: 'Computer & Software',
                                                      	style: 'margin-top: -20px;',
                                                      	cls: 'browse_text',
@@ -594,12 +602,14 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xEco_FriendlyPict',
                                                     	src: 'resources/images/eco_friendly_c.png',
                                                     	height: 50,
                                                     	margin: '15px 35px',
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xEco_FriendlyLabel',
                                                      	html: 'Eco-Friendly',
                                                      	cls: 'browse_text',
                                                      },
@@ -622,6 +632,7 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xEduPict',
                                                     	src: 'resources/images/edu_c.png',
                                                     	height: 50,
                                                     	width: '60%',
@@ -629,6 +640,7 @@ Ext.define('smiley360.view.Browse', {
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xEduLabel',
                                                      	html: 'Education',
                                                      	cls: 'browse_text',
                                                      },
@@ -702,12 +714,14 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xMobilePict',
                                                     	src: 'resources/images/mobile_c.png',
                                                     	height: 50,
                                                     	margin: '15px 35px',
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xMobileLabel',
                                                      	html: 'Electronics',
                                                      	cls: 'browse_text',
                                                      },
@@ -730,12 +744,14 @@ Ext.define('smiley360.view.Browse', {
 
                                                     {
                                                     	xtype: 'image',
+                                                    	id: 'xFinancePict',
                                                     	src: 'resources/images/finance_c.png',
                                                     	height: 50,
                                                     	margin: '15px 35px',
                                                     },
                                                      {
                                                      	xtype: 'label',
+                                                     	id: 'xFinanceLabel',
                                                      	html: 'Financial Services',
                                                      	style: 'margin-top: -20px;',
                                                      	cls: 'browse_text',
@@ -1335,14 +1351,14 @@ Ext.define('smiley360.view.Browse', {
 		if (Ext.getCmp(id).getCls() == 'has-shadow browse_container') {
 			Ext.getCmp(id).setCls('has-shadow after_browse_container');
 			Ext.getCmp('x' + id + '_panel_browse').show();
-			//Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
-			//Ext.getCmp('x' + id + 'Label').setCls('after_browse_text');
+			Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
+			Ext.getCmp('x' + id + 'Label').setCls('after_browse_text');
 		}
 		else {
 			Ext.getCmp(id).setCls('has-shadow browse_container');
 			Ext.getCmp('x' + id + '_panel_browse').hide();
-			//Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
-			//Ext.getCmp('x' + id + 'Label').setCls('browse_text');
+			Ext.getCmp('x' + id + 'Pict').setSrc('resources/images/' + id.toLowerCase() + '_c.png');
+			Ext.getCmp('x' + id + 'Label').setCls('browse_text');
 		}
 	},
 	onBackButtonTap: function () {

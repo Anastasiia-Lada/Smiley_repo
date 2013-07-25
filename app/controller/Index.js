@@ -66,6 +66,7 @@ Ext.define('smiley360.controller.Index', {
 			},
 			missionsView:
             {
+            	LoadMissionDetailsCommand: 'LoadMissionDetailsCommand',
             	backButtonCommandMissions: 'backButtonCommandMissions'
             },
 			detailsView: {
@@ -204,6 +205,21 @@ Ext.define('smiley360.controller.Index', {
 		Ext.Viewport.animateActiveItem(this.getEditProfileView(), this.slideLeftTransition);
 
 	},
+	LoadMissionDetailsCommand: function (missionID)
+	{
+		//smiley360.services.getMissionDetails(missionID,
+		//	function(response) {
+		//		if (response.success) {
+		//			smiley360.missionData.missionDetails = response;
+		//			alert(smiley360.missionData.missionDetails);
+		//			Ext.Viewport.animateActiveItem(
+		//				me.getDetailsView(), me.slideLeftTransition);
+		//		}
+		//		else {
+		//			console.log('Missiondetails is corrupted!');//show error on view
+		//		}
+		//	});
+	},
 
 	AuthentificateCommand: function (view, login, password) {
 		var me = this;
@@ -212,6 +228,7 @@ Ext.define('smiley360.controller.Index', {
 		members.add({ email: login, password: password });
 		members.sync();
 		console.log(members.data.all);
+		//adding to localstorage;
 		smiley360.services.authenticateservice(login, password,
             function (response) {
             	isLogined = response.success;
@@ -448,6 +465,7 @@ Ext.define('smiley360.controller.Index', {
 /* Global models and methods */
 
 smiley360.userData = {};
+smiley360.missionData = {};
 smiley360.viewStatus =
 {
 	initial: 'initial',

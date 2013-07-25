@@ -112,6 +112,23 @@ smiley360.services.getUserData = function (memberId, onCompleted) {
         });
 }
 
+smiley360.services.getMissionDetails = function (missionId, onCompleted) {	
+	var missionResponse = { MissionId: missionId };
+	smiley360.services.ajax(
+		"getMissionDetails",
+		missionId,
+        function (response) {
+        	if (!response.success) { onCompleted(response) }
+        	else { delete response.success; }
+
+        	missionResponse.MissionDetails = response;
+				
+
+        	missionResponse.success = true;
+
+        	onCompleted(missionResponse);
+        });
+}
 smiley360.services.getProfile = function (memberID, onCompleted) {
 	smiley360.services.ajax(
         "getProfile",

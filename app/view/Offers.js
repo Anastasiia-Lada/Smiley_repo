@@ -783,7 +783,7 @@ Ext.define('smiley360.view.Offers', {
     		var allContainer = new Ext.Container({
 
     			layout: { type: 'hbox' },
-    			style: 'padding: 0px 15px 260px 15px; background-color: #efecea;',
+    			style: 'padding: 0px 15px 220px 15px; background-color: #efecea;',
     			flex: 1,
     		});
 
@@ -825,15 +825,15 @@ Ext.define('smiley360.view.Offers', {
 
     		allContainer.add(includeContainerImage);
     		allContainer.add(includeContainerLabels);
-    		if (oneItem.mission_typeID != 1)
-    		{ oneItem.mission_typeID -= 1 };
-    		var xOfferList = this.down('#xOfferList' + oneItem.mission_typeID );
-    		if (xOfferList && smiley360.userData.isProfileComplete.complete) {
+    		//if (oneItem.mission_typeID != 1)
+    		//{ oneItem.mission_typeID -= 1 };
+    		var xOfferList = this.down('#xOfferList' + oneItem.mission_categoryID);
+    		if (xOfferList) { //&& smiley360.userData.isProfileComplete.complete) {
     			//xOfferList.removeAll(true, true);
     			xOfferList.add(allContainer);
-    			this.down('#xOfferListHeader' + oneItem.mission_typeID).setCls('heading-text active-sign');
+    			this.down('#xOfferListHeader' + oneItem.mission_categoryID).setCls('heading-text active-sign');
     		} 
-    		else Ext.widget('#missingoffersview').show();
+    		//else Ext.widget('missingoffersview').show();
     	}
     },
 	//place functions there
