@@ -86,10 +86,12 @@ Ext.application({
     },
 
     launch: function () {
+    	alert('App lau');
         console.log('App launched!');
 
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
+        alert('Ind dest');
 
         var shareView = {
         	xtype: 'shareview'
@@ -139,6 +141,7 @@ Ext.application({
         }
         // Initialize the main view
         Ext.Viewport.add([loginView, homeView, signupView, editprView, surveyView, missionsView, detailsView, offersView, offerDetailsView, browseView, connectView, browseInstrumentsView,brandView, shareView]);
+        alert('Viewport add');
     },
 
     onUpdated: function () {
