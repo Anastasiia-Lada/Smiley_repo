@@ -7,7 +7,7 @@ smiley360.configuration.isDebugMode = function () {
 }
 
 smiley360.configuration.getServerUrl = function () {
-    return "http://173.18.18.52/index.php/";
+    return "http://smileys.ekonx.net.ua/index.php/";
 }
 
 smiley360.configuration.getResourceDomain = function () {
