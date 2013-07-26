@@ -207,10 +207,10 @@ Ext.define('smiley360.controller.Index', {
         Ext.Viewport.animateActiveItem(this.getEditProfileView(), this.slideLeftTransition);
 
     },
-	LoadOfferDetailsCommand: function (image, missionID) 
+    LoadOfferDetailsCommand: function (image, missionID, memberID)
 	{
 		var me = this;
-		smiley360.services.getMissionDetails(missionID,
+		smiley360.services.getMissionDetails(missionID, memberID,
 			function (response) {
 				if (response.success) {
 					smiley360.missionData.MissionDetails = response;

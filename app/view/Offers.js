@@ -777,14 +777,21 @@ Ext.define('smiley360.view.Offers', {
     },
     setOffers: function () {
     	
-
+    	
     	for (var key in smiley360.memberData.Offers) {
     		var oneItem = smiley360.memberData.Offers[key];
     		var allContainer = new Ext.Container({
-
+    			id: 'OfferID_pane' + oneItem.missionID,
     			layout: { type: 'hbox' },
     			style: 'padding: 0px 15px 220px 15px; background-color: #efecea;',
     			flex: 1,
+    			listeners: {
+    				element: 'element',
+    				tap: function () {
+    					console.log('LoadOfferDetailsCommand', oneItem.missionID, this.valueOf());
+    					this.up('#xOfferView').fireEvent('LoadOfferDetailsCommand', this, this.getId().substr(12));
+    				}
+    			}//'resources/images/lays.png',
     		});
 
     		var includeContainerImage = new Ext.Container({
@@ -805,7 +812,7 @@ Ext.define('smiley360.view.Offers', {
             	src: smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link),//'resources/images/lays.png',
             	listeners: {
             		tap: function () {
-            			console.log('OfferDetailsCommand', oneItem.missionID, this.valueOf());
+            			console.log('LoadOfferDetailsCommand', oneItem.missionID, this.valueOf());
             			this.up('#xOfferView').fireEvent('LoadOfferDetailsCommand', this, this.getId().substr(12));
 
             		}
@@ -838,6 +845,7 @@ Ext.define('smiley360.view.Offers', {
     		var xOfferList = this.down('#xOfferList' + oneItem.mission_categoryID);
     		if (xOfferList) { //&& smiley360.memberData.isProfileComplete.complete) {
     			//xOfferList.removeAll(true, true);
+    			xOfferList.removeAll(true, true);
     			xOfferList.add(allContainer);
     			this.down('#xOfferListHeader' + oneItem.mission_categoryID).setCls('heading-text active-sign');
     		} 

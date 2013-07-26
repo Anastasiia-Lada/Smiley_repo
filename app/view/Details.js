@@ -102,7 +102,8 @@ Ext.define('smiley360.view.Details', {
 											},
 											{
 												xtype: 'label',
-												html: '13/92',
+												id: 'xTopMissionScore',
+												html: '',
 												cls: 'heading-text',
 												style: 'padding-left: 15px; padding-right: 10px;',
 												flex: 0.2,
@@ -165,8 +166,8 @@ Ext.define('smiley360.view.Details', {
 												{
 													xtype: 'label',
 													id: 'xDetailsPromo',
-													style: 'font-family: franklin; font-size:1em;',
-													html: '1 Campbell\'s Slow Kettle Soup',
+													style: 'font-family: franklin; font-size:1em;padding: 30px 0px 50px 0px; margin: -66px 0px 50px 0px;',
+													html: '',
 													padding: '10px 20px',
 												},
 												{
@@ -468,9 +469,15 @@ Ext.define('smiley360.view.Details', {
 		var smilesArray = smiley360.missionData.MissionDetails.MissionPoints.sharingToolScore;
 		var pointsArray = smiley360.missionData.MissionDetails.MissionPoints;
 		var detailsArray = smiley360.missionData.MissionDetails.MissionDetails;
-		if (detailsArray.mission_promo_Activated == '0') Ext.getCmp('xDetailsPromo').setHtml('somepromo');//detailsArray.promo_message);
+		if (detailsArray.mission_promo_Activated == '1') {
+			Ext.getCmp('xDetailsPromo').setHtml(detailsArray.promo_message);
+			//detailsArray.promo_message);
+		}
 
-		if (detailsArray.mission_shipment_active == '0') Ext.getCmp('xDetailsShipment').setHtml('someship');//detailsArray.promo_message);
+		if (detailsArray.mission_shipment_active == '1') {
+			Ext.getCmp('xDetailsShipment').setHtml(detailsArray.mission_shipment_message);//detailsArray.promo_message);
+			
+		}
 
 		for (var key in smilesArray) {
 			var oneItem = smilesArray[key];
@@ -480,7 +487,7 @@ Ext.define('smiley360.view.Details', {
 		this.setSmileItem('Bonus', pointsArray.mission_bonus_smiles, 'padding: 15px;');
 		this.setSmileItem('Mission Total', pointsArray.mission_current_smiles + '/' + pointsArray.mission_max_smiles, 'padding: 20px 15px; font-weight: bold;');
 		this.setSmileItem('Total Smiles', pointsArray.mission_total_smiles, 'padding: 30px 15px;');
-		
+		Ext.getCmp('xTopMissionScore').setHtml(pointsArray.mission_current_smiles + '/' + pointsArray.mission_max_smiles);
 	},
 	setSmileItem: function (left_html,right_html, addstyle) {
 		var smilesArrayItem = new Ext.Container({

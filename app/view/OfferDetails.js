@@ -101,7 +101,7 @@ items: [
                     },
                     {
                         xtype: 'label',
-                        html: '13/92',
+                        html: '',
                         cls: 'heading-text',
                         style: 'padding-left: 15px; padding-right: 10px;',
                         flex: 0.2,

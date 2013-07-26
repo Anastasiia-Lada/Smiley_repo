@@ -495,11 +495,17 @@ Ext.define('smiley360.view.Missions', {
 		for (var key in smiley360.memberData.MissionList) {
 			var oneItem = smiley360.memberData.MissionList[key];
 			var allContainer = new Ext.Container({
-
+				id: 'MissionID_pane' + oneItem.missionID,
 				layout: { type: 'hbox' },
 				style: 'padding: 10px 15px 280px 15px; border-bottom: 1px dashed #d7cfcd; background-color: #efecea;',
 				flex: 1,
-				
+				listeners: {
+					element: 'element',
+					tap: function () {
+						console.log('MissionDetailsCommandPanel', oneItem.missionID, this.valueOf());
+						this.up('#xMissionView').fireEvent('LoadMissionDetailsCommand', this, this.getId().substr(14), smiley360.memberData.UserId);
+					}
+				}
 			});
 
 			var includeContainerImage = new Ext.Container({

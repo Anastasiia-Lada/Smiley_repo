@@ -316,14 +316,7 @@ Ext.define('smiley360.view.Home', {
                 cls: 'home-title',
                 docked: 'top',
                 ui: 'light',
-            }],
-            listeners: {
-				element: 'element',
-				tap: function () {
-					alert('Go missions');
-            		this.up('#xHomeView').fireEvent('onMissionTapCommand', this);
-            	}
-            }
+            }]
         }, {
             title: 'SHARE',
             iconCls: 'share-img',
