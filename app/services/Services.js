@@ -50,56 +50,58 @@ smiley360.services.sendMessage = function (messageData, onCompleted) {
 
 /***************** Getter Methods *****************/
 
-smiley360.services.getUserData = function (memberId, onCompleted) {
-	var memberData = { memberID: memberId };
+smiley360.services.getMemberData = function (memberId, onCompleted) {
+	var memberRequest = { memberID: memberId };
 	var globalResponse = { UserId: memberId };
 
-	smiley360.services.ajax("getProfile", memberData,
+	smiley360.services.ajax("getProfile", memberRequest,
         function (response) {
         	if (!response.success) { onCompleted(response) }
         	else { delete response.success; }
 
         	globalResponse.Profile = response;
 
-        	smiley360.services.ajax("get_member_level", memberData,
+        	smiley360.services.ajax("get_member_level", memberRequest,
                 function (response) {
                 	if (!response.success) { onCompleted(response) }
                 	else { delete response.success; }
 
                 	globalResponse.UserLevel = response.level;
 
-                	smiley360.services.ajax("getWhatsHappening", memberData,
+                	smiley360.services.ajax("getWhatsHappening", memberRequest,
                         function (response) {
                         	if (!response.success) { onCompleted(response) }
                         	else { delete response.success; }
 
                         	globalResponse.WhatsHappening = response;
 
-                        	smiley360.services.ajax("getSpecialOffers", memberData,
+                        	smiley360.services.ajax("getSpecialOffers", memberRequest,
                                 function (response) {
                                 	if (!response.success) { onCompleted(response) }
                                 	else { delete response.success; }
 
                                 	globalResponse.SpecialOffers = response;
-                                	smiley360.services.ajax("getOffers", memberData,
+
+                                	smiley360.services.ajax("getOffers", memberRequest,
 										function (response) {
 											if (!response.success) { onCompleted(response) }
 											else { delete response.success; }
 
 											globalResponse.Offers = response;
-											smiley360.services.ajax("getMissionList", memberData,
+
+											smiley360.services.ajax("getMissionList", memberRequest,
 												function (response) {
 													if (!response.success) { onCompleted(response) }
 													else { delete response.success; }
 
 													globalResponse.MissionList = response;
-													smiley360.services.ajax("isProfileComplete", memberData,
+
+													smiley360.services.ajax("isProfileComplete", memberRequest,
 														function (response) {
 															if (!response.success) { onCompleted(response) }
 															else { delete response.success; }
 
 															globalResponse.isProfileComplete = response;
-
 															globalResponse.success = true;
 
 															onCompleted(globalResponse);
@@ -112,23 +114,48 @@ smiley360.services.getUserData = function (memberId, onCompleted) {
         });
 }
 
-smiley360.services.getMissionDetails = function (missionId, onCompleted) {	
-	var missionResponse = { MissionId: missionId };
+smiley360.services.getMissionDetails = function (missionID, memberID, onCompleted) {
+	var missionResponse = { MissionId: missionID };	
 	smiley360.services.ajax(
 		"getMissionDetails",
-		missionId,
+		{
+			missionID: missionID
+		},
         function (response) {
         	if (!response.success) { onCompleted(response) }
         	else { delete response.success; }
 
         	missionResponse.MissionDetails = response;
-				
+        	smiley360.services.ajax("getMissionPoints",
+				{
+					missionID: missionID,
+					memberID: memberID
+				},
+				function (response) {
+					if (!response.success) { onCompleted(response) }
+					else { delete response.success; }
 
-        	missionResponse.success = true;
+					missionResponse.MissionPoints = response;
+					//smiley360.services.ajax("getMissionSharingToolDetails",
+					//	{
+					//		missionID: missionID,
+					//		memberID: memberID,
+					//		sharingTool_typeID: 0,
+					//	},
+					//	function (response) {
+					//		if (!response.success) { onCompleted(response) }
+					//		else { delete response.success; }
 
-        	onCompleted(missionResponse);
+					//		missionResponse.MissionSharingToolDetails = response;
+
+								missionResponse.success = true;
+
+								onCompleted(missionResponse);
+					//});
+				});
         });
 }
+
 smiley360.services.getProfile = function (memberID, onCompleted) {
 	smiley360.services.ajax(
         "getProfile",
@@ -139,83 +166,82 @@ smiley360.services.getProfile = function (memberID, onCompleted) {
         );
 }
 
-smiley360.services.getMemberLevel = function (memberID, onCompleted) {
-	smiley360.services.ajax(
-        "get_member_level",
-        {
-        	memberID: memberID
-        },
-            onCompleted
-        );
-}
+	smiley360.services.getMemberLevel = function (memberID, onCompleted) {
+		smiley360.services.ajax(
+			"get_member_level",
+			{
+				memberID: memberID
+			},
+				onCompleted
+			);
+	}
 
-smiley360.services.getWhatsHappening = function (memberID, onCompleted) {
-	smiley360.services.ajax(
-        "getWhatsHappening",
-        {
-        	memberID: memberID
-        },
-            onCompleted
-        );
-}
+	smiley360.services.getWhatsHappening = function (memberID, onCompleted) {
+		smiley360.services.ajax(
+			"getWhatsHappening",
+			{
+				memberID: memberID
+			},
+				onCompleted
+			);
+	}
 
-smiley360.services.getSpecialOffers = function (memberID, onCompleted) {
-	smiley360.services.ajax(
-        "getSpecialOffers",
-        {
-        	memberID: memberID
-        },
-            onCompleted
-        );
-}
+	smiley360.services.getSpecialOffers = function (memberID, onCompleted) {
+		smiley360.services.ajax(
+			"getSpecialOffers",
+			{
+				memberID: memberID
+			},
+				onCompleted
+			);
+	}
 
-/***************** Setter Methods *****************/
+	/***************** Setter Methods *****************/
 
-smiley360.services.setProfile = function (memberID, profArr, onCompleted) {
-	smiley360.services.ajax(
-        "setProfile",
-        {
-        	memberID: memberID,
-        	profArr: profArr,
-        },
-            onCompleted
-        );
-}
-smiley360.services.signupMember = function (first, last, username, password, email, zip, birthdate, gender, onCompleted) {
-	smiley360.services.ajax(
-		"signupMember",
+	smiley360.services.setProfile = function (memberID, profArr, onCompleted) {
+		smiley360.services.ajax(
+			"setProfile",
+			{
+				memberID: memberID,
+				profArr: profArr,
+			},
+				onCompleted
+			);
+	}
+	smiley360.services.signupMember = function (first, last, username, password, email, zip, birthdate, gender, onCompleted) {
+		smiley360.services.ajax(
+			"signupMember",
+			{
+				first: first,
+				last: last,
+				username: username,
+				password: password,
+				email: email,
+				zip: zip,
+				birthdate: birthdate,
+				gender: gender,
+			},
+				onCompleted
+			);
+	}
+
+
+	/***************** Share Methods *****************/
+
+	smiley360.services.shareToBlog = function (shareData, onCompleted) {
+	}
+
+	smiley360.services.shareToFacebook = function (shareData, onCompleted) {
+	}
+
+	/***************** Helper Members *****************/
+
+	smiley360.services.ajax = function (method, params, onCompleted) {
+		Ext.data.JsonP.request(
 		{
-			first: first,
-			last: last,
-			username: username,
-			password: password,
-			email: email,
-			zip: zip,
-			birthdate: birthdate,
-			gender: gender,
-		},
-			onCompleted
-		);
-}
-
-
-/***************** Share Methods *****************/
-
-smiley360.services.shareToBlog = function (shareData, onCompleted) {
-}
-
-smiley360.services.shareToFacebook = function (shareData, onCompleted) {
-}
-
-/***************** Helper Members *****************/
-
-smiley360.services.serverUrl = smiley360.configuration.getServerUrl();//"http://173.18.18.52/index.php/";
-smiley360.services.ajax = function (method, params, onCompleted) {
-	Ext.data.JsonP.request(
-    {
-    	url: smiley360.services.serverUrl + "?method=" + method + "&params=" + Ext.JSON.encode(params),
-    	callback: function (result, response) {
-    		onCompleted(Ext.apply({ success: (result && !response.error) }, response));
-    	}
-    });
-}
+			url: smiley360.configuration.getServerUrl() + "?method=" + method + "&params=" + Ext.JSON.encode(params),
+			callback: function (result, response) {
+				onCompleted(Ext.apply({ success: (result && !response.error) }, response));
+			}
+		});
+	}

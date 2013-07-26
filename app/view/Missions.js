@@ -491,20 +491,15 @@ Ext.define('smiley360.view.Missions', {
 	},
 	setMissions: function () {
 
-
-		for (var key in smiley360.userData.MissionList) {
-			var oneItem = smiley360.userData.MissionList[key];
+		Ext.getCmp('xMissionList').removeAll(true, true);
+		for (var key in smiley360.memberData.MissionList) {
+			var oneItem = smiley360.memberData.MissionList[key];
 			var allContainer = new Ext.Container({
 
 				layout: { type: 'hbox' },
 				style: 'padding: 10px 15px 280px 15px; border-bottom: 1px dashed #d7cfcd; background-color: #efecea;',
 				flex: 1,
-				listeners: {
-					element: 'element',
-					tap: function () {
-						this.up('#xMissionView').fireEvent('LoadMissionDetailsCommand', this, oneItem.missionID);
-					}
-				}
+				
 			});
 
 			var includeContainerImage = new Ext.Container({
@@ -521,8 +516,17 @@ Ext.define('smiley360.view.Missions', {
             	cls: 'has-shadow',
             	width: 100,
             	height: 100,
-            	src: smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link),//'resources/images/lays.png',
+				id: 'MissionID_pict'+oneItem.missionID,
+            	src: smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link),
+            	listeners: {
+            		//element: 'element',
+            		tap: function () {
+            			console.log('MissionDetailsCommand', oneItem.missionID, this.valueOf());
+            			this.up('#xMissionView').fireEvent('LoadMissionDetailsCommand', this, this.getId().substr(14), smiley360.memberData.UserId);
+            		}
+            	}//'resources/images/lays.png',
             }));
+			
 			var includeContainerLabels = new Ext.Container({
 
 				layout: { type: 'vbox' },
@@ -545,12 +549,11 @@ Ext.define('smiley360.view.Missions', {
 
 			allContainer.add(includeContainerImage);
 			allContainer.add(includeContainerLabels);
-			//if (oneItem.mission_typeID != 1)
-			//{ oneItem.mission_typeID -= 1 };
 			var xMissionList = this.down('#xMissionList')// + oneItem.mission_typeID);
-			if (xMissionList) {//&& smiley360.userData.isProfileComplete.complete) {
+			if (xMissionList) {//&& smiley360.memberData.isProfileComplete.complete) {
 				//xOfferList.removeAll(true, true);
 				xMissionList.add(allContainer);
+				
 				//this.down('#xMissionListHeader' + oneItem.mission_typeID).setCls('heading-text active-sign');
 			}
 			//else Ext.widget('missingoffersview').show();

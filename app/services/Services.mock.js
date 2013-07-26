@@ -36,6 +36,19 @@ smiley360.services.authenticate = function (login, password, onCompleted) {
     }
 }
 
+smiley360.services.getMemberIdByDeviceId = function (deviceId, onCompleted) {
+    if (deviceId) {
+        onCompleted(
+       {
+           success: false,
+           memberId: 157207, //this is a test user
+       });
+    }
+    else {
+        onCompleted(smiley360.services.fault());
+    }
+}
+
 smiley360.services.getProfile = function (memberID, onCompleted) {
     if (memberID == 249) {
         onCompleted(
@@ -47,8 +60,8 @@ smiley360.services.getProfile = function (memberID, onCompleted) {
     else {
         onCompleted(smiley360.services.fault());
     }
-};
-/*isProfileComplete*/
+}
+
 smiley360.services.isProfileComplete = function (memberID, onCompleted) {
     if (memberID == 249) {
         onCompleted(
@@ -60,8 +73,8 @@ smiley360.services.isProfileComplete = function (memberID, onCompleted) {
     else {
         onCompleted(smiley360.services.fault());
     }
-};
-/*setProfile*/
+}
+
 smiley360.services.setProfile = function (memberID, onCompleted) {
     if (memberID == 249) {
         onCompleted(
@@ -73,12 +86,12 @@ smiley360.services.setProfile = function (memberID, onCompleted) {
     else {
         onCompleted(smiley360.services.fault());
     }
-};
+}
 
 
 smiley360.services.fault = function () {
     return { success: false };
-};
+}
 
 smiley360.services.getProfileCompletion = function () {
     var completion =
@@ -87,6 +100,7 @@ smiley360.services.getProfileCompletion = function () {
 	};
     return completion;
 }
+
 smiley360.services.setUserProfile = function () {
     profile =
 	{
@@ -110,16 +124,18 @@ smiley360.services.setUserProfile = function () {
 	};
     return profile;
 }
+
 smiley360.services.getUserProfile = function () {
 
     return profile;
 }
-/*getSpecialOffers*/
+
 function offerInfo(iconURL, text) {
 
     this.iconURL = iconURL;
     this.text = text;
 }
+
 smiley360.services.getSpecialOffers = function () {
     var offers = new Array();
     offers[0] = new offerInfo('http:\/\/uat.smiley360.com\/\/images\/smilely-icon-small.gif', 'Complete all the available surveys below to help us match you with future missions. You\'ll earn 10 bonus Smiles for each one!');
@@ -127,6 +143,7 @@ smiley360.services.getSpecialOffers = function () {
 
     return offers;
 }
+
 smiley360.services.getOffers = function (onCompleted) {
     onCompleted(
     {
@@ -134,6 +151,7 @@ smiley360.services.getOffers = function (onCompleted) {
         userOffers: smiley360.services.getSpecialOffers()
     });
 }
+
 smiley360.services.getProfileData = function () {
     var profiledata =
 	{
@@ -181,31 +199,6 @@ smiley360.services.getProfileData = function () {
 	};
     return profiledata;
 }
-/*mobile_app_member_initialize*/
-//smiley360.services.mobile_app_member_initialize = function () {
-//    var profile =
-//	{
-//	    fName: 'Anton',
-//	    lName: 'D',
-//	    marital: '4',
-//	    children: '3',
-//	    howmanychildren: '0',
-//	    income: '14',
-//	    aboutself: 'A few words',
-//	    blogURL: 'www.myblog.com',
-//	    gender: '',
-//	    birthdate: '1978-03-01',
-//	    address: 'POBOX763',
-//	    address2: '',
-//	    city: 'RIEGELSVILLE',
-//	    stateID: '38',
-//	    zip: '18077-0763',
-//	    address_status: '0',
-//	    isComplete: '0'
-//	};
-//    return profile;
-//}
-/* Restore Password */
 
 smiley360.services.restorePassword = function (submitData, onCompleted) {
     var task = new Ext.util.DelayedTask(function () {

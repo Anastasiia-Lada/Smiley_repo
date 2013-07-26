@@ -876,7 +876,7 @@ Ext.define('smiley360.view.EditProfile', {
             show: function () {
                 console.log('EditProfile view showed!');
 
-                var profile = smiley360.userData.Profile;
+                var profile = smiley360.memberData.Profile;
 
                 for (var field in profile) {
                     var element = (field == 'address')

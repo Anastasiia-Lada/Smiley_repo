@@ -316,7 +316,14 @@ Ext.define('smiley360.view.Home', {
                 cls: 'home-title',
                 docked: 'top',
                 ui: 'light',
-            }]
+            }],
+            listeners: {
+				element: 'element',
+				tap: function () {
+					alert('Go missions');
+            		this.up('#xHomeView').fireEvent('onMissionTapCommand', this);
+            	}
+            }
         }, {
             title: 'SHARE',
             iconCls: 'share-img',
@@ -389,8 +396,8 @@ Ext.define('smiley360.view.Home', {
     },
 
     setUserLevel: function () {
-        var userLevel = smiley360.userData.UserLevel
-            ? smiley360.userData.UserLevel : 0;
+        var userLevel = smiley360.memberData.UserLevel
+            ? smiley360.memberData.UserLevel : 0;
 
         this.down('#xUserLevelLabel').setHtml('LEVEL ' + userLevel);
 
@@ -404,8 +411,8 @@ Ext.define('smiley360.view.Home', {
         var xWhatsHappeningList = this.down('#xWhatsHappeningList');
         xWhatsHappeningList.removeAll(true, true);
 
-        for (var key in smiley360.userData.WhatsHappening) {
-            var oneItem = smiley360.userData.WhatsHappening[key];
+        for (var key in smiley360.memberData.WhatsHappening) {
+            var oneItem = smiley360.memberData.WhatsHappening[key];
             var oneElement = new Ext.Container({ layout: 'hbox', cls: 'whatshappening-image'});
 
             oneElement.add(new Ext.Img(
@@ -433,8 +440,8 @@ Ext.define('smiley360.view.Home', {
         var xSpecialOffersList = this.down('#xSpecialOffersList');
         xSpecialOffersList.removeAll(true, true);
 
-        for (var key in smiley360.userData.SpecialOffers) {
-            var oneItem = smiley360.userData.SpecialOffers[key];
+        for (var key in smiley360.memberData.SpecialOffers) {
+            var oneItem = smiley360.memberData.SpecialOffers[key];
             var oneElement = new Ext.Container({ layout: 'hbox' });
 
             oneElement.add(new Ext.Label(

@@ -1,122 +1,110 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>S360</title>
-	<style type="text/css">
-		/**
+    <meta charset="UTF-8">
+    <title>S360</title>
+    <style type="text/css">
+        /**
          * Example of an initial loading indicator.
          * It is recommended to keep this as minimal as possible to provide instant feedback
          * while other resources are still being loaded for the first time
          */
-		html, body {
-			background: url("resources/images/splash.png") no-repeat center center;
-			background-size: cover;
-		}
+        html, body {
+            background: url("resources/images/splash.png") no-repeat center center;
+            background-size: cover;
+        }
 
-		#appLoadingIndicator {
-			position: absolute;
-			top: 100%;
-			margin-top: -15px;
-			text-align: center;
-			width: 100%;
-			height: 30px;
-			-webkit-animation-name: appLoadingIndicator;
-			-webkit-animation-duration: 14s;
-			-webkit-animation-iteration-count: infinite;
-			-webkit-animation-direction: linear;
-		}
+        #appLoadingIndicator {
+            position: absolute;
+            top: 100%;
+            margin-top: -15px;
+            text-align: center;
+            width: 100%;
+            height: 30px;
+            -webkit-animation-name: appLoadingIndicator;
+            -webkit-animation-duration: 14s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-direction: linear;
+        }
 
-			#appLoadingIndicator > * {
-				background-color: #e19b20;
-				display: inline-block;
-				height: 10px;
-				width: 100%;
-			}
+            #appLoadingIndicator > * {
+                background-color: #e19b20;
+                display: inline-block;
+                height: 10px;
+                width: 100%;
+            }
 
-		@-webkit-keyframes appLoadingIndicator {
-			from {
-				width: 0%;
-			}
+        @-webkit-keyframes appLoadingIndicator {
+            from {
+                width: 0%;
+            }
 
-			25% {
-				width: 25%;
-			}
+            25% {
+                width: 25%;
+            }
 
-			50% {
-				width: 50%;
-			}
+            50% {
+                width: 50%;
+            }
 
-			75% {
-				width: 75%;
-			}
+            75% {
+                width: 75%;
+            }
 
-			to {
-				width: 100%;
-			}
-		}
-	</style>
+            to {
+                width: 100%;
+            }
+        }
+    </style>
+    <!-- The line below must be kept intact for Sencha Command to build your application -->
+    <script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>
+    <script type="text/javascript">
+        var deviceId = getCookie('deviceId');
+        if (deviceId == null) {
+            setCookie('deviceId', guid());
+        }
 
-	
-
-	<!-- The line below must be kept intact for Sencha Command to build your application -->
-	<script>
-		function setCookie(name, value, expires, path, domain, secure) {
-			document.cookie = name + "=" + escape(value) +
-			  ((expires) ? "; expires=" + expires : "") +
-			  ((path) ? "; path=" + path : "") +
-			  ((domain) ? "; domain=" + domain : "") +
-			  ((secure) ? "; secure" : "");
-		};
-
-
-		function getCookie(name) {
-			var cookie = " " + document.cookie;
-			var search = " " + name + "=";
-			var setStr = null;
-			var offset = 0;
-			var end = 0;
-			if (cookie.length > 0) {
-				offset = cookie.indexOf(search);
-				if (offset != -1) {
-					offset += search.length;
-					end = cookie.indexOf(";", offset)
-					if (end == -1) {
-						end = cookie.length;
-					}
-					setStr = unescape(cookie.substring(offset, end));
-				}
-			}
-			return (setStr);
-		};
-		var head = document.getElementsByTagName('head').item(0);
-		var script = document.createElement('script');
-		script.setAttribute('id', 'microloader');
-		script.setAttribute('type', 'text/javascript');
-		script.setAttribute('src', 'touch/microloader/development.js');
-
-		//function goToTest() {
-		//	if (getCookie('helloKey') == "newcook") {
-		//		alert('old window');// head.appendChild(script);
-		//	}
-		//	else {
-		//		setCookie('helloKey', "newcook");
-		//		window.location = 'http://173.18.18.52/go_test.html';
-		//	};
-		//}
+        function setCookie(name, value, expires, path, domain, secure) {
+            document.cookie = name + "=" + escape(value) +
+              ((expires) ? "; expires=" + expires : "") +
+              ((path) ? "; path=" + path : "") +
+              ((domain) ? "; domain=" + domain : "") +
+              ((secure) ? "; secure" : "");
+        }
 
 
-	</script>
+        function getCookie(name) {
+            var cookie = " " + document.cookie;
+            var search = " " + name + "=";
+            var setStr = null;
+            var offset = 0;
+            var end = 0;
+            if (cookie.length > 0) {
+                offset = cookie.indexOf(search);
+                if (offset != -1) {
+                    offset += search.length;
+                    end = cookie.indexOf(";", offset)
+                    if (end == -1) {
+                        end = cookie.length;
+                    }
+                    setStr = unescape(cookie.substring(offset, end));
+                }
+            }
+            return (setStr);
+        }
 
+        function guid() {
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+        }
 
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+    </script>
 </head>
 <body>
-
-	<script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>
-	<div id="appLoadingIndicator">
-		<div>
-			<!--<button value="GoToTest" onclick="goToTest()"></button>-->
-		</div>
-	</div>
+    <div id="appLoadingIndicator">
+        <div></div>
+    </div>
 </body>
 </html>

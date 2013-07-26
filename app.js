@@ -18,19 +18,21 @@ Ext.Loader.setPath({
     'Ext': 'touch/src',
     'smiley360': 'app'
 });
-Ext.onReady(function () { alert('OnReady1') });
-
 //</debug>
+
 Ext.application({
     name: 'smiley360',
     requires: [
         'Ext.MessageBox', 'Ext.data.Validations', 'smiley360.model.SignupModel'
     ],
-	stores: ['Members'],
+    stores: ['Members'],
     models: ['Member'],
-
     controllers: ['Index'],
-
+    viewport: {
+        layout: {
+            type: 'card'
+        }
+    },
     views: [
         'Login',
         'Signup',
@@ -63,9 +65,7 @@ Ext.application({
 		'OfferAcceptAddress',
 		'MissionCompleted',
 		'MissingOffers',
-        'LoginWithFacebook',
     ],
-
     icon: {
         '36': 'resources/icons/Icon_Android36.png',
         '48': 'resources/icons/Icon_Android48.png',
@@ -74,9 +74,7 @@ Ext.application({
         '114': 'resources/icons/Icon@2x.png',
         '144': 'resources/icons/Icon~ipad@2x.png'
     },
-
     isIconPrecomposed: true,
-
     startupImage: {
         '320x460': 'resources/startup/320x460.jpg',
         '640x920': 'resources/startup/640x920.png',
@@ -87,12 +85,10 @@ Ext.application({
     },
 
     launch: function () {
-    	alert('App lau');
-        console.log('App launched!');
+        console.log('App -> launched!');
 
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
-        alert('Ind dest');
 
         var shareView = {
         	xtype: 'shareview'
@@ -142,7 +138,6 @@ Ext.application({
         }
         // Initialize the main view
         Ext.Viewport.add([loginView, homeView, signupView, editprView, surveyView, missionsView, detailsView, offersView, offerDetailsView, browseView, connectView, browseInstrumentsView,brandView, shareView]);
-        alert('Viewport add');
     },
 
     onUpdated: function () {

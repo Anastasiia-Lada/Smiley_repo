@@ -778,8 +778,8 @@ Ext.define('smiley360.view.Offers', {
     setOffers: function () {
     	
 
-    	for (var key in smiley360.userData.Offers) {
-    		var oneItem = smiley360.userData.Offers[key];
+    	for (var key in smiley360.memberData.Offers) {
+    		var oneItem = smiley360.memberData.Offers[key];
     		var allContainer = new Ext.Container({
 
     			layout: { type: 'hbox' },
@@ -801,7 +801,15 @@ Ext.define('smiley360.view.Offers', {
             	cls: 'has-shadow',
             	width: 100,
             	height: 100,
-            	src: smiley360.configuration.getOfferImagesUrl(oneItem.missionID,oneItem.link),//'resources/images/lays.png',
+            	id: 'OfferID_pict' + oneItem.missionID,
+            	src: smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link),//'resources/images/lays.png',
+            	listeners: {
+            		tap: function () {
+            			console.log('OfferDetailsCommand', oneItem.missionID, this.valueOf());
+            			this.up('#xOfferView').fireEvent('LoadOfferDetailsCommand', this, this.getId().substr(12));
+
+            		}
+            	}
             }));
     		var includeContainerLabels = new Ext.Container({
 
@@ -828,7 +836,7 @@ Ext.define('smiley360.view.Offers', {
     		//if (oneItem.mission_typeID != 1)
     		//{ oneItem.mission_typeID -= 1 };
     		var xOfferList = this.down('#xOfferList' + oneItem.mission_categoryID);
-    		if (xOfferList) { //&& smiley360.userData.isProfileComplete.complete) {
+    		if (xOfferList) { //&& smiley360.memberData.isProfileComplete.complete) {
     			//xOfferList.removeAll(true, true);
     			xOfferList.add(allContainer);
     			this.down('#xOfferListHeader' + oneItem.mission_categoryID).setCls('heading-text active-sign');

@@ -8,7 +8,7 @@ Ext.define('smiley360.view.OfferDetails', {
         'Ext.Video'
     ],
     config: {
-
+		id: 'OfferDetailsView',
         tabBarPosition: 'bottom',
         cls: 'cust-tabbar normal-page-bg',
         items: [
@@ -31,7 +31,12 @@ Ext.define('smiley360.view.OfferDetails', {
 							    ui: 'plain',
 							    iconCls: 'back-btn',
 							    iconMask: true,
-							    itemId: 'backBtn'
+							    itemId: 'backBtn',
+							    listeners: {
+							    	tap: function () {
+							    		this.up('#OfferDetailsView').fireEvent('backButtonCommandOfferDetails', this);
+							    	}
+							    }
 							},
 							{ xtype: 'spacer' },
 							{
@@ -87,7 +92,8 @@ items: [
                 layout: { type: 'hbox' },
                 items: [
                     {
-                        xtype: 'label',
+                    	xtype: 'label',
+                    	id: 'OfferDetailsTitleLabel',
                         html: 'CAMPBELL\'S &reg; SLOW KETTLE &reg; SOUPS ',
                         cls: 'heading-text active-sign',
                         style: 'padding-left: 15px;',
@@ -133,10 +139,11 @@ items: [
                                     items: [
                                                         
                                         {
-                                            xtype: 'image',
+                                        	xtype: 'image',
+                                        	id: 'OfferDetailsHero',
                                             //margin: '0px -20px 0px -50px',
                                             //style:'padding-left: 15px;',
-                                            src: 'resources/images/campbells.png',
+                                            //src: 'resources/images/campbells.png',
                                             height: 160
                                         }
                                     ]
@@ -199,7 +206,8 @@ items: [
                                                     style: 'background-color:#fba00a; margin: 0px 0px 0px 0px; '
                                                 }, 
                                         {
-                                            xtype: 'label',
+                                        	xtype: 'label',
+                                        	id: 'OfferDetailsOffer',
                                             style: 'background-color:#e2ddda; font-family: din medium; font-size:1.1em;',
                                             html: 'You will recieve one Campbell\'s Go&trade; soup of your choice, fun items to use when sharing your thoughts about Campbell\'s Go&trade; soup and 10 coupons to share with your friends and family for $2 off Campbell\'s Go&trade; soup.',
                                             padding: '10px 20px',
@@ -240,7 +248,8 @@ items: [
                                         style: 'background-color:#fba00a; margin: 0px 0px 0px 0px; '
                                     },
                             {
-                                xtype: 'label',
+                            	xtype: 'label',
+                            	id: 'OfferDetailsMission',
                                 style: 'background-color:#e2ddda; font-family: din medium; font-size:1.1em;',
                                 html: 'Try Campbell\'s Go&trade; soup once and you\'ll be hooked! Once you\'ve tried it, share your experience with your social circle both on and offline using your talk bubble and disguise accessories that are in your Smiley kit. Let your inner foodie shine bright and all about Campbell\'s Go&trade; soup. ',
                                 padding: '10px 20px',
@@ -278,47 +287,49 @@ items: [
                                 xtype: 'label',
                                 height: '3px',
                                 style: 'background-color:#fba00a; margin: 0px 0px 0px 0px; '
-                            }, {
-                                xtype: 'label',
-                                html: 'JOIN THIS MISSION AND RECIEVE:',
-                                style: 'background-color:#e2ddda; font-family: din bold; font-size:1em;',
-                                padding: '10px 20px',
                             },
-                                    {
-                                        xtype: 'label',
-                                        style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-                                        cls: 'mission-t',
-                                        html: '1 Campbell\'s Go&trade; soup in the bold flavour that you chose',
-                                        padding: '10px 20px',
-                                    },
+							//{
+                            //    xtype: 'label',
+                            //    html: 'JOIN THIS MISSION AND RECIEVE:',
+                            //    style: 'background-color:#e2ddda; font-family: din bold; font-size:1em;',
+                            //    padding: '10px 20px',
+                            //},
+                                    //{
+                                    //	xtype: 'label',
+                                    //    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
+                                    //    cls: 'mission-t',
+                                    //    html: '1 Campbell\'s Go&trade; soup in the bold flavour that you chose',
+                                    //    padding: '10px 20px',
+                                    //},
                     {
-                        xtype: 'label',
+                    	xtype: 'label',
+                    	id: 'OfferDetailsWhatYoullRecieve',
                         style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
                         cls: 'mission-t',
                         html: 'Fun items to use when sharing about your Campbell\'s GO&trade; experience',
                         padding: '10px 20px',
                     },
-                                        {
-                                            xtype: 'label',
-                                            style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-                                            cls: 'mission-t',
-                                            html: '10 coupons to share with your friends for $2 off GoCampbell\'s Go&trade; soup',
-                                            padding: '10px 20px',
-                                        },
-                                        {
-                                            xtype: 'label',
-                                            style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-                                            cls: 'mission-t',
-                                            html: '$1 off Digital Coupon to share',
-                                            padding: '10px 20px',
-                                        },
-                                        {
-                                            xtype: 'label',
-                                            style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-                                            cls: 'mission-t',
-                                            html: 'Smiley360 Sharing Guide',
-                                            padding: '10px 20px',
-                                        },
+                                        //{
+                                        //    xtype: 'label',
+                                        //    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
+                                        //    cls: 'mission-t',
+                                        //    html: '10 coupons to share with your friends for $2 off GoCampbell\'s Go&trade; soup',
+                                        //    padding: '10px 20px',
+                                        //},
+                                        //{
+                                        //    xtype: 'label',
+                                        //    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
+                                        //    cls: 'mission-t',
+                                        //    html: '$1 off Digital Coupon to share',
+                                        //    padding: '10px 20px',
+                                        //},
+                                        //{
+                                        //    xtype: 'label',
+                                        //    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
+                                        //    cls: 'mission-t',
+                                        //    html: 'Smiley360 Sharing Guide',
+                                        //    padding: '10px 20px',
+                                        //},
                                             ],
                                     },
                               {
@@ -450,25 +461,14 @@ items: [
                 ]
             }
         ],
-        listeners: [
-			{
-			    delegate: "#backBtn",
-			    event: "tap",
-			    fn: "onBackButtonTap"
-			},
-            //{
-            //    delegate: '#editprofileLabel',
-            //    fn: 'oneditLabel',
-            //    element: 'element',
-            //    event: 'painted',
-            //},
-            {
-                delegate: "#gotoeditprofileBtn",
-                event: "tap",
-                fn: "onGoToProfileTap",
-            },
-
-        ]
+        listeners: {
+        	show: function () {
+        		console.log('OfferDetails view showed!');
+        		this.setOfferDetails();
+        		//this.setWhatsHappening();
+        		//this.setSpecialOffers();
+        	},
+        },
     },
     onBackButtonTap: function () {
         console.log('back button tapped');
@@ -481,5 +481,15 @@ items: [
     oneditLabel: function () {
         console.log("oneditLabel");
         this.fireEvent('oneditLabelCommand', this);
+    },
+    setOfferDetails: function () {
+    	//alert('1');
+    	//alert(smiley360.missionData.MissionDetails.MissionId);
+    	Ext.getCmp('OfferDetailsTitleLabel').setHtml(smiley360.missionData.MissionDetails.MissionDetails.title);
+    	Ext.getCmp('OfferDetailsHero').setSrc(smiley360.configuration.getOfferImagesUrl(smiley360.missionData.MissionDetails.MissionId, smiley360.missionData.MissionDetails.MissionDetails.link));
+    	Ext.getCmp('OfferDetailsOffer').setHtml(smiley360.missionData.MissionDetails.MissionDetails.offerDetails);
+    	Ext.getCmp('OfferDetailsMission').setHtml(smiley360.missionData.MissionDetails.MissionDetails.missionDetails);
+		Ext.getCmp('OfferDetailsWhatYoullRecieve').setHtml(smiley360.missionData.MissionDetails.MissionDetails.youllReceive);
+
     },
 });
