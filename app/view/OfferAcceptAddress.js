@@ -6,7 +6,7 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 		centered: true,
 		fullscreen: true,
 		hideOnMaskTap: true,
-		id: 'xView',
+		id: 'xOAView',
 		scrollable: 'vertical',
 		cls: 'popup-panel',
 		items: [{
@@ -18,7 +18,7 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 				cls: 'popup-close-button',
 				listeners: {
 					tap: function () {
-						Ext.getCmp('xView').destroy();
+						Ext.getCmp('xOAView').destroy();
 					}
 				}
 			}, {
@@ -40,6 +40,7 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 					html: 'In order to send product your way, please provide us with you most current address.',
 				}, {
 					xtype: 'panel',
+					id: 'address_panel',
 					layout: 'vbox',
 					items: [{
 						xtype: 'label',
@@ -49,10 +50,12 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 					}, {
 						xtype: 'textfield',
 						cls: 'cust-input',
+						id: 'address_address1',
 						value: '263 West Street',
 					}, {
 						xtype: 'textfield',
 						cls: 'cust-input',
+						id: 'address_address2',
 						value: '8th Floor',
 					},
 					{
@@ -61,22 +64,30 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 						items: [{
 							xtype: 'textfield',
 							cls: 'cust-input',
+							id: 'address_city',
 							value: 'New York',
 							flex: 1,
 							style: 'margin-right: 10px;'
 						}, {
-							xtype: 'textfield',
+							xtype: 'selectfield',
+							id: 'address_stateID',
 							cls: 'cust-input cust-input-ddl',
-							value: 'NY',
 							flex: 1,
 						}]
 					}, {
 						xtype: 'textfield',
 						cls: 'cust-input',
+						id: 'address_zip',
 						value: '10018',
+						listeners: {
+							blur: function () {
+								Ext.getCmp('xOfferView').fireEvent('getLocationCommand', Ext.getCmp('xOAView'), Ext.getCmp('address_zip').getValue());
+							}
+						}
 					}, {
 						xtype: 'textfield',
 						cls: 'cust-input',
+						id: 'address_countryID',
 						value: 'United States of America',
 					}, ],
 				}, {
@@ -84,11 +95,12 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 					style: 'margin-top: 10px;',
 					items: [{
 						xtype: 'label',
-						id:'verify-label',
+						id: 'verify-label',
 						width: 150,
+						docked: 'left',
 						cls: 'popup-address-comment',
 						html: 'This address is VERIFIED!',
-					},{
+					}, {
 						xtype: 'spacer',
 						id: 'verify-spacer',
 					},
@@ -97,9 +109,16 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 						id: 'question-icon',
 						width: 30,
 						height: 30,
-						docked:'right',
+						docked: 'right',
 						src: 'resources/images/question.png',
 						cls: 'popup-post-icon',
+						listeners: {
+							tap: function () {
+								Ext.widget('offeracceptaddressview').hide();
+								Ext.widget('contactusview').show();
+
+							}
+						}
 					}, {
 						xtype: 'button',
 						id: 'question-help-button',
@@ -111,13 +130,19 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 						//iconAlign: 'right',
 						//iconCls: 'popup-post-icon',
 						listeners: {
+							tap: function () {
+								Ext.widget('offeracceptaddressview').hide();
+								Ext.widget('contactusview').show();
+
+							},
 							initialize: function () {
-								Ext.getCmp('verify-label').hide();
-								Ext.getCmp('verify-spacer').hide();
-								//Ext.getCmp('question-icon').setDocked('left');
-								//Ext.getCmp('question-help-button').setDocked('left');
-								//Ext.getCmp('xView').showHelp();
-							}
+								Ext.getCmp('verify-label').setHtml('This address is not VERIFIED!');
+								Ext.getCmp('verify-label').setCls('popup-address-comment-not');
+								Ext.getCmp('question-icon').setDocked('right');
+								Ext.getCmp('question-help-button').setDocked('right');
+								Ext.getCmp('verify-label').setDocked('left');
+							},
+
 						}
 					}],
 				}],
@@ -131,12 +156,25 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 					html: 'SAVE ADDRESS<br> AND CONTINUE TO MISSION',
 					listeners: {
 						tap: function () {
-							Ext.getCmp('verify-label').setHtml('This address is not VERIFIED!');
-							Ext.getCmp('verify-label').setCls('popup-address-comment-not');
-							Ext.getCmp('verify-label').show();
-							Ext.getCmp('verify-spacer').show();
-							//Ext.getCmp('question-icon').setDocked('right');
-							//Ext.getCmp('question-help-button').setDocked('right');
+							//save address always					
+							//go accept mission
+							Ext.getCmp('xOfferView').fireEvent(
+												'setAddressCommand', this,
+												smiley360.memberData.UserId,
+												Ext.getCmp('address_address1').getValue(),
+												Ext.getCmp('address_address2').getValue(),
+												Ext.getCmp('address_city').getValue(),
+												Ext.getCmp('address_stateID').getValue(),
+												Ext.getCmp('address_zip').getValue(),
+												Ext.getCmp('address_countryID').getValue()
+												);
+							//verify on need		
+							Ext.getCmp('xOfferView').fireEvent('verifyAddressCommand', this, smiley360.memberData.UserId);
+							//go accept mission
+							Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
+							//if accepted to go
+							Ext.getCmp('xOfferView').fireEvent('LoadMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, smiley360.memberData.UserId);
+							Ext.widget('offeracceptaddressview').hide();
 						}
 					}
 				}, ],
@@ -144,14 +182,35 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 		}],
 		listeners: {
 			initialize: function () {
-				this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+				smiley360.adjustPopupSize(this);
+			},
+			painted: function () {
+				if (smiley360.memberData.Profile.address_status == '2') {
+					this.down('#verify-label').hide();
+				}
+				Ext.getCmp('xOfferView').fireEvent('getAddressCommand', this, smiley360.memberData.UserId);
+				var profile = smiley360.memberData.Profile;
+
+				for (var field in profile) {
+					var element = (field == 'address')
+                        ? Ext.getCmp('address_' + field + '1')
+                        : Ext.getCmp('address_' + field);
+
+					if (element) {
+						element.setValue(profile[field]);
+					}
+				}
+				this.setDropdownLists();
 			},
 			hide: function () {
 				this.destroy();
-			}
+			},
 		},
 	},
-
+	setAddress: function () {
+		Ext.getCmp('address_stateID').setValue(smiley360.memberData.Profile.stateID);
+		Ext.getCmp('address_city').setValue(smiley360.memberData.Profile.city);
+	},
 	doRemoveOffer: function () {
 		var submitView = this;
 		var submitData = {
@@ -162,6 +221,40 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 		smiley360.services.restorePassword(submitData, function (response) {
 			smiley360.setResponseStatus(submitView, response);
 		});
+	},
+	setOrder: function (obj, callback, context) {
+		var tuples = [];
+
+		for (var key in obj) tuples.push([key, obj[key]]);
+
+		tuples.sort(function (a, b) { return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0 });
+
+
+		var length = tuples.length;
+		while (length--) callback.call(context, tuples[length][0], tuples[length][1]);
+	},
+	setAnyOptions: function (field, otherOptions) {
+		field.setOptions(otherOptions, true);
+	},
+	setDropdownLists: function () {
+		var me = this;
+		var otherOptions = [];
+		for (var item in smiley360.ProfileDropdowns)
+			if (item == 'stateID') {
+				otherOptions = [];
+				me.setOrder(smiley360.ProfileDropdowns[item], function (key, value) {
+					//alert(key + ": " + value);
+					var temp_array = new Array();
+					temp_array["text"] = key;
+					temp_array["value"] = value;
+
+					otherOptions.push(temp_array);
+				});
+
+				if (Ext.getCmp(item)) {
+					me.setAnyOptions(Ext.getCmp('address_'+item), otherOptions);
+				};
+			};
 	},
 
 	setStatus: function (status) {
@@ -208,6 +301,6 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 			default:
 		}
 		// resize container after state has been changed
-		this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+		smiley360.adjustPopupSize(this);
 	}
 });

@@ -1,381 +1,259 @@
 var hide_panel, first_time, dock_panel;
+
 Ext.define('smiley360.view.Connect', {
-	extend: 'Ext.tab.Panel',
+	extend: 'Ext.Panel',
 	alias: 'widget.connectview',
 	requires: [
         'Ext.carousel.Carousel',
-        'Ext.TitleBar',
-        'Ext.Video',
 		'Ext.field.Search'
 	],
 	config: {
-		cls: 'normal-page-bg',
-		id: 'xConnect',
-		tabBarPosition: 'bottom',
-		cls: 'cust-tabbar',
-		items: [
-            {
-            	title: 'HOME',
-            	iconCls: 'home-img',
-            	styleHtmlContent: true,
-            	scrollable: true,
-            	items: [
-                	{
-                		xtype: 'toolbar',
-                		title: 'CONNECT',
-                		cls: 'home-title',
-                		docked: 'top',
-                		ui: 'light',
-                		items: [
-							{
-								xtype: 'button',
-								text: '',
-								ui: 'plain',
-								iconCls: 'back-btn',
-								iconMask: true,
-								itemId: 'backBtn',
-								listeners: {
-									tap: function () {
-										this.up('#xConnect').fireEvent('backButtonCommandConnect', this);
-									}
-								}
-
-							},
-							{ xtype: 'spacer' },
-							{
-								xtype: 'button',
-								iconCls: 'menu-btn',
-								iconMask: true,
-								ui: 'plain',
-								text: '',
-								itemId: 'menuBtn',
-								listeners:
-                                {
-                                	tap: function () {
-                                		if (Ext.getCmp('connect_menu').getHidden() == false) {
-                                			Ext.getCmp('connect_menu').hide({ type: 'slide', direction: 'top', duration: 300 });
-                                		}
-                                		else {
-                                			Ext.getCmp('connect_menu').show({ type: 'slide', direction: 'left', duration: 300 });
-                                		}
-                                	},
-
-                                },
-							}
-                		]
-                	}, {
-                		xtype: 'container',
-                		layout: 'vbox',
-                		flex: 1,
-                		listeners:
-						{
-							painted: function () {
-								//dock_panel = this;
-							},
+		id: 'xConnectView',
+		items: [{
+			xtype: 'container',
+			layout: 'vbox',
+			flex: 1,
+			items: [{
+				xtype: 'spacer',
+				height: '14px',
+				style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 5px 5px 0px 0px;'
+			}, {
+				xtype: 'spacer',
+				height: '7px',
+				style: 'background-color: #efecea;'
+			}, {
+				xtype: 'container',
+				laytout: 'vbox',
+				items: [{
+					xtype: 'container',
+					cls: 'has-shadow',
+					layout: 'hbox',
+					items: [{
+						xtype: 'label',
+						html: 'FEATURED BRANDS',
+						cls: 'heading-text active-sign',
+						style: 'padding-left: 15px;',
+						flex: 2,
+					},
+					//{
+                    //    xtype: 'label',
+                    //    html: '13/92',
+                    //    cls: 'heading-text',
+                    //    style: 'padding-left: 15px; padding-right: 10px;',
+                    //    flex: 0.2,
+					//}
+					],
+				}, {
+					xtype: 'container',
+					style: 'background-color: #efecea',
+					items: [{
+						xtype: 'carousel',
+						id: 'xFeaturedList',
+						direction: 'horizontal',
+						style: 'background-color: #efecea',
+						dragable: false,
+						indicator: false,
+						width: '100%',
+						height: 100,
+						defaults: {
+							styleHtmlContent: true
 						},
-                		items: [
-							{
-								xtype: 'spacer',
-								height: '14px',
-								style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 5px 5px 0px 0px;'
-							},
-							{
-								xtype: 'spacer',
-								height: '7px',
-								style: 'background-color: #efecea;'
-							},
-							{
-								xtype: 'container',
-								laytout: { type: 'vbox' },
-								//cls: 'has-shadow',
-								items: [
-									{
-										xtype: 'container',
-										cls: 'has-shadow',
-										layout: { type: 'hbox' },
-										items: [
-											{
-												xtype: 'label',
-												html: 'FEATURED BRANDS',
-												cls: 'heading-text active-sign',
-												style: 'padding-left: 15px;',
-												flex: 2,
-											},
-											{
-												xtype: 'label',
-												html: '13/92',
-												cls: 'heading-text',
-												style: 'padding-left: 15px; padding-right: 10px;',
-												flex: 0.2,
-											},
-										]
-									},
-									{
-										xtype: 'container',
-										style: 'background-color: #efecea',
-										items: [
-											{
-												xtype: 'carousel',
-												direction: 'horizontal',
-												style: 'background-color: #efecea',
-												dragable: false,
-												indicator: false,
-
-												defaults: {
-													styleHtmlContent: true
-												},
-												width: '100%',
-												height: 100,
-												items: [
-													{
-														xtype: 'container',
-														layout: 'hbox',
-														cls: 'cont-pad',
-														items: [
-															{
-																xtype: 'container',
-																layout: 'vbox',
-																style: 'padding: 0px 20px;',
-																items: [{
-																	xtype: 'label',
-																	html: 'BRAND',
-																	style: 'text-align:left;font-size:1.4em; padding: 0px 15px 10px 30px; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
-
-																}, {
-																	xtype: 'label',
-																	style: 'font-size: 1.1em;background-color: #efecea; color:#413f40; padding-left: 30px; font-family: \'din medium\';',
-																	html: 'Description goes here lorem ipsum.',
-																}, ],
-																flex: 2.5
-															},
-															{
-
-																xtype: 'container',
-																layout: { type: 'vbox', align: 'center' },
-																items: [
-																	{
-																		xtype: 'image',
-																		cls: 'has-shadow',
-																		style: 'border-radius: 5px; border-style: solid; border-width: 1px; border-color: white;',
-																		src: 'resources/images/offers_logo3.png',
-																		width: 80,
-																		height: 80
-																	}
-																],
-																flex: 1.5,
-															}
-														]
-													},
-												]
-											},
-											{
-												xtype: 'panel',
-												html: '<div class="left-btn-mission"></div><div class="right-btn-mission"></div>'
-											},
-									{
-										xtype: 'spacer',
-										style: 'background-color: #efecea; border-bottom: 1px dashed #d7cfcd;',
-										height: 20,
-									},
-
-											{
-												xtype: 'container',
-												//margin: '20px 25px',
-												style: 'background-color: #F4F3F1; padding: 40px 25px;',
-												layout: { type: 'vbox' },
-												items: [
-													{
-														xtype: 'button',
-														itemId: 'recievebtn',
-														cls: 'connect-btn-search',
-														style: 'margin: -50px 0px;',
-														text: 'SEARCH',
-														listeners:
-															{
-																tap: function () {
-																	//if (Ext.getCmp('search_panel').getHidden() == true)
-																	//{ Ext.getCmp('search_panel').show(); this.setCls('after-menu-list-btn-recieve'); }
-																	//else { Ext.getCmp('search_panel').hide(); this.setCls('menu-list-btn-recieve'); }
-																}
-															}
-
-													},
-																{
-																	xtype: 'panel',
-																	layout: 'vbox',
-																	cls: 'has-shadow',
-																	style: 'border-radius: 0px 0px 5px 5px; background-color: #e2ddda; margin-top: 40px; margin-bottom: -30px;',
-																	id: 'search_panel',
-																	listeners: {
-																		initialize: function ()
-																		{ /*this.hide();*/ }
-																	},
-																	items:
-																		[
-														{
-															xtype: 'label',
-															height: '3px',
-															style: 'background-color:#fba00a; '
-														}, {
-															xtype: 'container',
-															layout: 'vbox',
-															padding: 30,
-															items: [{
-																xtype: 'searchfield',
-																placeHolder: 'Brand name',
-																cls: 'cust-input cust-input-search',
-																style: 'background-color: white; font-family: din bold; font-size:1em;',
-																margin: '0px -10px;',
-															}, ]
-														},
-
-																		],
-																},
-
-													{
-														xtype: 'button',
-														style: 'padding: 30px 0px 50px 0px; margin: 60px 0px;',
-														cls: 'connect-btn-browse',
-														text: 'BROWSE',
-													},
-												],
-											},
-
-										]
-									},
-
-									{
-										xtype: 'spacer',
-										height: '7px',
-										style: 'background-color: #f4f3f1;',
-									},
-
-
-									{
-										xtype: 'spacer',
-										height: '7px',
-										style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 0px 0px 5px 5px;'
-
-									},
-									{
-										xtype: 'spacer',
-										height: '10px',
-										style: 'background: transparent;'
+						listeners: {
+							painted: function (carousel) {
+								me = this;
+								carousel.pageTurner = new Ext.util.DelayedTask(function () {
+									if (me.getActiveIndex() == me.items.length - 1) {
+										me.setActiveItem(0, 'slide');
 									}
-
-								]
-							},
-
-                		],
-
-                	},//end vbox container
-
-            	]
-            },
-            {
-            	title: 'MISSIONS',
-            	iconCls: 'mission-img',
-            	styleHtmlContent: true,
-            	scrollable: true,
-            },
-            {
-            	title: 'SHARE',
-            	iconCls: 'share-img',
-            	styleHtmlContent: true,
-            	scrollable: true,
-
-            },
-            {
-            	title: 'OFFERS',
-            	iconCls: 'offers-img',
-
-            	items: [
-                    {
-                    	xtype: 'toolbar',
-                    	title: 'SIGN UP',
-                    	docked: 'top',
-                    	ui: 'light',
-                    	items: [
-							{
-								xtype: 'button',
-								text: '',
-								ui: 'plain',
-								iconCls: 'cust-back',
-								itemId: 'backBtn'
-							},
-							{ xtype: 'spacer' },
-							{
-								xtype: 'button',
-								iconCls: 'cust-menu',
-								ui: 'plain',
-								text: '',
-								itemId: 'menuBtn'
+									else {
+										me.next();
+									}
+									//console.log(me.pageTurner.valueOf());
+									//me.pageTurner.delay(3000); //comment this to avoid js-bug
+								}, carousel);
+								carousel.pageTurner.delay(3000);
 							}
-                    	]
-                    },
-            	]
-            },
-            {
-            	title: 'CONNECT',
-            	iconCls: 'connect-img',
+						},
+						items: [
+						//	{
+                        //    xtype: 'container',
+                        //    layout: 'hbox',
+                        //    cls: 'cont-pad',
+                        //    flex: 2.5,
+                        //    items: [
+						//		{
+                        //        xtype: 'container',
+                        //        layout: 'vbox',
+                        //        style: 'padding: 0px 20px;',                                
+                        //        items: [{
+                        //            xtype: 'label',
+                        //            html: 'BRAND',
+                        //            style: 'text-align:left;font-size:1.4em; padding: 0px 15px 10px 30px; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
 
-            	items: [
-                    {
-                    	xtype: 'toolbar',
-                    	title: 'SIGN UP',
-                    	docked: 'top',
-                    	ui: 'light',
-                    	items: [
-							{
-								xtype: 'button',
-								text: '',
-								ui: 'plain',
-								iconCls: 'cust-back',
-								itemId: 'backBtn'
+                        //        }, {
+                        //            xtype: 'label',
+                        //            style: 'font-size: 1.1em;background-color: #efecea; color:#413f40; padding-left: 30px; font-family: \'din medium\';',
+                        //            html: 'Description goes here lorem ipsum.',
+                        //        }],
+                        //    }, {
+                        //        xtype: 'container',
+                        //        flex: 1.5,
+                        //        layout: { type: 'vbox', align: 'center' },
+                        //        items: [{
+                        //            xtype: 'image',
+                        //            cls: 'has-shadow',
+                        //            style: 'border-radius: 5px; border-style: solid; border-width: 1px; border-color: white;',
+                        //            src: 'resources/images/offers_logo3.png',
+                        //            width: 80,
+                        //            height: 80,
+                        //            listeners: {
+                        //                tap: function () {
+                        //                    smiley360.brandData.BrandId = '3250',
+                        //                    this.up('#xConnectView').fireEvent('onBrandTapCommand', this, smiley360.memberData.UserId, smiley360.brandData.BrandId, 0, 10);
+                        //                }
+                        //            }
+                        //        }],
+                        //    }],
+                        //}
+						],
+					}, {
+						xtype: 'panel',
+						html: '<div class="left-btn-mission"></div><div class="right-btn-mission"></div>'
+					}, {
+						xtype: 'spacer',
+						style: 'background-color: #efecea; border-bottom: 1px dashed #d7cfcd;',
+						height: 20,
+					}, {
+						xtype: 'container',
+						//margin: '20px 25px',
+						style: 'background-color: #F4F3F1; padding: 40px 25px;',
+						layout: 'vbox',
+						items: [{
+							xtype: 'button',
+							itemId: 'recievebtn',
+							cls: 'connect-btn-search',
+							style: 'margin: -50px 0px;',
+							text: 'SEARCH',
+							listeners: {
+								tap: function () {
+									smiley360.brandData.BrandId = '3250',
+                                    this.up('#xConnectView').fireEvent('onSearchTapCommand', this, Ext.getCmp('BrandTitleSearchField').getValue().toString(), 10, 10);
+								},
 							},
-							{ xtype: 'spacer' },
-							{
-								xtype: 'button',
-								iconCls: 'cust-menu',
-								ui: 'plain',
-								text: '',
-								itemId: 'menuBtn'
-							}
-                    	]
-                    },
-            	]
-            }
+						}, {
+							xtype: 'panel',
+							layout: 'vbox',
+							cls: 'has-shadow',
+							style: 'border-radius: 0px 0px 5px 5px; background-color: #e2ddda; margin-top: 40px; margin-bottom: -30px;',
+							id: 'search_panel',
+							listeners: {
+								initialize: function ()
+								{ /*this.hide();*/ }
+							},
+							items: [{
+								xtype: 'label',
+								height: '3px',
+								style: 'background-color:#fba00a; '
+							}, {
+								xtype: 'container',
+								layout: 'vbox',
+								padding: 30,
+								items: [{
+									xtype: 'searchfield',
+									placeHolder: 'Brand name',
+									id: 'BrandTitleSearchField',
+									cls: 'cust-input cust-input-search',
+									style: 'background-color: white; font-family: din bold; font-size:1em;',
+									margin: '0px -10px;',
+								}],
+							}],
+						}, {
+							xtype: 'button',
+							style: 'padding: 30px 0px 50px 0px; margin: 60px 0px;',
+							cls: 'connect-btn-browse',
+							text: 'BROWSE',
+							listeners: {
+								tap: function () {
+									this.up('#xConnectView').fireEvent('onBrowseTapCommand', this, smiley360.memberData.UserId);
+								},
+							},
+						}],
+					}],
+				}, {
+					xtype: 'spacer',
+					height: '7px',
+					style: 'background-color: #f4f3f1;',
+				}, {
+					xtype: 'spacer',
+					height: '7px',
+					style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 0px 0px 5px 5px;'
+
+				}, {
+					xtype: 'spacer',
+					height: '10px',
+					style: 'background: transparent;'
+				}],
+			}],
+		},//end vbox container
+
 		],
-		listeners: [
-			{
-				delegate: "#backBtn",
-				event: "tap",
-				fn: "onBackButtonTap"
+		listeners: {
+			activate: function () {
+				console.log('Connect view activated!');
+				Ext.getCmp('xConnectView').fireEvent('onConnectTapCommand', this);
+				//Ext.getCmp('xConnectView').fireEvent('onBrowseLoadCommand', this);
 			},
-            //{
-            //    delegate: '#editprofileLabel',
-            //    fn: 'oneditLabel',
-            //    element: 'element',
-            //    event: 'painted',
-            //},
-            {
-            	delegate: "#gotoeditprofileBtn",
-            	event: "tap",
-            	fn: "onGoToProfileTap",
-            },
+			painted: function () {
+				console.log('Connect view painted!');
 
-		]
+				this.setFeatured();
+			},
+		},
 	},
-	onBackButtonTap: function () {
-		console.log('back button tapped');
-		this.fireEvent('backButtonCommandDetails', this);
-	},
-	onGoToProfileTap: function () {
-		console.log('GoToProfile button tapped');
-		this.fireEvent('GoToProfileCommand', this);
-	},
-	oneditLabel: function () {
-		console.log("oneditLabel");
-		this.fireEvent('oneditLabelCommand', this);
+	setFeatured: function () {
+		var xFeaturedList = Ext.getCmp('xFeaturedList');
+		//xFeaturedList.removeAll(true, true);
+		//for (var i = 0; i < 3; i++) {
+		for (var key in smiley360.FeaturedBrands) {
+			var oneItem = smiley360.FeaturedBrands[key];
+			var oneElement = new Ext.Container({
+				layout: 'hbox',
+				cls: 'cont-pad',
+
+			});
+			var leftCont = oneElement.add(new Ext.Container({
+				layout: 'vbox',
+				style: 'padding: 0px 20px;',
+				flex: 2.5,
+			}));
+			var incLabel = leftCont.add(new Ext.Label({
+				style: 'text-align:left;font-size:1.4em; padding: 0px 15px 10px 30px; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
+				html: oneItem.title, //'Description goes here lorem ipsum.',
+
+			}));
+			incLabel = leftCont.add(new Ext.Label({
+				style: 'font-size: 1.1em;background-color: #efecea; color:#413f40; padding-left: 30px; font-family: \'din medium\';',
+				html: oneItem.descr, //'Description goes here lorem ipsum.',
+
+			}));
+			var rightCont = oneElement.add(new Ext.Container({
+				layout: { type: 'vbox', align: 'center' },
+				flex: 1.5,
+			}));
+			var incImg = rightCont.add(new Ext.Img({
+				cls: 'has-shadow',
+				//id: 'xHomeBrandImage',
+				style: 'border-radius: 5px; border-style: solid; border-width: 1px; border-color: white;',
+				src: smiley360.configuration.getResourceDomain() + '/' + oneItem.imageURL,//'resources/images/offers_logo3.png',
+				width: 80,
+				height: 80,
+				listeners: {
+					tap: function () {
+						Ext.getCmp('xConnectView').fireEvent('onBrandTapCommand', this, smiley360.memberData.UserId, oneItem.smileyconnectID, 0, 10);
+					}
+				}
+			}));
+			xFeaturedList.add(oneElement);
+		};
 	},
 });

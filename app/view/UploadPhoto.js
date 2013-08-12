@@ -1,9 +1,11 @@
-﻿var image_1, image_2, image_3, image_4, image_5, t_field;
-
-Ext.define('smiley360.view.UploadPhoto', {
+﻿Ext.define('smiley360.view.UploadPhoto', {
     extend: 'Ext.Container',
     alias: 'widget.uploadphotoview',
-    requires: ['Ext.Rating', 'Ext.Anim'],
+    requires: [
+        'Ext.Anim',
+        'Ext.Rating',
+        'Ext.ux.Fileup',
+    ],
     config: {
         modal: true,
         centered: true,
@@ -22,7 +24,7 @@ Ext.define('smiley360.view.UploadPhoto', {
                 cls: 'popup-close-button',
                 listeners: {
                     tap: function () {
-                        Ext.getCmp('xView').destroy();
+                        this.up('#xView').destroy();
                     }
                 }
             }, {
@@ -52,27 +54,39 @@ Ext.define('smiley360.view.UploadPhoto', {
                     items: [{
                         xtype: 'panel',
                         layout: 'vbox',
-                        style: 'padding-top: 15px;',
                         items: [{
-                            xtype: 'button',
-                            text: 'TAKE PHOTO',
-                            id: 'xTakePhotoButton',
-                            cls: 'popup-photo-button',
-                            listeners: {
-                                tap: function () {
-                                    //Ext.getCmp('xView').doTakePhoto();
-                                }
-                            },
-                        }, {
-                            xtype: 'button',
-                            text: 'BROWSE PHOTO',
+                            xtype: 'fileupload',
                             id: 'xBrowsePhotoButton',
                             cls: 'popup-photo-button',
-                            listeners: {
-                                tap: function () {
-                                    //Ext.getCmp('xView').doBrowsePhoto();
+                            autoUpload: true,
+                            states: {
+                                browse: {
+                                    text: 'ADD PHOTO'
+                                },
+                                uploading: {
+                                    text: 'Uploading',
+                                    loading: true// Enable loading spinner on button
                                 }
                             },
+                            listeners: {
+                                success: function (response) {
+                                    this.hide();
+
+                                    var xView = this.up('#xView');
+                                    var xAddedImage = xView.down('#xAddedImage');
+                                    var xPostText = xView.down('#xPostText');
+
+                                    xAddedImage.show();
+                                    xAddedImage.setHeight(xPostText.element.getHeight());
+                                    xAddedImage.setWidth(xPostText.element.getWidth() * 0.4);
+                                    xAddedImage.setSrc(smiley360.configuration.getServerDomain() + response.filepath);
+                                }
+                            }
+                        }, {
+                            xtype: 'image',
+                            id: 'xAddedImage',
+                            cls: 'popup-photo-image',
+                            hidden: true,
                         }]
                     }, {
                         xtype: 'textareafield',
@@ -84,7 +98,7 @@ Ext.define('smiley360.view.UploadPhoto', {
                         listeners: {
                             keyup: function () {
                                 var postLenght = this.getValue().length;
-                                var xPostCountLabel = Ext.getCmp('xPostCountLabel');
+                                var xPostCountLabel = this.up('#xView').down('#xPostCountLabel');
 
                                 xPostCountLabel.setHtml(postLenght.toString());
 
@@ -133,10 +147,10 @@ Ext.define('smiley360.view.UploadPhoto', {
                         checked: true,
                         listeners: {
                             check: function () {
-                                Ext.getCmp('xView').onCheck();
+                                this.up('#xView').onCheck();
                             },
                             uncheck: function () {
-                                Ext.getCmp('xView').onUncheck();
+                                this.up('#xView').onUncheck();
                             }
                         }
                     }, {
@@ -147,10 +161,10 @@ Ext.define('smiley360.view.UploadPhoto', {
                         cls: 'popup-checkbox',
                         listeners: {
                             check: function () {
-                                Ext.getCmp('xView').onCheck();
+                                this.up('#xView').onCheck();
                             },
                             uncheck: function () {
-                                Ext.getCmp('xView').onUncheck();
+                                this.up('#xView').onUncheck();
                             }
                         }
                     }],
@@ -176,7 +190,7 @@ Ext.define('smiley360.view.UploadPhoto', {
                     cls: 'popup-post-button',
                     listeners: {
                         tap: function () {
-                            //Ext.getCmp('xView').doUpload();
+                            this.up('#xView').doShare();
                         }
                     },
                 }],
@@ -184,24 +198,30 @@ Ext.define('smiley360.view.UploadPhoto', {
         }],
         listeners: {
             initialize: function () {
-                this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+                smiley360.adjustPopupSize(this);
             },
             hide: function () {
                 this.destroy();
+            },
+            painted: function () {
+                var fileName = guid();
+                var uploadUrl = smiley360.configuration.getServerDomain() +
+                    'getfile.php?foldername=photos&filename=' + fileName;
+
+                this.down('#xBrowsePhotoButton').setUrl(uploadUrl);
             }
         },
     },
 
     onCheck: function () {
-        Ext.getCmp('xTakePhotoButton').setCls('popup-photo-button');
-        Ext.getCmp('xBrowsePhotoButton').setCls('popup-photo-button');
-        Ext.getCmp('xFacebookCheckbox').setLabelCls('popup-checkbox-grey-label');
-        Ext.getCmp('xTwitterCheckbox').setLabelCls('popup-checkbox-grey-label');
+        this.down('#xBrowsePhotoButton').setCls('popup-photo-button');
+        this.down('#xFacebookCheckbox').setLabelCls('popup-checkbox-grey-label');
+        this.down('#xTwitterCheckbox').setLabelCls('popup-checkbox-grey-label');
     },
 
     onUncheck: function () {
-        var xTwitterCheckbox = Ext.getCmp('xTwitterCheckbox');
-        var xFacebookCheckbox = Ext.getCmp('xFacebookCheckbox');
+        var xTwitterCheckbox = this.down('#xTwitterCheckbox');
+        var xFacebookCheckbox = this.down('#xFacebookCheckbox');
 
         if (!xTwitterCheckbox.getChecked() &&
             !xFacebookCheckbox.getChecked()) {
@@ -209,60 +229,32 @@ Ext.define('smiley360.view.UploadPhoto', {
             xTwitterCheckbox.setLabelCls('popup-checkbox-red-label');
             xFacebookCheckbox.setLabelCls('popup-checkbox-red-label');
 
-            Ext.getCmp('xTakePhotoButton').setCls('popup-photo-button-required');
-            Ext.getCmp('xBrowsePhotoButton').setCls('popup-photo-button-required');
+            this.down('#xBrowsePhotoButton').setCls('popup-photo-button-required');
         }
     },
 
     doShare: function () {
         var shareView = this;
+        var shareOptions = [];
+
+        if (this.down('#xFacebookCheckbox').getChecked() == true) {
+            shareOptions.push(1);
+        }
+
+        if (this.down('#xTwitterCheckbox').getChecked() == true) {
+            shareOptions.push(3);
+        }
+
         var shareData = {
-            post: Ext.getCmp('xPostText').getValue()
+            missionID: smiley360.missionData.MissionDetails.MissionId,
+            memberID: smiley360.memberData.UserId,
+            text: this.down('#xPostText').getValue(),
+            postOptionIDs: shareOptions,
         };
 
         smiley360.setViewStatus(shareView, smiley360.viewStatus.progress);
-        smiley360.services.shareToFacebook(shareData, function (response) {
+        smiley360.services.postToUploadPhoto(shareData, function (response) {
             smiley360.setResponseStatus(shareView, response);
         });
     },
-
-    setStatus: function (status) {
-        var xShareButton = Ext.getCmp('xShareButton');
-        var xStatusIndicator = Ext.getCmp('xStatusIndicator');
-
-        switch (status) {
-            case smiley360.viewStatus.progress: {
-                xShareButton.setText('POSTING...');
-                xShareButton.setIcon('resources/images/share-initial.png');
-                xStatusIndicator.setStyle('background-color: #F9A419;');
-
-                var statusAnimation = new Ext.Anim({
-                    autoClear: false,
-                    duration: 2000,
-                    easing: 'ease-in',
-                    from: { width: 0 },
-                    to: { width: this.getWidth() },
-                });
-
-                statusAnimation.run(xStatusIndicator.element, 'slide');
-
-                break;
-            }
-            case smiley360.viewStatus.successful: {
-                xShareButton.setText('POST SUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-successful.png');
-                xStatusIndicator.setStyle('background-color: #5F9E45;');
-
-                break;
-            }
-            case smiley360.viewStatus.unsuccessful: {
-                xShareButton.setText('POST UNSUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-unsuccessful.png');
-                xStatusIndicator.setStyle('background-color: #ED1C24;');
-
-                break;
-            }
-            default:
-        }
-    }
 });

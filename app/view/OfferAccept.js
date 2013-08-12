@@ -6,7 +6,7 @@ Ext.define('smiley360.view.OfferAccept', {
         centered: true,
         fullscreen: true,
         hideOnMaskTap: true,
-        id: 'xView',
+        id: 'xOAView',
         scrollable: 'vertical',
         cls: 'popup-panel',
         items: [{
@@ -18,7 +18,7 @@ Ext.define('smiley360.view.OfferAccept', {
                 cls: 'popup-close-button',
                 listeners: {
                     tap: function () {
-                        Ext.getCmp('xView').destroy();
+                        Ext.getCmp('xOAView').destroy();
                     }
                 }
             }, {
@@ -55,22 +55,26 @@ Ext.define('smiley360.view.OfferAccept', {
                         cls: 'popup-photo-button',
                         style: 'padding: 5px; font-size: 10pt;',
                         listeners: {
-                            tap: function () {
-                                //Ext.getCmp('xView').doEditAddress();
+                        	tap: function () {
+                        		console.log('i am tapped');
+                                Ext.getCmp('xOAView').doEditAddress();
                             }
                         },
                     }],
                 }, {
                     xtype: 'label',
-                    //cls: 'popup-message-text',
+                	//cls: 'popup-message-text',
+                    id: 'addr_label_address1',
                     html: '263 West 38th Street',
                 }, {
                     xtype: 'label',
-                    //cls: 'popup-message-text',
+                	//cls: 'popup-message-text',
+                    id: 'addr_label_address2',
                     html: '8th Floor',
                 }, {
                     xtype: 'label',
-                    //cls: 'popup-message-text',
+                	//cls: 'popup-message-text',
+                    id: 'addr_label_comp',
                     html: 'New York, NY 10018',
                 }, {
                     xtype: 'panel',
@@ -87,6 +91,12 @@ Ext.define('smiley360.view.OfferAccept', {
                         height: 30,
                         src: 'resources/images/question.png',
                         cls: 'popup-post-icon',
+                        listeners: {
+                        	tap: function () {
+                        		Ext.widget('contactusview').show();
+                        		Ext.widget('offeracceptview').hide();
+                        	}
+                        }
                     }, {
                         xtype: 'button',
                         docked: 'right',
@@ -97,9 +107,10 @@ Ext.define('smiley360.view.OfferAccept', {
                         //iconAlign: 'right',
                         //iconCls: 'popup-post-icon',
                         listeners: {
-                            tap: function () {
-                                //Ext.getCmp('xView').showHelp();
-                            }
+                        	tap: function () {
+                        		Ext.widget('contactusview').show();
+                        		Ext.widget('offeracceptview').hide();
+                        	}
                         }
                     }],
                 }],
@@ -108,27 +119,59 @@ Ext.define('smiley360.view.OfferAccept', {
                 cls: 'popup-button-panel',
                 items: [{
                     xtype: 'button',
-                    text: 'REMOVE THIS OFFER',
+                    text: 'CONTINUE TO MISSION',
                     id: 'xSubmitButton',
                     cls: 'popup-submit-button',
                     listeners: {
-                        tap: function () {
-                            //Ext.getCmp('xView').doRemoveOffer();
-                        }
+                    	tap: function () {
+                    		//go accept mission
+                    		Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
+                    		//if accepted go to
+                    		Ext.getCmp('xOfferView').fireEvent('LoadMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, smiley360.memberData.UserId);
+                    		Ext.widget('offeracceptview').hide();
+                    	}
                     },
                 }],
             }],
         }],
         listeners: {
             initialize: function () {
-                this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+                smiley360.adjustPopupSize(this);
             },
             hide: function () {
                 this.destroy();
+            },
+            show: function () {
+            	Ext.getCmp('xOfferView').fireEvent('getAddressCommand', this, smiley360.memberData.UserId);
+				var profile = smiley360.memberData.Profile;
+				var setstr = '';
+				for (var field in profile) {
+					var element = (field == 'address')
+                        ? Ext.getCmp('addr_label_' + field + '1')
+                        : Ext.getCmp('addr_label_' + field);
+
+					
+					if (field == 'city')
+						setstr += profile[field] + ', ';
+					if (field == 'stateID')
+						setstr += profile[field] + ' ';
+					if (field == 'zip')
+						setstr += profile[field];
+					Ext.getCmp('addr_label_comp').setHtml(setstr);
+
+					if (element) {
+						element.setHtml(profile[field]);
+					}
+				}
+				
             }
         },
     },
-
+    doEditAddress: function () {
+    	Ext.widget('offeracceptview').hide();
+    	Ext.widget('offeracceptaddressview').show();
+    	
+    },
     doRemoveOffer: function () {
         var submitView = this;
         var submitData = {
@@ -185,6 +228,6 @@ Ext.define('smiley360.view.OfferAccept', {
             default:
         }
         // resize container after state has been changed
-        this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+        smiley360.adjustPopupSize(this);
     }
 });

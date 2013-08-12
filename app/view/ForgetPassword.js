@@ -77,7 +77,7 @@ Ext.define('smiley360.view.ForgetPassword', {
         }],
         listeners: {
             initialize: function () {
-                this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+                smiley360.adjustPopupSize(this);
             },
             hide: function () {
                 this.destroy();
@@ -92,7 +92,7 @@ Ext.define('smiley360.view.ForgetPassword', {
         };
 
         //smiley360.setViewStatus(submitView, smiley360.viewStatus.progress);
-        smiley360.services.recoverPassword(submitData, function (response) {
+        smiley360.services.recoverPassword(Ext.getCmp('xEmailField').getValue(), function (response) {
             smiley360.setResponseStatus(submitView, response);
         });
     },
@@ -141,6 +141,6 @@ Ext.define('smiley360.view.ForgetPassword', {
             default:
         }
         // resize container after state has been changed
-        this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+        smiley360.adjustPopupSize(this);
     }
 });

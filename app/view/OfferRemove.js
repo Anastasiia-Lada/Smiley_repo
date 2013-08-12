@@ -55,7 +55,9 @@ Ext.define('smiley360.view.OfferRemove', {
                     id: 'xSubmitButton',
                     cls: 'popup-submit-button',
                     listeners: {
-                        tap: function () {
+                    	tap: function () {
+                    		Ext.getCmp('xOfferView').fireEvent('declineMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
+
                             //Ext.getCmp('xView').doRemoveOffer();
                         }
                     },
@@ -64,7 +66,7 @@ Ext.define('smiley360.view.OfferRemove', {
         }],
         listeners: {
             initialize: function () {
-                this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+                smiley360.adjustPopupSize(this);
             },
             hide: function () {
                 this.destroy();
@@ -128,6 +130,6 @@ Ext.define('smiley360.view.OfferRemove', {
             default:
         }
         // resize container after state has been changed
-        this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+        smiley360.adjustPopupSize(this);
     }
 });

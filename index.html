@@ -59,10 +59,28 @@
     <!-- The line below must be kept intact for Sencha Command to build your application -->
     <script id="microloader" type="text/javascript" src="touch/microloader/development.js"></script>
     <script type="text/javascript">
+        // Global variable for Sencha Application object
+        var _App = undefined;
+
         var deviceId = getCookie('deviceId');
         if (deviceId == null) {
             setCookie('deviceId', guid());
         }
+
+        // Create IE + others compatible event handler
+        var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+        var eventer = window[eventMethod];
+        var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+        // Listen to message from child window
+        eventer(messageEvent, function (e) {
+            //check the origin, to make sure it comes from a trusted source.
+            if (event.origin === 'http://smileys.ekonx.net.ua') {
+                console.log('Index -> received message from: ', e.origin);
+
+                _App.getController('Index').onShowOffersView(true);
+            }
+        }, false);
 
         function setCookie(name, value, expires, path, domain, secure) {
             document.cookie = name + "=" + escape(value) +

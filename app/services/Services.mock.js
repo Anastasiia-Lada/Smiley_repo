@@ -41,7 +41,7 @@ smiley360.services.getMemberIdByDeviceId = function (deviceId, onCompleted) {
         onCompleted(
        {
            success: false,
-           memberId: 157207, //this is a test user
+           ID: 157207, //this is a test user
        });
     }
     else {

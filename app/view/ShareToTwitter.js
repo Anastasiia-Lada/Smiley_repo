@@ -19,7 +19,7 @@
                 cls: 'popup-close-button',
                 listeners: {
                     tap: function () {
-                        Ext.getCmp('xView').destroy();
+                        this.up('#xView').destroy();
                     }
                 }
             }, {
@@ -39,10 +39,14 @@
                 }],
             }, {
                 xtype: 'panel',
-                id: 'xMiddlePanel',
-                cls: 'popup-middle-panel',
+                id: 'xStatusIndicator',
+                cls: 'popup-status-indicator',
+            }, {
+                xtype: 'panel',
+                cls: 'popup-middle-panel popup-status-container',
                 items: [{
                     xtype: 'textareafield',
+                    id: 'xPostText',
                     maxRows: 5,
                     //maxLength: 84,
                     cls: 'popup-input popup-input-text',
@@ -103,7 +107,7 @@
                     cls: 'popup-post-button',
                     listeners: {
                         tap: function () {
-                            //Ext.getCmp('xView').doShare();
+                            this.up('#xView').doShare();
                         }
                     },
                 }],
@@ -111,7 +115,7 @@
         }],
         listeners: {
             initialize: function () {
-                this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+                smiley360.adjustPopupSize(this);
             },
             hide: function () {
                 this.destroy();
@@ -122,52 +126,14 @@
     doShare: function () {
         var shareView = this;
         var shareData = {
-            post: Ext.getCmp('xPostText').getValue()
+            missionID: smiley360.missionData.MissionDetails.MissionId,
+            memberID: smiley360.memberData.UserId,
+            text: this.down('#xPostText').getValue(),
         };
 
         smiley360.setViewStatus(shareView, smiley360.viewStatus.progress);
-        smiley360.services.shareToFacebook(shareData, function (response) {
+        smiley360.services.postToTwitter(shareData, function (response) {
             smiley360.setResponseStatus(shareView, response);
         });
     },
-
-    setStatus: function (status) {
-        var xShareButton = Ext.getCmp('xShareButton');
-        var xStatusIndicator = Ext.getCmp('xStatusIndicator');
-
-        switch (status) {
-            case smiley360.viewStatus.progress: {
-                xShareButton.setText('POSTING...');
-                xShareButton.setIcon('resources/images/share-initial.png');
-                xStatusIndicator.setStyle('background-color: #F9A419;');
-
-                var statusAnimation = new Ext.Anim({
-                    autoClear: false,
-                    duration: 2000,
-                    easing: 'ease-in',
-                    from: { width: 0 },
-                    to: { width: this.getWidth() },
-                });
-
-                statusAnimation.run(xStatusIndicator.element, 'slide');
-
-                break;
-            }
-            case smiley360.viewStatus.successful: {
-                xShareButton.setText('POST SUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-successful.png');
-                xStatusIndicator.setStyle('background-color: #5F9E45;');
-
-                break;
-            }
-            case smiley360.viewStatus.unsuccessful: {
-                xShareButton.setText('POST UNSUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-unsuccessful.png');
-                xStatusIndicator.setStyle('background-color: #ED1C24;');
-
-                break;
-            }
-            default:
-        }
-    }
 });

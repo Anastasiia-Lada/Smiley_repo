@@ -3,7 +3,11 @@
 Ext.define('smiley360.view.ReviewForFender', {
     extend: 'Ext.Container',
     alias: 'widget.reviewforfenderview',
-    requires: ['Ext.Rating', 'Ext.Anim'],
+    requires: [
+        'Ext.Anim',
+        'Ext.Rating',
+        'Ext.ux.Fileup',
+    ],
     config: {
         modal: true,
         centered: true,
@@ -22,7 +26,7 @@ Ext.define('smiley360.view.ReviewForFender', {
                 cls: 'popup-close-button',
                 listeners: {
                     tap: function () {
-                        Ext.getCmp('xView').destroy();
+                        this.up('#xView').destroy();
                     }
                 }
             }, {
@@ -48,37 +52,67 @@ Ext.define('smiley360.view.ReviewForFender', {
                     layout: 'hbox',
                     items: [{
                         xtype: 'rating',
+                        id: 'xRating',
                         label: 'Rate the product:',
                         labelWidth: 'auto',
                         itemsCount: 5,
                         itemCls: 'x-rating-star',
                         itemHoverCls: 'x-rating-star-hover',
                     }, {
-                        xtype: 'button',
-                        docked: 'right',
-                        text: 'ADD PHOTO',
+                        xtype: 'fileupload',
                         id: 'xAddPhotoButton',
+                        docked: 'right',
                         cls: 'popup-photo-button',
                         style: 'height: 30px; padding: 5px; margin-top: -3px;',
-                        listeners: {
-                            tap: function () {
-                                //Ext.getCmp('xView').doAddPhoto();
+                        autoUpload: true,
+                        states: {
+                            browse: {
+                                text: 'ADD PHOTO'
+                            },
+                            uploading: {
+                                text: 'Uploading',
+                                loading: true// Enable loading spinner on button
                             }
                         },
+                        listeners: {
+                            success: function (response) {
+                                this.hide();
+
+                                var xView = this.up('#xView');
+                                var xAddedImage = xView.down('#xAddedImage');
+                                var xReviewText = xView.down('#xReviewText');
+
+                                xAddedImage.show();
+                                xAddedImage.setHeight(xReviewText.element.getHeight());
+                                xAddedImage.setWidth(xReviewText.element.getWidth() * 0.4);
+                                xAddedImage.setSrc(smiley360.configuration.getServerDomain() + response.filepath);
+                            }
+                        }
                     }]
                 }, {
-                    xtype: 'textareafield',
-                    maxRows: 5,
-                    minLength: 70,
-                    id: 'xReviewText',
-                    cls: 'popup-input popup-input-text',
-                    listeners: {
-                        keyup: function () {
-                            var postLenght = this.getValue().length;
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items: [{
+                        xtype: 'textareafield',
+                        flex: 1,
+                        maxRows: 5,
+                        minLength: 70,
+                        id: 'xReviewText',
+                        cls: 'popup-input popup-input-text',
+                        listeners: {
+                            keyup: function () {
+                                var postLenght = this.getValue().length;
 
-                            Ext.getCmp('xReviewCountLabel').setHtml(postLenght.toString());
+                                this.up('#xView').down('#xReviewCountLabel').setHtml(postLenght.toString());
+                            }
                         }
-                    }
+                    }, {
+                        xtype: 'image',
+                        id: 'xAddedImage',
+                        cls: 'popup-photo-image',
+                        style: 'margin: 5px 0px 5px 5px;',
+                        hidden: true,
+                    }]
                 }, {
                     xtype: 'panel',
                     layout: 'hbox',
@@ -219,7 +253,7 @@ Ext.define('smiley360.view.ReviewForFender', {
                         html: 'Review Guidelines',
                         listeners: {
                             tap: function () {
-                                Ext.getCmp('xView').showGuidelines();
+                                this.up('#xView').showGuidelines();
                             }
                         }
                     }],
@@ -230,15 +264,15 @@ Ext.define('smiley360.view.ReviewForFender', {
                 items: [{
                     xtype: 'button',
                     text: 'ADD REVIEW',
-                    id: 'xAddReviewButton',
+                    id: 'xShareButton',
                     cls: 'popup-submit-button',
                     listeners: {
                         tap: function () {
                             if (xIsReviewState) {
-                                Ext.getCmp('xView').doAddReview();
+                                this.up('#xView').doAddReview();
                             }
                             else {
-                                Ext.getCmp('xView').showReviewForm();
+                                this.up('#xView').showReviewForm();
                             }
                         }
                     },
@@ -247,85 +281,56 @@ Ext.define('smiley360.view.ReviewForFender', {
         }],
         listeners: {
             initialize: function () {
-                this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+                smiley360.adjustPopupSize(this);
             },
             hide: function () {
                 this.destroy();
+            },
+            painted: function () {
+                var fileName = guid();
+                var uploadUrl = smiley360.configuration.getServerDomain() +
+                    'getfile.php?foldername=comments&filename=' + fileName;
+
+                this.down('#xAddPhotoButton').setUrl(uploadUrl);
             }
         },
     },
 
     doAddReview: function () {
-        var shareView = this;
-        var shareData = {
-            post: Ext.getCmp('xPostText').getValue()
+        var commentView = this;
+        var commentData = {
+            memberID: smiley360.memberData.UserId,
+            brandID: smiley360.brandData.BrandId,
+            text: this.down('#xReviewText').getValue(),
+            rating: this.down('#xRating').getValue(),
+            pageSize: 10,
         };
 
-        smiley360.setViewStatus(shareView, smiley360.viewStatus.progress);
-        smiley360.services.shareToFacebook(shareData, function (response) {
-            smiley360.setResponseStatus(shareView, response);
+        smiley360.setViewStatus(commentView, smiley360.viewStatus.progress);
+        smiley360.services.createComment(commentData, function (response) {
+            smiley360.setResponseStatus(commentView, response);
         });
-    },
-
-    setStatus: function (status) {
-        var xShareButton = Ext.getCmp('xShareButton');
-        var xStatusIndicator = Ext.getCmp('xStatusIndicator');
-
-        switch (status) {
-            case smiley360.viewStatus.progress: {
-                xShareButton.setText('POSTING...');
-                xShareButton.setIcon('resources/images/share-initial.png');
-                xStatusIndicator.setStyle('background-color: #F9A419;');
-
-                var statusAnimation = new Ext.Anim({
-                    autoClear: false,
-                    duration: 2000,
-                    easing: 'ease-in',
-                    from: { width: 0 },
-                    to: { width: this.getWidth() },
-                });
-
-                statusAnimation.run(xStatusIndicator.element, 'slide');
-
-                break;
-            }
-            case smiley360.viewStatus.successful: {
-                xShareButton.setText('POST SUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-successful.png');
-                xStatusIndicator.setStyle('background-color: #5F9E45;');
-
-                break;
-            }
-            case smiley360.viewStatus.unsuccessful: {
-                xShareButton.setText('POST UNSUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-unsuccessful.png');
-                xStatusIndicator.setStyle('background-color: #ED1C24;');
-
-                break;
-            }
-            default:
-        }
     },
 
     showReviewForm: function () {
         xIsReviewState = true;
 
-        Ext.getCmp('xReviewPanel').show();
-        Ext.getCmp('xGuidelinesPanel').hide();
-        Ext.getCmp('xTitleLabel').setHtml('Add your Review for Fender')
-        Ext.getCmp('xAddReviewButton').setText('ADD REVIEW');
+        this.down('#xReviewPanel').show();
+        this.down('#xGuidelinesPanel').hide();
+        this.down('#xTitleLabel').setHtml('Add your Review for Fender')
+        this.down('#xShareButton').setText('ADD REVIEW');
 
-        this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+        smiley360.adjustPopupSize(this);
     },
 
     showGuidelines: function () {
         xIsReviewState = false;
 
-        Ext.getCmp('xReviewPanel').hide();
-        Ext.getCmp('xGuidelinesPanel').show();
-        Ext.getCmp('xTitleLabel').setHtml('Review Guidelines')
-        Ext.getCmp('xAddReviewButton').setText('GO BACK TO YOUR REVIEW');
+        this.down('#xReviewPanel').hide();
+        this.down('#xGuidelinesPanel').show();
+        this.down('#xTitleLabel').setHtml('Review Guidelines')
+        this.down('#xShareButton').setText('GO BACK TO YOUR REVIEW');
 
-        this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+        smiley360.adjustPopupSize(this);
     },
 });

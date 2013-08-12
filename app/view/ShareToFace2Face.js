@@ -20,7 +20,7 @@
                 cls: 'popup-close-button',
                 listeners: {
                     tap: function () {
-                        Ext.getCmp('xView').destroy();
+                        this.up('#xView').destroy();
                     }
                 }
             }, {
@@ -69,7 +69,7 @@
                     cls: 'popup-input popup-input-text',
                 }, {
                     xtype: 'rating',
-                    id: 'xRateLabel',
+                    id: 'xRating',
                     label: 'Rate the product:',
                     labelWidth: 'auto',
                     itemsCount: 5,
@@ -82,17 +82,22 @@
 
                             console.log(logMessage);
 
-                            if (value < 0) {
-                                this.addCls('x-rating-field-required');
+                            var xView = this.up('#xView');
+                            if (xView){
+                                if (value < 0) {
+                                    this.addCls('x-rating-field-required');
 
-                                Ext.getCmp('xReviewText').addCls('popup-input-required');
-                                Ext.getCmp('xPeoplesSelector').addCls('popup-input-required');
-                            }
-                            else {
-                                this.removeCls('x-rating-field-required');
+                                    xView.down('#xReviewText').addCls('popup-input-required');
+                                    xView.down('#xPeoplesSelector').addCls('popup-input-required');
+                                    xView.down('#xShareButton').disable();
+                                }
+                                else {
+                                    this.removeCls('x-rating-field-required');
 
-                                Ext.getCmp('xReviewText').removeCls('popup-input-required');
-                                Ext.getCmp('xPeoplesSelector').removeCls('popup-input-required');
+                                    xView.down('#xReviewText').removeCls('popup-input-required');
+                                    xView.down('#xPeoplesSelector').removeCls('popup-input-required');
+                                    xView.down('#xShareButton').enable();
+                                }
                             }
                         }
                     }
@@ -102,15 +107,15 @@
                 cls: 'popup-button-panel',
                 items: [{
                     xtype: 'button',
+                    id: 'xShareButton',
                     text: 'SUBMIT',
                     icon: 'resources/images/share-initial.png',
                     iconAlign: 'right',
                     iconCls: 'popup-post-icon',
-                    id: 'xShareButton',
                     cls: 'popup-post-button',
                     listeners: {
                         tap: function () {
-                            //Ext.getCmp('xView').doShare();
+                            this.up('#xView').doShare();
                         }
                     },
                 }],
@@ -118,7 +123,7 @@
         }],
         listeners: {
             initialize: function () {
-                this.setHeight(Ext.getCmp('xRootPanel').element.getHeight());
+                smiley360.adjustPopupSize(this);
             },
             hide: function () {
                 this.destroy();
@@ -129,52 +134,16 @@
     doShare: function () {
         var shareView = this;
         var shareData = {
-            post: Ext.getCmp('xPostText').getValue()
+            missionID: smiley360.missionData.MissionDetails.MissionId,
+            memberID: smiley360.memberData.UserId,
+            sharepeople: this.down('#xPeoplesSelector').getValue(),
+            rating: this.down('#xRating').getValue(),
+            desc: this.down('#xReviewText').getValue(),
         };
 
         smiley360.setViewStatus(shareView, smiley360.viewStatus.progress);
-        smiley360.services.shareToFacebook(shareData, function (response) {
+        smiley360.services.postToFace2face(shareData, function (response) {
             smiley360.setResponseStatus(shareView, response);
         });
     },
-
-    setStatus: function (status) {
-        var xShareButton = Ext.getCmp('xShareButton');
-        var xStatusIndicator = Ext.getCmp('xStatusIndicator');
-
-        switch (status) {
-            case smiley360.viewStatus.progress: {
-                xShareButton.setText('POSTING...');
-                xShareButton.setIcon('resources/images/share-initial.png');
-                xStatusIndicator.setStyle('background-color: #F9A419;');
-
-                var statusAnimation = new Ext.Anim({
-                    autoClear: false,
-                    duration: 2000,
-                    easing: 'ease-in',
-                    from: { width: 0 },
-                    to: { width: this.getWidth() },
-                });
-
-                statusAnimation.run(xStatusIndicator.element, 'slide');
-
-                break;
-            }
-            case smiley360.viewStatus.successful: {
-                xShareButton.setText('POST SUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-successful.png');
-                xStatusIndicator.setStyle('background-color: #5F9E45;');
-
-                break;
-            }
-            case smiley360.viewStatus.unsuccessful: {
-                xShareButton.setText('POST UNSUCCESSFUL');
-                xShareButton.setIcon('resources/images/share-unsuccessful.png');
-                xStatusIndicator.setStyle('background-color: #ED1C24;');
-
-                break;
-            }
-            default:
-        }
-    }
 });

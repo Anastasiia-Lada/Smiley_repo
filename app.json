@@ -39,7 +39,7 @@
      *      }
      */
     "js": [{
-            "path": "touch/sencha-touch-all.js",
+            "path": "touch/sencha-touch.js",
             "x-bootstrap": true,
         }, {
             "path": "app.js",
@@ -65,6 +65,9 @@
      */
     "css": [{
             "path": "resources/css/app.css",
+            "update": "delta"
+        }, {
+            "path": "resources/css/fileup.css",
             "update": "delta"
         }, {
             "path": "resources/css/rating.css",

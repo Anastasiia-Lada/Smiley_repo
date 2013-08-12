@@ -2564,7 +2564,7 @@ html, body {
     }
 
         .x-layout-box.x-vertical > .x-layout-box-item.x-flexed {
-            height: 0 !important;
+            height: auto;
         }
 
     .x-layout-box > .x-layout-box-item {
