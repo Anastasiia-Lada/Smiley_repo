@@ -1,5 +1,6 @@
 Ext.define('smiley360.view.Login', {
     extend: 'Ext.form.Panel',
+    alias: 'widget.loginview',
     requires: [
         'Ext.Img',
         'Ext.Label',
@@ -7,7 +8,6 @@ Ext.define('smiley360.view.Login', {
         'Ext.form.Password',
         'Ext.field.Text',
     ],
-    alias: 'widget.loginview',
     config: {
         id: 'xLoginView',
         cls: 'page-bg',
@@ -87,64 +87,10 @@ Ext.define('smiley360.view.Login', {
                         window.location = 'http://smileys.ekonx.net.ua/oauth/Twitter.html?deviceId=' + getCookie('deviceId');
                     }
                 }
-            }, {
-                xtype: 'panel',
-                layout: 'hbox',
-                items: [  ]
-            }, {
-                xtype: 'panel',
-                layout: 'hbox',
-                items: [{  xtype: 'button',
-                    style: 'background-color: #3f4b4e !important;',
-                    itemId: 'xSurvey',
-                    text: 'S',
-                    width: '50px',
-                    ui: 'action',
-                    tap: 'onSurveyTap'
-                }],
-            }, {
-                xtype: 'panel',
-                layout: 'hbox',
-                items: [ ],
-            }, ],
+            }],
         }],
+
         listeners: [{
-            delegate: "#xShare",
-            fn: "onShareTap",
-            event: "tap",
-        }, {
-            delegate: "#xBrand",
-            fn: "onBrandTap",
-            event: "tap",
-        }, {
-            delegate: "#xConnect",
-            fn: "onConnectTap",
-            event: "tap",
-        }, {
-            delegate: "#xBrowseInstruments",
-            fn: "onBrowseInstrumentsTap",
-            event: "tap",
-        }, {
-            delegate: "#xBrowse",
-            fn: "onBrowseTap",
-            event: "tap",
-        }, {
-            delegate: "#xOffersDetails",
-            fn: "onOffersDetailsTap",
-            event: "tap",
-        }, {
-            delegate: "#xOffers",
-            fn: "onOffersTap",
-            event: "tap",
-        }, {
-            delegate: "#xMission",
-            fn: "onMissionTap",
-            event: "tap",
-        }, {
-            delegate: "#xMissionDetails",
-            fn: "onMissionDetailsTap",
-            event: "tap",
-        }, {
             delegate: "#xLogin",
             fn: "onLoginTap",
             event: "tap",
@@ -158,87 +104,12 @@ Ext.define('smiley360.view.Login', {
             fn: 'onForgetPasswordTap',
             event: 'tap',
             element: 'element',
-        }, {
-            delegate: "#xEditProfile",
-            fn: "onEditProfileTap",
-            event: "tap",
-        }, {
-            delegate: "#xSurvey",
-            fn: "onSurveyTap",
-            event: "tap",
         }]
-    },
-    onShareTap: function () {
-        //================================
-        console.log("onShareTap");
-        //================================
-        this.fireEvent('onShareTapCommand', this);
-    },
-    onBrandTap: function () {
-        //================================
-        console.log("onBrandTap");
-        //================================
-        this.fireEvent('onBrandTapCommand', this);
-    },
-    onConnectTap: function () {
-        //================================
-        console.log("onConnectTap");
-        //================================
-        this.fireEvent('onConnectTapCommand', this);
-    },
-    onBrowseInstrumentsTap: function () {
-        //================================
-        console.log("onBrowseTap");
-        //================================
-        this.fireEvent('onBrowseResultsByCategoryTapCommand', this);
-    },
-    onBrowseTap: function () {
-        //================================
-        console.log("onBrowseTap");
-        //================================
-        this.fireEvent('onBrowseTapCommand', this);
-    },
-
-    onLocalstoragetestTap: function () {
-        //================================
-        console.log("onLocalstoragetestTap");
-        //================================
-        this.fireEvent('onLocalstoragetestTapCommand', this);
-    },
-
-    onOffersDetailsTap: function () {
-        //================================
-        console.log("onLoginTap");
-        //================================
-        this.fireEvent('onOffersDetailsTapCommand', this);
-    },
-
-    onOffersTap: function () {
-        //================================
-        console.log("onLoginTap");
-        //================================
-        this.fireEvent('onOffersTapCommand', this);
-    },
-
-    onMissionDetailsTap: function () {
-        //================================
-        console.log("onLoginTap");
-        //================================
-        this.fireEvent('onMissionDetailsTapCommand', this);
-    },
-
-    onMissionTap: function () {
-        //================================
-        console.log("onLoginTap");
-        //================================
-        this.fireEvent('onMissionTapCommand', this);
     },
 
     onLoginTap: function () {
         Ext.getCmp('login_btn').setDisabled(true);
         this.fireEvent('AuthentificateCommand', this, this.down("#txtLogin").getValue(), this.down("#txtPassword").getValue());
-
-
     },
 
     onSignupTap: function () {
@@ -250,25 +121,5 @@ Ext.define('smiley360.view.Login', {
 
     onForgetPasswordTap: function () {
         Ext.widget('forgetpasswordview').show();
-    },
-
-    onEditProfileTap: function () {
-        this.fireEvent('getProfileCommand', this);
-    },
-
-    onSurveyTap: function () {
-        //================================
-        console.log("onSurveyTap");
-        //================================
-        //this.fireEvent('ShowSurveyViewCommand', this);
-    },
-
-    getAuthData: function () {
-        var getView = this;
-        var getData = {
-            loginData: Ext.getCmp('txtLogin').getValue(),
-            passwordData: Ext.getCmp('txtPassword').getValue()
-        };
-        //smiley360.authenticate(getView, getData.loginData, getData.passwordData);
     },
 });

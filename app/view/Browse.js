@@ -1,4 +1,4 @@
-﻿var hide_panel, first_time, dock_panel, id_arr_browse = [], categoryArray = [];
+﻿var hide_panel, first_time, dock_panel, id_arr_browse = [], categoryArray = [], globalCount = 0;
 Ext.define('smiley360.view.Browse', {
 	extend: 'Ext.Panel',
 	alias: 'widget.browseview',
@@ -283,7 +283,7 @@ Ext.define('smiley360.view.Browse', {
 									 	listeners: {
 									 		initialize: function () {
 									 			var arr = ['Cars', 'Trucks', 'Motorcycles', 'Boats'];
-									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left');
+									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left', 'AUTOMOTIVE', 1);
 									 			this.hide();
 									 		}
 									 	}
@@ -300,7 +300,7 @@ Ext.define('smiley360.view.Browse', {
 													'Clothing & Shoe Brands & Stores', 'Diapers & Accessories',
 													'Feeding', 'General Parenting Info & Websites',
 													'Safety', 'Strollers & Carriers'];
-									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle');
+									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle', 'BABY', 6);
 									 			this.hide();
 									 		}
 									 	}
@@ -317,7 +317,7 @@ Ext.define('smiley360.view.Browse', {
 													'Department Stores', 'Fashion Designers &<br> Retailers',
 													'Jewelry & Wathches', 'Maternity', 'Shoes',
 													'Sunglasses, Handbags and Other<br> Accessories'];
-									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right');
+									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right', 'CLOTHING & ACCESSORIES', 18);
 									 			this.hide();
 									 		}
 									 	}
@@ -429,7 +429,7 @@ Ext.define('smiley360.view.Browse', {
 												var arr = ['Computer Makes & Models',
 													'Social Networking & Email Program',
 													'General Software'];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left', 'COMPUTER & SOFTWARE', 14);
 												this.hide();
 											}
 										}
@@ -444,7 +444,7 @@ Ext.define('smiley360.view.Browse', {
 									 		initialize: function () {
 									 			var arr = ['Cleaning & Household', 'Food & Beverage',
 													'General Eco-Friendly', ' Wellness Products'];
-									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle');
+									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle', 'ECO-FRIENDLY', 31);
 									 			this.hide();
 									 		}
 									 	}
@@ -459,7 +459,7 @@ Ext.define('smiley360.view.Browse', {
 									 		initialize: function () {
 									 			var arr = ['Colleges & Universities',
 													'Educational Services &<br> Websites', 'General Education'];
-									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right');
+									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right', 'EDUCATION', 27);
 									 			this.hide();
 									 		}
 									 	}
@@ -568,7 +568,7 @@ Ext.define('smiley360.view.Browse', {
 											initialize: function () {
 												var arr = ['Cameras', ' Computers', 'Electronics Misc',
 													'Music Players', 'Phones', 'Retailers, Websites & Models'];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left', 'ELECTRONICS', 36);
 												this.hide();
 											}
 										}
@@ -582,7 +582,7 @@ Ext.define('smiley360.view.Browse', {
 									 	listeners: {
 									 		initialize: function () {
 									 			var arr = ['Banking', ' Mortgages & Loans'];
-									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle');
+									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle', 'FINANCIAL SERVICES', 128);
 									 			this.hide();
 									 		}
 									 	}
@@ -608,7 +608,7 @@ Ext.define('smiley360.view.Browse', {
 													'Information, Websites & Recipes',
 													'Milk, Juice & Soda'
 									 			];
-									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right');
+									 			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right', 'FOOD & DRINKS', 43);
 									 			this.hide();
 									 		}
 									 	}
@@ -726,7 +726,7 @@ Ext.define('smiley360.view.Browse', {
 													'Skin Care',
 													'Wellness'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left', 'HEALTH & BEAUTY', 57);
 												this.hide();
 											}
 										}
@@ -746,7 +746,7 @@ Ext.define('smiley360.view.Browse', {
 													'Websites & Arcades',
 													'Video & Electronic Games'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle', 'HOBBIES', 67);
 												this.hide();
 											}
 										}
@@ -768,7 +768,7 @@ Ext.define('smiley360.view.Browse', {
 													'Remodeling',
 													'Tools & Home Improvement'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right', 'HOME & GARDEN', 74);
 												this.hide();
 											}
 										}
@@ -877,7 +877,7 @@ Ext.define('smiley360.view.Browse', {
                                     			var arr = ['ArtSupplies', 'Artists',
 													'Instruments', 'Musical Gear',
 													'Performers'];
-                                    			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle');
+                                    			Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle', 'MUSIC & ARTS', 90);
                                     			this.hide();
                                     		}
                                     	}
@@ -897,7 +897,7 @@ Ext.define('smiley360.view.Browse', {
 													'Internet',
 													'Radio'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left', 'MEDIA', 83);
 												this.hide();
 											}
 										}
@@ -914,7 +914,7 @@ Ext.define('smiley360.view.Browse', {
 													'General Non-Profit',
 													'Institutes & Research'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right', 'NON-PROFIT', 96);
 												this.hide();
 											}
 										}
@@ -1027,7 +1027,7 @@ Ext.define('smiley360.view.Browse', {
 													'Talk Show Hosts & Comedians',
 													'Writers'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left', 'PEOPLE', 100);
 												this.hide();
 											}
 										}
@@ -1045,7 +1045,7 @@ Ext.define('smiley360.view.Browse', {
 													'Pet Gear',
 													'Pet Misc'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle', 'PETS', 107);
 												this.hide();
 											}
 										}
@@ -1063,7 +1063,7 @@ Ext.define('smiley360.view.Browse', {
 													'Sports Services',
 													'Teams & Leagues'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'right', 'SPORTS', 112);
 												this.hide();
 											}
 										}
@@ -1149,7 +1149,7 @@ Ext.define('smiley360.view.Browse', {
 													'Hotels',
 													'Outdoor & Fitness'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'left', 'TRAVEL', 116);
 												this.hide();
 											}
 										}
@@ -1167,7 +1167,7 @@ Ext.define('smiley360.view.Browse', {
 													'Work Services',
 													'Supplies'
 												];
-												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle');
+												Ext.getCmp('xBrowse').doCreateItems(arr, this.id, 'middle', 'WORK', 123);
 												this.hide();
 											}
 										}
@@ -1301,32 +1301,36 @@ Ext.define('smiley360.view.Browse', {
 			NextItem.setHtml(NextItem.getHtml().toString().substr(0, 9) + '...');
 		};
 	},
-	doCreateItems: function (items_arr, id, pos) {
+	doCreateItems: function (items_arr, id, pos, category, categoryCount) {
 		var lbl_padding = '10px 0px 10px ';
 		if (pos == 'left') { lbl_padding += '20px'; }
 		if (pos == 'middle') { lbl_padding += '140px'; }
 		if (pos == 'right') { lbl_padding += '260px'; }
-		for (var key in items_arr)
+		var sub_categoryCount = categoryCount;
+		for (var key in items_arr) {
+			sub_categoryCount += 1;
 			Ext.getCmp(id).add(new Ext.Label(
 				{
 					html: items_arr[key].toString(),
 					padding: lbl_padding,
+					id: 'xBrSub' + sub_categoryCount,
 					style: 'max-width: 260px; text-align: left; font-size:1em; word-wrap: break-all; color:#413f40; font-family: \'din medium\';',
 					listeners: {
 						element: 'element',
 						tap: function () {
-							this.up('#xBrowse').fireEvent('onBrowseResultsByCategoryTapCommand', this, 1, 1, 10, 10);
+							this.up('#xBrowse').fireEvent('onBrowseResultsByCategoryTapCommand', this, categoryCount, sub_categoryCount, 0, 100, category, this.getHtml());
 						}
 					}
 				}));
+		};
 	},
 	doTap: function (id) {
 		if (Ext.getCmp(id)) {
 			categoryArray.push(id);
 		}
 		for (var cat_item in categoryArray)
-		if (categoryArray[cat_item] != id) {
-			//console.log(categoryArray[cat_item]);
+			if (categoryArray[cat_item] != id) {
+				//console.log(categoryArray[cat_item]);
 				Ext.getCmp(categoryArray[cat_item]).setCls('has-shadow browse_container');
 				Ext.getCmp('x' + categoryArray[cat_item] + '_panel_browse').hide();
 				Ext.getCmp('x' + categoryArray[cat_item] + 'Pict').setSrc('resources/images/' + categoryArray[cat_item].toLowerCase() + '_c.png');

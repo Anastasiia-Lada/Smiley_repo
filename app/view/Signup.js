@@ -1,5 +1,5 @@
 Ext.define('smiley360.view.Signup', {
-    extend: 'Ext.Panel',
+	extend: 'Ext.form.Panel',
     requires: [
         'Ext.Img',
         'Ext.Label',
@@ -67,7 +67,7 @@ Ext.define('smiley360.view.Signup', {
                 id: 'last_signup',
                 required: true
             }, {
-                xtype: 'textfield',
+                xtype: 'emailfield',
                 placeHolder: 'Email',
                 itemId: 'txtEmail',
                 name: 'txtEmail',

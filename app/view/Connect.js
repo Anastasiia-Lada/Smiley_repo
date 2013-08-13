@@ -1,5 +1,3 @@
-var hide_panel, first_time, dock_panel;
-
 Ext.define('smiley360.view.Connect', {
 	extend: 'Ext.Panel',
 	alias: 'widget.connectview',
@@ -71,51 +69,10 @@ Ext.define('smiley360.view.Connect', {
 									//console.log(me.pageTurner.valueOf());
 									//me.pageTurner.delay(3000); //comment this to avoid js-bug
 								}, carousel);
+
 								carousel.pageTurner.delay(3000);
 							}
 						},
-						items: [
-						//	{
-                        //    xtype: 'container',
-                        //    layout: 'hbox',
-                        //    cls: 'cont-pad',
-                        //    flex: 2.5,
-                        //    items: [
-						//		{
-                        //        xtype: 'container',
-                        //        layout: 'vbox',
-                        //        style: 'padding: 0px 20px;',                                
-                        //        items: [{
-                        //            xtype: 'label',
-                        //            html: 'BRAND',
-                        //            style: 'text-align:left;font-size:1.4em; padding: 0px 15px 10px 30px; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
-
-                        //        }, {
-                        //            xtype: 'label',
-                        //            style: 'font-size: 1.1em;background-color: #efecea; color:#413f40; padding-left: 30px; font-family: \'din medium\';',
-                        //            html: 'Description goes here lorem ipsum.',
-                        //        }],
-                        //    }, {
-                        //        xtype: 'container',
-                        //        flex: 1.5,
-                        //        layout: { type: 'vbox', align: 'center' },
-                        //        items: [{
-                        //            xtype: 'image',
-                        //            cls: 'has-shadow',
-                        //            style: 'border-radius: 5px; border-style: solid; border-width: 1px; border-color: white;',
-                        //            src: 'resources/images/offers_logo3.png',
-                        //            width: 80,
-                        //            height: 80,
-                        //            listeners: {
-                        //                tap: function () {
-                        //                    smiley360.brandData.BrandId = '3250',
-                        //                    this.up('#xConnectView').fireEvent('onBrandTapCommand', this, smiley360.memberData.UserId, smiley360.brandData.BrandId, 0, 10);
-                        //                }
-                        //            }
-                        //        }],
-                        //    }],
-                        //}
-						],
 					}, {
 						xtype: 'panel',
 						html: '<div class="left-btn-mission"></div><div class="right-btn-mission"></div>'
@@ -146,10 +103,6 @@ Ext.define('smiley360.view.Connect', {
 							cls: 'has-shadow',
 							style: 'border-radius: 0px 0px 5px 5px; background-color: #e2ddda; margin-top: 40px; margin-bottom: -30px;',
 							id: 'search_panel',
-							listeners: {
-								initialize: function ()
-								{ /*this.hide();*/ }
-							},
 							items: [{
 								xtype: 'label',
 								height: '3px',
@@ -194,15 +147,15 @@ Ext.define('smiley360.view.Connect', {
 					style: 'background: transparent;'
 				}],
 			}],
-		},//end vbox container
+		}],
 
-		],
 		listeners: {
 			activate: function () {
-				console.log('Connect view activated!');
-				Ext.getCmp('xConnectView').fireEvent('onConnectTapCommand', this);
-				//Ext.getCmp('xConnectView').fireEvent('onBrowseLoadCommand', this);
+			    console.log('Connect view activated!');
+
+				this.fireEvent('onConnectTapCommand', this);
 			},
+
 			painted: function () {
 				console.log('Connect view painted!');
 
@@ -210,50 +163,38 @@ Ext.define('smiley360.view.Connect', {
 			},
 		},
 	},
+
 	setFeatured: function () {
 		var xFeaturedList = Ext.getCmp('xFeaturedList');
 		//xFeaturedList.removeAll(true, true);
 		//for (var i = 0; i < 3; i++) {
 		for (var key in smiley360.FeaturedBrands) {
 			var oneItem = smiley360.FeaturedBrands[key];
-			var oneElement = new Ext.Container({
+			var oneItemContainer = new Ext.Container({
 				layout: 'hbox',
 				cls: 'cont-pad',
-
 			});
-			var leftCont = oneElement.add(new Ext.Container({
-				layout: 'vbox',
-				style: 'padding: 0px 20px;',
-				flex: 2.5,
-			}));
-			var incLabel = leftCont.add(new Ext.Label({
-				style: 'text-align:left;font-size:1.4em; padding: 0px 15px 10px 30px; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
-				html: oneItem.title, //'Description goes here lorem ipsum.',
 
-			}));
-			incLabel = leftCont.add(new Ext.Label({
-				style: 'font-size: 1.1em;background-color: #efecea; color:#413f40; padding-left: 30px; font-family: \'din medium\';',
+			var incLabel = oneItemContainer.add(new Ext.Label({
+				style: 'font-size: 1.1em; font-family: \'din medium\';',
 				html: oneItem.descr, //'Description goes here lorem ipsum.',
+                width: '60%',
+			}));
 
-			}));
-			var rightCont = oneElement.add(new Ext.Container({
-				layout: { type: 'vbox', align: 'center' },
-				flex: 1.5,
-			}));
-			var incImg = rightCont.add(new Ext.Img({
+			var incImg = oneItemContainer.add(new Ext.Img({
 				cls: 'has-shadow',
 				//id: 'xHomeBrandImage',
-				style: 'border-radius: 5px; border-style: solid; border-width: 1px; border-color: white;',
+				style: 'margin-left: 10px; border-radius: 5px; border-style: solid; border-width: 1px; border-color: white;',
 				src: smiley360.configuration.getResourceDomain() + '/' + oneItem.imageURL,//'resources/images/offers_logo3.png',
-				width: 80,
-				height: 80,
+				width: '40%',
 				listeners: {
 					tap: function () {
-						Ext.getCmp('xConnectView').fireEvent('onBrandTapCommand', this, smiley360.memberData.UserId, oneItem.smileyconnectID, 0, 10);
+						this.up('#xConnectView').fireEvent('onBrandTapCommand', this, smiley360.memberData.UserId, oneItem.smileyconnectID, 0, 10);
 					}
 				}
 			}));
-			xFeaturedList.add(oneElement);
+
+			xFeaturedList.add(oneItemContainer);
 		};
 	},
 });

@@ -72,7 +72,6 @@ Ext.define('smiley360.view.Main', {
                 title: 'SHARE',
                 id: 'xShareTab',
                 iconCls: 'share-img',
-                //disabled: true,
                 items: { xtype: 'detailsview' },
             }, {
                 title: 'OFFERS',
@@ -127,12 +126,35 @@ Ext.define('smiley360.view.Main', {
                 mainViews['offersview'] = this.down('#xOffersTab');
                 mainViews['connectview'] = this.down('#xConnectTab');
 
+
                 var shareButton = xTabpanel.getTabBar().getComponent(2);
 
-                shareButton.disable();
                 shareButton.on('tap', function () {
-                    xTabpanel.down('#xDetailsView').showSharePanel();
+                    if (smiley360.missionData.MissionDetails == null) {
+                        smiley360.services.getMissionDetails(
+                            smiley360.memberData.MissionList['0'].missionID,
+                            smiley360.memberData.UserId, function (response) {
+                                if (response.success) {
+                                    smiley360.missionData.MissionDetails = response;
+
+                                    if (smiley360.missionData.MissionDetails.MissionDetails.mission_full == true) {
+                                        xTabpanel.down('#xDetailsView').setMissionDetails();
+                                        xTabpanel.down('#xDetailsView').showSharePanel();
+                                    };
+                                }
+                                else {
+                                    console.log('Missiondetails is corrupted!');//show error on view
+                                }
+                            });
+                    }
+                    else {
+                        xTabpanel.down('#xDetailsView').showSharePanel();
+                    }
                 });
+
+                if (!Object.keys(smiley360.memberData.MissionList).length) {
+                    shareButton.disable();
+                }
             },
         }
     },
@@ -157,8 +179,10 @@ Ext.define('smiley360.view.Main', {
             currentTab = xTabpanel.getActiveItem().element;
         }
 
+        xSidePanel.show();
+
         var currentTabWidth = currentTab.getWidth();
-        var panelWidth = currentTabWidth * 0.4;
+        var panelWidth = xTabpanel.down('#xSideMenu').element.getWidth() + 16;// 8px = 0.5em + 0.5em of the .x-html padding
 
         Ext.Animator.run({
             element: currentTab,
@@ -167,8 +191,8 @@ Ext.define('smiley360.view.Main', {
             from: { left: 0, right: 0 },
             to: { left: -panelWidth, right: panelWidth },
             onEnd: function () {
-                currentTab.setLeft('-40%');
-                currentTab.setRight('40%');
+                currentTab.setLeft(-panelWidth);
+                currentTab.setRight(panelWidth);
             }
         });
 
@@ -180,7 +204,7 @@ Ext.define('smiley360.view.Main', {
             to: { left: currentTabWidth - panelWidth },
             before: { fn: xSidePanel.show() },
             onEnd: function () {
-                xSidePanel.element.setLeft('60%');
+                xSidePanel.element.setLeft(currentTabWidth - panelWidth);
             },
         });
     },
@@ -191,7 +215,7 @@ Ext.define('smiley360.view.Main', {
         }
 
         var currentTabWidth = currentTab.getWidth();
-        var panelWidth = currentTabWidth * 0.4;
+        var panelWidth = xTabpanel.down('#xSideMenu').element.getWidth() + 16;// 8px = 0.5em + 0.5em of the .x-html padding
 
         Ext.Animator.run({
             element: currentTab,

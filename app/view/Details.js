@@ -11,6 +11,12 @@ Ext.define('smiley360.view.Details', {
     config: {
         id: 'xDetailsView',
         title: 'MISSIONS',
+        //masked: {
+        //	xtype: 'loadmask',
+        //	fullscreen: true,
+        //	message: 'Please wait while we fetch some more data... ',
+        //	indicator: true
+        //},
         items: [{
             xtype: 'spacer',
             height: '14px',
@@ -48,9 +54,11 @@ Ext.define('smiley360.view.Details', {
                 items: [{
                     xtype: 'carousel',
                     direction: 'horizontal',
+					cls: 'missionsIndicator',
                     style: 'background-color: #efecea;',
-                    dragable: false,
-                    indicator: false,
+                	//dragable: false,
+                    ui: 'dark',
+                    indicator: true,
                     defaults: {
                         styleHtmlContent: true
                     },
@@ -58,6 +66,14 @@ Ext.define('smiley360.view.Details', {
                     height: 160,
 
                     items: [{
+                    	xtype: 'container',
+                    	layout: 'vbox',
+                    	items: [{
+                    		xtype: 'image',
+							src:'',
+                    		height: 160
+                    	}],
+                    },{
                         xtype: 'container',
                         layout: 'vbox',
                         items: [{
@@ -296,7 +312,7 @@ Ext.define('smiley360.view.Details', {
                         xtype: 'panel',
                         layout: 'vbox',
                         cls: 'has-shadow',
-                        style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; background-color:white; margin: -20px -10px 20px -10px;',
+                        style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; margin: -20px -10px 20px -10px;',
                         id: 'mission_smiles_panel',
                         listeners: {
                             initialize: function () {
@@ -436,6 +452,10 @@ Ext.define('smiley360.view.Details', {
 
     setMissionDetails: function () {
         //alert('set for' + smiley360.missionData.MissionDetails.MissionId);
+        if (!smiley360.missionData.MissionDetails) {
+            console.log('DetailsView -> [setMissionDetails] no MissionDetails!');
+            return;
+        }
 
         Ext.getCmp('DetailsTitleLabel').setHtml(smiley360.missionData.MissionDetails.MissionDetails.title);
         Ext.getCmp('DetailsHero').setSrc(smiley360.configuration.getOfferImagesUrl(smiley360.missionData.MissionDetails.MissionId, smiley360.missionData.MissionDetails.MissionDetails.link));

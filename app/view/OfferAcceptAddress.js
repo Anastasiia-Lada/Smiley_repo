@@ -96,7 +96,6 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 					items: [{
 						xtype: 'label',
 						id: 'verify-label',
-						width: 150,
 						docked: 'left',
 						cls: 'popup-address-comment',
 						html: 'This address is VERIFIED!',
@@ -132,12 +131,10 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 						listeners: {
 							tap: function () {
 								Ext.widget('offeracceptaddressview').hide();
-								Ext.widget('contactusview').show();
+								Ext.getCmp('xOfferView').fireEvent('LoadContactUsCommand', this);
 
 							},
 							initialize: function () {
-								Ext.getCmp('verify-label').setHtml('This address is not VERIFIED!');
-								Ext.getCmp('verify-label').setCls('popup-address-comment-not');
 								Ext.getCmp('question-icon').setDocked('right');
 								Ext.getCmp('question-help-button').setDocked('right');
 								Ext.getCmp('verify-label').setDocked('left');
@@ -173,8 +170,16 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 							//go accept mission
 							Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
 							//if accepted to go
-							Ext.getCmp('xOfferView').fireEvent('LoadMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, smiley360.memberData.UserId);
-							Ext.widget('offeracceptaddressview').hide();
+							if (smiley360.missionData.MissionDetails.MissionDetails.mission_full) {
+								//if (Ext.widget('offeracceptview')) Ext.widget('offeracceptview').hide();
+								Ext.widget('offeracceptaddressview').hide();
+								Ext.widget('missionisfull').show();
+							}
+							else {
+								//if (Ext.widget('offeracceptview')) Ext.widget('offeracceptview').hide();
+								Ext.widget('offeracceptaddressview').hide();
+								Ext.getCmp('xOfferView').fireEvent('LoadMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, smiley360.memberData.UserId);
+							};							
 						}
 					}
 				}, ],
@@ -185,9 +190,26 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 				smiley360.adjustPopupSize(this);
 			},
 			painted: function () {
-				if (smiley360.memberData.Profile.address_status == '2') {
-					this.down('#verify-label').hide();
+				if (smiley360.memberData.Profile.address_status == '1') {
+					Ext.getCmp('verify-label').setHtml('This address is VERIFIED!');
+					Ext.getCmp('verify-label').setCls('popup-address-comment');
+					//this.down('#verify-label').hide();
 				}
+				if (smiley360.memberData.Profile.address_status == '2') {
+					Ext.getCmp('verify-label').setHtml('This address is not VERIFIED!');
+					Ext.getCmp('verify-label').setCls('popup-address-comment-not');
+				}
+				var stateIdTemp = [];
+				for (var it in smiley360.ProfileDropdowns.stateID) {
+					var temp_array = new Array();
+					temp_array["text"] = it;
+					temp_array["value"] = smiley360.ProfileDropdowns.stateID[it];
+					stateIdTemp.push(temp_array);
+				};
+				Ext.getCmp('address_stateID').setOptions(stateIdTemp, true);
+
+				Ext.getCmp('address_countryID').setValue('United States of America');
+
 				Ext.getCmp('xOfferView').fireEvent('getAddressCommand', this, smiley360.memberData.UserId);
 				var profile = smiley360.memberData.Profile;
 
@@ -208,7 +230,8 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 		},
 	},
 	setAddress: function () {
-		Ext.getCmp('address_stateID').setValue(smiley360.memberData.Profile.stateID);
+		if (Ext.getCmp('address_stateID'))
+			Ext.getCmp('address_stateID').setValue(smiley360.memberData.Profile.stateID);
 		Ext.getCmp('address_city').setValue(smiley360.memberData.Profile.city);
 	},
 	doRemoveOffer: function () {
@@ -252,7 +275,7 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 				});
 
 				if (Ext.getCmp(item)) {
-					me.setAnyOptions(Ext.getCmp('address_'+item), otherOptions);
+					me.setAnyOptions(Ext.getCmp('address_' + item), otherOptions);
 				};
 			};
 	},

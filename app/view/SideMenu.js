@@ -94,7 +94,8 @@
 				ui: 'plain',
 				listeners: {
 					tap: function () {
-						Ext.widget('contactusview').show();
+						//Ext.widget('contactusview').show();
+						Ext.getCmp('xOfferView').fireEvent('LoadContactUsCommand', this);
 					}
 				}
 			}, {

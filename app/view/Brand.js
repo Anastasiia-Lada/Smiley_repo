@@ -10,7 +10,7 @@ Ext.define('smiley360.view.Brand', {
 		id: 'xBrandView',
 		title: 'Brand',
 		items: [
-                	
+
                     {
                     	xtype: 'spacer',
                     	height: '14px',
@@ -85,35 +85,12 @@ Ext.define('smiley360.view.Brand', {
 																height: 50,
 																style: 'border-radius:0px; margin-left:-4px;',
 																src: 'resources/images/brands_2.png',
+																listeners: {
+																	tap: function () {
+																		Ext.widget('brandimageview').show();
+																	}
+																},
 															},//2
-															{
-																xtype: 'image',
-																width: 50,
-																height: 50,
-																style: 'border-radius:0px; margin-left:-4px;',
-																src: 'resources/images/brands_3.png',
-															},//3
-															{
-																xtype: 'image',
-																width: 50,
-																height: 50,
-																style: 'border-radius:0px; margin-left:-4px;',
-																src: 'resources/images/brands_4.png',
-															},//4
-															{
-																xtype: 'image',
-																width: 50,
-																height: 50,
-																style: 'border-radius:0px; margin-left:-4px;',
-																src: 'resources/images/brands_5.png',
-															},//5
-															{
-																xtype: 'image',
-																width: 50,
-																height: 50,
-																style: 'border-radius:0px; margin-left:-4px;',
-																src: 'resources/images/brands_6.png',
-															}//6
 															],
 														}
                                                 	],
@@ -145,10 +122,11 @@ Ext.define('smiley360.view.Brand', {
                                                             	id: 'xBrandRating',
                                                             	labelWidth: 'auto',
                                                             	itemsCount: 5,
-																readOnly: true,
+                                                            	readOnly: true,
                                                             	style: 'padding: 10px 0px 30px 0px;',
                                                             	itemCls: 'x-rating-star',
                                                             	itemHoverCls: 'x-rating-star-hover',
+                                                            	disabled: true
                                                             },
 															{
 																xtype: 'button',
@@ -262,7 +240,7 @@ Ext.define('smiley360.view.Brand', {
                     		],
                     	},//end vbox container
 
-                    
+
                     	]
                     }//ens strange container
 		],
@@ -286,8 +264,9 @@ Ext.define('smiley360.view.Brand', {
 			Ext.getCmp('xBrandDescription').setHtml(BrDetails.smileyConnect_description);
 		if (BrDetails.smileyConnect_detailsImage_URL)
 			var str = smiley360.configuration.getResourceDomain() + '/' + BrDetails.smileyConnect_detailsImage_URL;
-		
+
 		Ext.getCmp('xBrandImage').setSrc(str);
+
 		if (BrDetails.smileyConnect_rating) {
 			Ext.getCmp('xBrandRating').setValue(BrDetails.smileyConnect_rating - 1);
 		}
@@ -313,7 +292,7 @@ Ext.define('smiley360.view.Brand', {
 
 	},
 	setCommentItem: function (oneItem) {
-		
+
 		var commentsArrayItem = new Ext.Container({
 			//id: id + 'container',
 			layout: { type: 'hbox' },
@@ -342,7 +321,7 @@ Ext.define('smiley360.view.Brand', {
 			cls: 'has-shadow',
 			width: 100,
 			height: 100,
-			src: smiley360.configuration.getProfilePic(smiley360.memberData.UserId, oneItem.member_image_file_name),
+			src: smiley360.configuration.getProfilePic(oneItem.memberID, oneItem.member_image_file_name),
 			//src: 'resources/images/lays.png',
 		}));
 		//middle
@@ -379,12 +358,13 @@ Ext.define('smiley360.view.Brand', {
 			style: 'color: #7c7a7b; font-size:1em; margin-top: -10px; padding: 0px 15px 10px 0px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
 
 		}));
-		LabelItem = MiddleSubItem.add(new Ext.Label(
-		{
-			cls: 'rew_comment',
-			style: 'font-size:1em; margin-top: -10px; padding: 0px 15px 10px 0px; word-wrap: break-all; background-color: #efecea;font-family: \'franklin\';',
-			html: 'I\'m on the mission!',
-		}));
+		if (oneItem.commenter_isonMission == 1)
+			LabelItem = MiddleSubItem.add(new Ext.Label(
+			{
+				cls: 'rew_comment',
+				style: 'font-size:0.8em; margin-top: -10px; padding: 0px 15px 10px 0px; word-wrap: break-all; background-color: #efecea;font-family: \'franklin\';',
+				html: 'I\'m on the mission!',
+			}));
 		//right
 		var RightSubItem = commentsArrayItem.add(new Ext.Container(
 		{
@@ -394,24 +374,24 @@ Ext.define('smiley360.view.Brand', {
 				align: 'middle',
 			},
 		}));
-		if (oneItem.has_image==1)
-		ImageSubItem = RightSubItem.add(new Ext.Img(
-		{
-			style: 'padding: 20px 0px 0px 0px;background-color: #efecea; border-radius: 5px; border-style: solid; border-width:2px; border-color: white;',
-			cls: 'has-shadow',
-			width: 70,
-			height: 70,
-			src: 'resources/images/brands_1.png',
-			listeners: {
-				tap: function () {
-					Ext.widget('brandimageview').show();
-				}
-			},
-		}));
+		if (oneItem.has_image == 1)
+			ImageSubItem = RightSubItem.add(new Ext.Img(
+			{
+				style: 'padding: 20px 0px 0px 0px;background-color: #efecea; border-radius: 5px; border-style: solid; border-width:2px; border-color: white;',
+				cls: 'has-shadow',
+				width: 70,
+				height: 70,
+				src: 'resources/images/brands_1.png',
+				listeners: {
+					tap: function () {
+						Ext.widget('brandimageview').show();
+					}
+				},
+			}));
 		Ext.getCmp('xAllCommentsContainer').add(commentsArrayItem);
 		//////////////////////////////////
-		
-	
+
+
 	},
 	onBackButtonTap: function () {
 		console.log('back button tapped');

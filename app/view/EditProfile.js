@@ -507,7 +507,7 @@ Ext.define('smiley360.view.EditProfile', {
 					};
 				};
 				Ext.getCmp('userProfileImage').setSrc(smiley360.userProfileImage);
-				console.log(smiley360.ProfileDropdowns.race.valueOf());
+				//console.log(smiley360.ProfileDropdowns.race.valueOf());
 
 			},
 

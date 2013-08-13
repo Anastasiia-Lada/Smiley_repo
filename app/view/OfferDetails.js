@@ -108,30 +108,62 @@ Ext.define('smiley360.view.OfferDetails', {
 								style: 'background-color: #efecea; padding: 40px 25px 15px 25px;',
 								layout: { type: 'vbox' },
 								items: [
-									{
-										xtype: 'button',
-										//itemId: 'recievebtn',
-										cls: 'offers-offer-btn',
-										style: 'padding: 30px 0px 50px 0px; margin: -50px 0px; margin-top: -15px 0px;',
-										text: 'OFFER',
-										//icon: 'resources/images/missions-box.png',
-										//iconAlign: 'right',
-										//iconCls: 'icon-recieve', 
-										listeners:
-											{
-												tap: function () {
-													if (Ext.getCmp('offer_offer_panel').getHidden() == true)
-													{ Ext.getCmp('offer_offer_panel').show(); this.setCls('after-offers-offer-btn'); }
-													else { Ext.getCmp('offer_offer_panel').hide(); this.setCls('offers-offer-btn'); }
-												}
-											}
+									//{
+									//	xtype: 'button',
+									//	//itemId: 'recievebtn',
+									//	cls: 'offers-offer-btn',
+									//	style: 'padding: 30px 0px 50px 0px; margin: -50px 0px; margin-top: -15px 0px;',
+									//	text: 'OFFER',
+									//	//icon: 'resources/images/missions-box.png',
+									//	//iconAlign: 'right',
+									//	//iconCls: 'icon-recieve', 
+									//	listeners:
+									//		{
+									//			tap: function () {
+									//				if (Ext.getCmp('offer_offer_panel').getHidden() == true)
+									//				{ Ext.getCmp('offer_offer_panel').show(); this.setCls('after-offers-offer-btn'); }
+									//				else { Ext.getCmp('offer_offer_panel').hide(); this.setCls('offers-offer-btn'); }
+									//			}
+									//		}
 
+									//},
+									{
+										xtype: 'panel',
+										layout: 'hbox',
+										cls: 'offers-offer-btn',
+										listeners: {
+											element: 'element',
+											tap: function () {
+												if (Ext.getCmp('offer_offer_panel').getHidden() == true)
+												{ Ext.getCmp('offer_offer_panel').show(); this.setCls('after-offers-offer-btn'); }
+												else { Ext.getCmp('offer_offer_panel').hide(); this.setCls('offers-offer-btn'); }
+											}
+										},
+										items: [{
+											xtype: 'container',
+											docked: 'left',
+											items: [{
+												xtype: 'label', style: 'padding: 15px 2px 15px 15px;',
+												html: 'OFFER',
+											}],
+										}, {
+											xtype: 'spacer',
+											style: 'background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%); height: 50px;',
+										}, {
+											xtype: 'container',
+											docked: 'right',
+											items: [{
+												xtype: 'image',
+												src: 'resources/images/offer_offer_btn.png',
+												padding: 14,
+											}],
+										}],
 									},
 												{
 													xtype: 'panel',
 													layout: 'vbox',
 													cls: 'has-shadow',
-													style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; background-color:white; margin-top: 50px; margin-bottom: -30px;',
+													style: 'border-radius: 0px 0px 5px 5px; background-color: #e2ddda; margin: -20px -10px 20px -10px;',
 													id: 'offer_offer_panel',
 													listeners: {
 														initialize: function ()
@@ -147,33 +179,67 @@ Ext.define('smiley360.view.OfferDetails', {
 												{
 													xtype: 'label',
 													id: 'OfferDetailsOffer',
-													style: 'background-color:#e2ddda; font-family: din medium; font-size:1.1em;',
+													style: 'font-family: franklin; font-size:1em;',
 													html: 'You will recieve one Campbell\'s Go&trade; soup of your choice, fun items to use when sharing your thoughts about Campbell\'s Go&trade; soup and 10 coupons to share with your friends and family for $2 off Campbell\'s Go&trade; soup.',
 													padding: '10px 20px',
 												},
 														],
 												},
 
+									//{
+									//	xtype: 'button',
+									//	//itemId: 'recievebtn',
+									//	style: 'padding: 30px 0px 50px 0px; margin: 60px 0px;',
+									//	cls: 'offers-mission-btn',
+									//	text: 'MISSION',
+									//	listeners:
+									//		{
+									//			tap: function () {
+									//				if (Ext.getCmp('offer_mission_panel').getHidden() == true)
+									//				{ Ext.getCmp('offer_mission_panel').show(); this.setCls('after-offers-mission-btn'); }
+									//				else { Ext.getCmp('offer_mission_panel').hide(); this.setCls('offers-mission-btn'); }
+									//			}
+									//		}
+									//},
 									{
-										xtype: 'button',
-										//itemId: 'recievebtn',
-										style: 'padding: 30px 0px 50px 0px; margin: 60px 0px;',
-										cls: 'offers-mission-btn',
-										text: 'MISSION',
-										listeners:
-											{
-												tap: function () {
-													if (Ext.getCmp('offer_mission_panel').getHidden() == true)
-													{ Ext.getCmp('offer_mission_panel').show(); this.setCls('after-offers-mission-btn'); }
-													else { Ext.getCmp('offer_mission_panel').hide(); this.setCls('offers-mission-btn'); }
-												}
+										xtype: 'panel',
+										layout: 'hbox',
+										cls: 'offers-offer-btn',
+										listeners: {
+											element: 'element',
+											tap: function () {
+												if (Ext.getCmp('offer_mission_panel').getHidden() == true)
+												{ Ext.getCmp('offer_mission_panel').show(); this.setCls('after-offers-offer-btn'); }
+												else { Ext.getCmp('offer_mission_panel').hide(); this.setCls('offers-offer-btn'); }
 											}
+										},
+										items: [{
+											xtype: 'container',
+											docked: 'left',
+											items: [
+											{
+												xtype: 'label', style: 'padding: 15px 2px 15px 15px;',
+												html: 'MISSION',
+											}, ],
+										}, {
+											xtype: 'spacer',
+											style: 'background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%); height: 50px;',
+										}, {
+											xtype: 'container',
+											docked: 'right',
+											items: [{
+												xtype: 'image',
+												style: 'margin-right: 5px;',
+												src: 'resources/images/offer-mission-btn.png',
+												padding: '13px 21px',
+											}],
+										}],
 									},
 									{
 										xtype: 'panel',
 										layout: 'vbox',
 										cls: 'has-shadow',
-										style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; background-color:white; margin-top: -60px; margin-bottom: 60px;',
+										style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; background-color:white; margin: -20px -10px 20px -10px;',
 										id: 'offer_mission_panel',
 										listeners: {
 											initialize: function ()
@@ -189,32 +255,67 @@ Ext.define('smiley360.view.OfferDetails', {
 									{
 										xtype: 'label',
 										id: 'OfferDetailsMission',
-										style: 'background-color:#e2ddda; font-family: din medium; font-size:1.1em;',
+										style: 'font-family: franklin; font-size:1em;',
 										html: 'Try Campbell\'s Go&trade; soup once and you\'ll be hooked! Once you\'ve tried it, share your experience with your social circle both on and offline using your talk bubble and disguise accessories that are in your Smiley kit. Let your inner foodie shine bright and all about Campbell\'s Go&trade; soup. ',
 										padding: '10px 20px',
 									},
 											],
 									},
+											//{
+											//	xtype: 'button',
+											//	//itemId: 'recievebtn',
+											//	style: 'padding: 30px 0px 50px 0px; margin: -45px 0px 0px 0px;',
+											//	cls: 'offers-recieve-btn',
+											//	text: 'WHAT YOU\'LL RECIEVE',
+											//	listeners:
+											//{
+											//	tap: function () {
+											//		if (Ext.getCmp('offer_recieve_panel').getHidden() == true)
+											//		{ Ext.getCmp('offer_recieve_panel').show(); this.setCls('after-offers-recieve-btn'); }
+											//		else { Ext.getCmp('offer_recieve_panel').hide(); this.setCls('offers-recieve-btn'); }
+											//	}
+											//}
+											//},
+
 											{
-												xtype: 'button',
-												//itemId: 'recievebtn',
-												style: 'padding: 30px 0px 50px 0px; margin: -45px 0px 0px 0px;',
-												cls: 'offers-recieve-btn',
-												text: 'WHAT YOU\'LL RECIEVE',
-												listeners:
-											{
-												tap: function () {
-													if (Ext.getCmp('offer_recieve_panel').getHidden() == true)
-													{ Ext.getCmp('offer_recieve_panel').show(); this.setCls('after-offers-recieve-btn'); }
-													else { Ext.getCmp('offer_recieve_panel').hide(); this.setCls('offers-recieve-btn'); }
-												}
-											}
+												xtype: 'panel',
+												layout: 'hbox',
+
+												cls: 'offers-offer-btn',
+												listeners: {
+													element: 'element',
+													tap: function () {
+														if (Ext.getCmp('offer_recieve_panel').getHidden() == true)
+														{ Ext.getCmp('offer_recieve_panel').show(); this.setCls('after-offers-offer-btn'); }
+														else { Ext.getCmp('offer_recieve_panel').hide(); this.setCls('offers-offer-btn'); }
+													}
+												},
+												items: [{
+													xtype: 'container',
+													docked: 'left',
+													items: [{
+														xtype: 'label', style: 'padding: 15px 2px 15px 15px;',
+														html: 'WHAT YOU\'LL RECIEVE',
+													}],
+												}, {
+													xtype: 'spacer',
+													style: 'background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%); height: 50px;',
+												}, {
+													xtype: 'container',
+													docked: 'right',
+													items: [{
+														xtype: 'image',
+														src: 'resources/images/missions-box.png',
+														padding: '15px 25px',
+
+													}],
+												}],
 											},
 											{
 												xtype: 'panel',
 												layout: 'vbox',
 												cls: 'has-shadow',
-												style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; background-color:white;',
+												style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; margin: -20px -10px 20px -10px;',
 												id: 'offer_recieve_panel',
 												listeners: {
 													initialize: function ()
@@ -243,7 +344,7 @@ Ext.define('smiley360.view.OfferDetails', {
 							{
 								xtype: 'label',
 								id: 'OfferDetailsWhatYoullRecieve',
-								style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
+								style: 'font-family: franklin; font-size:1em;',
 								cls: 'mission-t',
 								html: 'Fun items to use when sharing about your Campbell\'s GO&trade; experience',
 								padding: '10px 20px',
@@ -295,11 +396,11 @@ Ext.define('smiley360.view.OfferDetails', {
 						listeners: {
 							tap: function () {
 								if (smiley360.missionData.MissionDetails.MissionDetails.mission_shipment_active == '0') {
-									if (smiley360.memberData.Profile.address_status == '0')
+									if (smiley360.memberData.Profile.address_status == '1')
 										Ext.widget('offeracceptview').show()
 									else Ext.widget('offeracceptaddressview').show();
 								}
-								else this.up('#xOfferDetailsView').fireEvent('LoadMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, smiley360.memberData.UserId);
+
 							},
 						}
 					},

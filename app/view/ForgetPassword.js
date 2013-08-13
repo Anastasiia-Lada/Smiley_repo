@@ -6,7 +6,7 @@ Ext.define('smiley360.view.ForgetPassword', {
         centered: true,
         fullscreen: true,
         hideOnMaskTap: true,
-        id: 'xView',
+        id: 'xForgetPasswordView',
         scrollable: 'vertical',
         cls: 'popup-panel',
         items: [{
@@ -19,7 +19,7 @@ Ext.define('smiley360.view.ForgetPassword', {
                 cls: 'popup-close-button',
                 listeners: {
                     tap: function () {
-                        Ext.getCmp('xView').destroy();
+                        Ext.getCmp('xForgetPasswordView').destroy();
                     }
                 }
             }, {
@@ -41,11 +41,12 @@ Ext.define('smiley360.view.ForgetPassword', {
                 xtype: 'panel',
                 cls: 'popup-bottom-panel',
                 items: [{
-                    xtype: 'textfield',
+                    xtype: 'emailfield',
                     required: true,
                     id: 'xEmailField',
                     placeHolder: 'Email',
                     cls: 'cust-input',
+					autoCapitalize: false
                 }, {
                     xtype: 'label',
                     id: 'xMessageText',
@@ -60,15 +61,15 @@ Ext.define('smiley360.view.ForgetPassword', {
                     //icon: 'resources/images/share-initial.png',
                     //iconAlign: 'right',
                     //iconCls: 'popup-post-icon',
-                    id: 'xSubmitButton',
+                    id: 'xShareButton',
                     cls: 'popup-submit-button',
                     listeners: {
                         tap: function () {
                             if (this.getHtml() == 'CLOSE') {
-                                Ext.getCmp('xView').destroy();
+                                Ext.getCmp('xForgetPasswordView').destroy();
                             }
                             else {
-                                Ext.getCmp('xView').doSubmit();
+                                Ext.getCmp('xForgetPasswordView').doSubmit();
                             }
                         }
                     },
@@ -101,14 +102,14 @@ Ext.define('smiley360.view.ForgetPassword', {
         var xEmailField = Ext.getCmp('xEmailField');
         var xTitleImage = Ext.getCmp('xTitleImage');
         var xMessageText = Ext.getCmp('xMessageText');
-        var xSubmitButton = Ext.getCmp('xSubmitButton');
-        //var xSubmitStatus = Ext.getCmp('xSubmitStatus');
+        var xShareButton = Ext.getCmp('xShareButton');
+        //var xShareStatus = Ext.getCmp('xShareStatus');
 
         switch (status) {
             //case smiley360.viewStatus.progress: {
-            //    xSubmitButton.setText('POSTING...');
-            //    xSubmitButton.setIcon('resources/images/share-initial.png');
-            //    xSubmitStatus.setStyle('background-color: #F9A419;');
+            //    xShareButton.setText('POSTING...');
+            //    xShareButton.setIcon('resources/images/share-initial.png');
+            //    xShareStatus.setStyle('background-color: #F9A419;');
 
             //    var statusAnimation = new Ext.Anim({
             //        autoClear: false,
@@ -118,23 +119,23 @@ Ext.define('smiley360.view.ForgetPassword', {
             //        to: { width: this.getWidth() },
             //    });
 
-            //    statusAnimation.run(xSubmitStatus.element, 'slide');
+            //    statusAnimation.run(xShareStatus.element, 'slide');
 
             //    break;
             //}
             case smiley360.viewStatus.successful: {
                 xEmailField.hide();
-                xSubmitButton.setHtml('CLOSE')
+                xShareButton.setHtml('CLOSE')
                 xTitleImage.setSrc('resources/images/smile-successful.png');
                 xMessageText.setHtml('Thankyou, your password reminder was sent');
-                //xSubmitStatus.setStyle('background-color: #5F9E45;');
+                //xShareStatus.setStyle('background-color: #5F9E45;');
 
                 break;
             }
             case smiley360.viewStatus.unsuccessful: {
                 xTitleImage.setSrc('resources/images/smile-unsuccessful.png');
                 xMessageText.setHtml('Oops, the email address you entered is not found in our member accouns. Try again, or contact us for assistance.');
-                //xSubmitStatus.setStyle('background-color: #ED1C24;');
+                //xShareStatus.setStyle('background-color: #ED1C24;');
 
                 break;
             }

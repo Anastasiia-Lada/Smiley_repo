@@ -5,20 +5,19 @@ Ext.define('smiley360.view.MissingOffers', {
 		modal: true,
 		centered: true,
 		fullscreen: true,
-		//hideOnMaskTap: true,
-		id: 'xMOView',
+		id: 'xView',
 		scrollable: 'vertical',
 		cls: 'popup-panel',
 		items: [{
 			xtype: 'panel',
-			id: 'xMORootPanel',
+			id: 'xRootPanel',
 			cls: 'popup-root-panel',
 			items: [{
 				xtype: 'image',
 				cls: 'popup-close-button',
 				listeners: {
 					tap: function () {
-						Ext.getCmp('xMOView').destroy();
+						this.up('#xView').destroy();
 					}
 				}
 			}, {
@@ -39,19 +38,18 @@ Ext.define('smiley360.view.MissingOffers', {
 					cls: 'has-shadow',
 					items: [{
 						xtype: 'image',
-						id: 'xMOProfileImage',
+						id: 'xProfileImage',
 						style: ' min-height: 60px; min-width: 60px;background-color:white;',
-
 					}, {
 						xtype: 'label',
 						style: 'padding-top: 10px;',
-						id: 'xMOFirstLastName',
+						id: 'xFirstLastName',
 						html: 'Noel Zahra',
 						style: 'font-size:0.8em; text-align: right;',
 					}, {
 						xtype: 'label',
 						html: 'Austin, TX',
-						id: 'xMOCityState',
+						id: 'xCityState',
 						style: 'padding-bottom: 10px;',
 						style: 'font-size: 0.6em; text-align: right;',
 					}],
@@ -61,9 +59,8 @@ Ext.define('smiley360.view.MissingOffers', {
 				cls: 'popup-bottom-panel',
 				items: [{
 					xtype: 'label',
-					id: 'xMOMessageText',
+					id: 'xMessageText',
 					cls: 'popup-message-text',
-					//style: 'margin: 10px;',
 					html: 'Complete your personal info now.',
 				}],
 			}, {
@@ -72,10 +69,12 @@ Ext.define('smiley360.view.MissingOffers', {
 				items: [{
 					xtype: 'button',
 					text: 'EDIT PROFILE',
-					id: 'xMOSubmitButton',
+					id: 'xSubmitButton',
 					cls: 'popup-submit-button',
 					listeners: {
 						tap: function () {
+							Ext.widget('missingoffersview').hide();
+							Ext.getCmp('xMainView').showExternalView('editprofileview');
 						}
 					},
 				}],
@@ -83,7 +82,7 @@ Ext.define('smiley360.view.MissingOffers', {
 		}],
 		listeners: {
 			initialize: function () {
-				this.setHeight(Ext.getCmp('xMORootPanel').element.getHeight());
+			    smiley360.adjustPopupSize(this, 20);
 			},
 			painted: function () {
 				this.setMOUser();
@@ -93,9 +92,15 @@ Ext.define('smiley360.view.MissingOffers', {
 			}
 		},
 	},
+
 	setMOUser: function () {
-		Ext.getCmp('xMOProfileImage').setSrc(smiley360.userProfileImage);
-		Ext.getCmp('xMOFirstLastName').setHtml(smiley360.memberData.Profile.fName + ' ' + smiley360.memberData.Profile.lName);
-		if (Ext.getCmp('stateID')) Ext.getCmp('xMOCityState').setHtml(smiley360.memberData.Profile.city + ', ' + Ext.getCmp('stateID').getOptions()[Ext.getCmp('stateID').getValue() - 1].text);
+		this.down('#xProfileImage').setSrc(smiley360.userProfileImage);
+		this.down('#xFirstLastName').setHtml(smiley360.memberData.Profile.fName + ' ' + smiley360.memberData.Profile.lName);
+
+		var stateElement = Ext.getCmp('stateID');
+		if (stateElement) {
+		    this.down('#xCityState').setHtml(
+                smiley360.memberData.Profile.city + ', ' + stateElement.getOptions()[stateElement.getValue() - 1].text);
+		}
 	},
 });
