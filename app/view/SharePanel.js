@@ -52,10 +52,10 @@
                     }
 
                     var divTag = document.createElement("div");
-                    divTag.style.width = '100px';
-                    divTag.style.height = '100px';
-                    divTag.style.padding = '5px';
-                    divTag.style.display = 'inline-block';
+                    divTag.style.width = '90px';
+                    divTag.style.height = '90px';
+                    divTag.style.padding = '2px';
+                    divTag.style.display = 'inline-table';
                     divTag.setAttribute("align", "left");
 
                     oneButton.renderTo(divTag);

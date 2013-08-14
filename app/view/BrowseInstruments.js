@@ -11,6 +11,7 @@ Ext.define('smiley360.view.BrowseInstruments', {
     config: {
         id: 'xBrowseInstruments',
         title: 'CONNECT/browse',
+        cls:'browse-pict',
         items: [{
             xtype: 'spacer',
             height: '14px',
@@ -134,7 +135,7 @@ Ext.define('smiley360.view.BrowseInstruments', {
         var Item = ContItem.add(new Ext.Img(
 		{
 		    //src: 'resources/images/secret-logo.png',
-		    style: 'border-radius: 5px;',
+			style: 'border-radius: 5px; background-color: white;',
 		    src: smiley360.configuration.getResourceDomain() + '/' + oneBrowseIt.smileyConnect_summaryImage_URL,
 		    padding: 50,
 		    listeners: {

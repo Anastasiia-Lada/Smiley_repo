@@ -58,7 +58,7 @@ Ext.define('smiley360.view.Brand', {
                                                         },
                                                         {
                                                         	xtype: 'label',
-                                                        	width: 300,
+                                                        	width: 220,
                                                         	id: 'xBrandDescription',
                                                         	html: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
                                                         	style: 'font-size:1em; margin-top: -10px; padding: 0px 15px 10px 0px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
@@ -106,14 +106,14 @@ Ext.define('smiley360.view.Brand', {
                                                             	xtype: 'container',
                                                             	layout: { type: 'vbox', align: 'middle' },
                                                             	style: 'padding: 20px 0px 0px 20px; background-color: white; border-style:inset; border-width: 1px; border-radius: 5px;',
-                                                            	cls: 'has-shadow',
+                                                            	cls: 'has-shadow browse-pict',
                                                             	width: 120,
                                                             	height: 120,
                                                             	items: [
 																		{
 																			xtype: 'image',
-																			padding: 30,
-																			margin: '30px 0px',
+																			padding: 50,
+																			margin: '0px 0px',
 																			id: 'xBrandImage',
 																			src: 'resources/images/fender.png',
 																		}, ],

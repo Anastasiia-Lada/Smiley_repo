@@ -38,6 +38,7 @@ Ext.define('smiley360.view.OfferDetails', {
 								cls: 'heading-text active-sign',
 								style: 'padding-left: 15px;',
 								flex: 2,
+								height: 'auto',
 							},
 							{
 								xtype: 'label',
@@ -239,7 +240,7 @@ Ext.define('smiley360.view.OfferDetails', {
 										xtype: 'panel',
 										layout: 'vbox',
 										cls: 'has-shadow',
-										style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; background-color:white; margin: -20px -10px 20px -10px;',
+										style: 'background-color:#e2ddda; border-radius: 0px 0px 5px 5px; margin: -20px -10px 20px -10px;',
 										id: 'offer_mission_panel',
 										listeners: {
 											initialize: function ()
@@ -395,7 +396,7 @@ Ext.define('smiley360.view.OfferDetails', {
 						text: 'ACCEPT THIS OFFER',
 						listeners: {
 							tap: function () {
-								if (smiley360.missionData.MissionDetails.MissionDetails.mission_shipment_active == '0') {
+								if (smiley360.missionData.MissionDetails.MissionDetails.mission_shipment_active == '1') {
 									if (smiley360.memberData.Profile.address_status == '1')
 										Ext.widget('offeracceptview').show()
 									else Ext.widget('offeracceptaddressview').show();

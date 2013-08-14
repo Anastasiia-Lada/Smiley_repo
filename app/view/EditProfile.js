@@ -250,7 +250,6 @@ Ext.define('smiley360.view.EditProfile', {
 					placeHolder: 'Do you have children?',
 					listeners: {
 						change: function (selectbox, newValue, oldValue) {
-							first_time_children = false;
 							//first_time = false;//check if custom variable has been set to false
 							if (newValue == 1) {
 								Ext.getCmp('howmanychildren').show();
@@ -262,9 +261,6 @@ Ext.define('smiley360.view.EditProfile', {
 							}
 						},
 					},
-					options: [
-                        { text: '', value: '' },
-					]
 				}, {
 					xtype: 'selectfield',
 					itemId: 'ddlHaveChildren',
@@ -276,8 +272,6 @@ Ext.define('smiley360.view.EditProfile', {
 					listeners: {
 						element: 'element',
 						painted: function () {
-							child_field_hide = this;
-							if (first_time_children == true) { child_field_hide.hide(); };
 						},
 					},
 					options: [
@@ -297,23 +291,19 @@ Ext.define('smiley360.view.EditProfile', {
 					xtype: 'textfield',
 					itemId: 'ddlRace',
 					name: 'ddlRace',
+					readOnly: true,
 					//style: 'my-ddl-color',
 					cls: 'cust-input cust-input-ddl',
 					placeHolder: 'Race / Ethnicity',
 					id: 'race_etn',
 					listeners: {
-						element: 'element',
-						painted: function () {
-							//if (first_time == true) { s_hide.hide(); };
-						},
+						element: 'element',						
 						mousedown: function () {
 							this.setValue('Race / Ethnicity');
 							this.setReadOnly(true);
 							//this.setCls('cust-input cust-input-ddl my-ddl-color');
-							first_time = false;
-							if (make_hide == false) {
-								s_hide.show();
-								make_hide = true;
+							if (Ext.getCmp('ddlCheckboxes').isHidden()) {
+								Ext.getCmp('ddlCheckboxes').show();
 								field_about.setValue(' ');
 								field_url.setValue(' ');
 								field_about.setReadOnly(true);
@@ -322,17 +312,14 @@ Ext.define('smiley360.view.EditProfile', {
 								field_url.setPadding('0px 20px');
 							}
 							else {
-								s_hide.hide();
-								//Ext.Msg.alert('dfvgd');
-								make_hide = false;
-								field_about.setValue('');
-								field_url.setValue('');
-								field_url.setReadOnly(false);
+								Ext.getCmp('ddlCheckboxes').hide();
+								field_about.setValue(smiley360.memberData.Profile.aboutself);
+								field_url.setValue(smiley360.memberData.Profile.blogURL);
+								field_about.setReadOnly(false);
 								field_url.setReadOnly(false);
 								field_about.setPadding('0px 0px');
 								field_url.setPadding('0px 0px');
 							};
-							//Ext.Msg.alert('Hidden!');
 						},
 					},
 					options: [
@@ -347,10 +334,9 @@ Ext.define('smiley360.view.EditProfile', {
 					style: 'border-radius: 0px 0px 5px 5px; background-color:white; margin:-10px 0px -10px 0px;',
 					cls: 'cust-input',
 					listeners: {
-						element: 'element',
-						painted: function () {
-							s_hide = this;
-							if (first_time == true) { s_hide.hide(); };
+						//element: 'element',
+						initialize: function () {
+							this.hide();
 						},
 					},
 					//padding: 5,
@@ -366,21 +352,17 @@ Ext.define('smiley360.view.EditProfile', {
 								Ext.getCmp('race_etn').setValue('Race / Ethnicity');
 								Ext.getCmp('race_etn').setReadOnly(true);
 								//this.setCls('cust-input cust-input-ddl my-ddl-color');
-								first_time = false;
-								if (make_hide == false) {
-									s_hide.show();
-									make_hide = true;
-									field_about.setValue(smiley360.memberData.Profile.aboutself);
-									field_url.setValue(smiley360.memberData.Profile.blogURL);
+								if (Ext.getCmp('ddlCheckboxes').isHidden()) {
+									Ext.getCmp('ddlCheckboxes').show();
+									field_about.setValue(' ');
+									field_url.setValue(' ');
 									field_about.setReadOnly(true);
 									field_url.setReadOnly(true);
 									field_about.setPadding('0px 20px');
 									field_url.setPadding('0px 20px');
 								}
 								else {
-									s_hide.hide();
-									//Ext.Msg.alert('dfvgd');
-									make_hide = false;
+									Ext.getCmp('ddlCheckboxes').hide();
 									field_about.setValue(smiley360.memberData.Profile.aboutself);
 									field_url.setValue(smiley360.memberData.Profile.blogURL);
 									field_about.setReadOnly(false);
@@ -388,8 +370,6 @@ Ext.define('smiley360.view.EditProfile', {
 									field_about.setPadding('0px 0px');
 									field_url.setPadding('0px 0px');
 								};
-								//Ext.Msg.alert('Hidden!');
-
 							},
 						}
 					},

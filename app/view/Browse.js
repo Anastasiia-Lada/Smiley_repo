@@ -25,13 +25,13 @@ Ext.define('smiley360.view.Browse', {
                     {
                     	xtype: 'container',
                     	layout: 'hbox',
+
                     	//id: 'missions-cont',
                     	style: 'box-shadow: 0px 1px 2px rgba(0,0,0,0.5);',
                     	items: [{
                     		xtype: 'container',
                     		layout: 'vbox',
                     		flex: 1,
-
                     		listeners:
                                 {
                                 	painted: function () {
@@ -59,16 +59,16 @@ Ext.define('smiley360.view.Browse', {
                                         },
                                         {
                                         	xtype: 'carousel',
+                                        	cls: 'browse-pict',
                                         	direction: 'horizontal',
                                         	style: 'background-color: #efecea;',
-                                        	dragable: false,
+                                        	dragable: true,
                                         	indicator: false,
                                         	defaults: {
                                         		styleHtmlContent: true
                                         	},
                                         	width: '100%',
                                         	height: 180,
-
                                         	items: [{
                                         		xtype: 'container',
                                         		layout: 'hbox',
@@ -76,6 +76,10 @@ Ext.define('smiley360.view.Browse', {
                                         		style: 'background-color: #efecea;',
                                         		cls: 'has-shadow',
                                         		padding: 20,
+                                        		scrollable: {
+                                        			direction: 'horizontal',
+                                        			directionLock: true
+                                        		},
                                         		items: [
                                         		],
                                         	}, ]
@@ -104,7 +108,7 @@ Ext.define('smiley360.view.Browse', {
 										items: [
 											{
 												xtype: 'label',
-												html: 'FAVORITED',
+												html: 'FAVORITES',
 												cls: 'heading-text active-sign',
 												style: 'padding-left: 15px;',
 												flex: 1
@@ -115,6 +119,7 @@ Ext.define('smiley360.view.Browse', {
                                     {
                                     	xtype: 'carousel',
                                     	direction: 'horizontal',
+                                    	cls: 'browse-pict',
                                     	style: 'background-color: #efecea;',
                                     	dragable: false,
                                     	indicator: false,
@@ -131,6 +136,10 @@ Ext.define('smiley360.view.Browse', {
                                     		style: 'background-color: #efecea;',
                                     		cls: 'has-shadow',
                                     		padding: 20,
+                                    		scrollable: {
+                                    			direction: 'horizontal',
+                                    			directionLock: true
+                                    		},
                                     		items: [
                                     		],
                                     	}, ]
@@ -200,7 +209,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xAutoPict',
                                                     	src: 'resources/images/auto_c.png',
-                                                    	height: 40,
+                                                    	height: 35,
                                                     	width: '100%',
                                                     	margin: '15px 0px',
                                                     },
@@ -230,7 +239,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xBabyPict',
                                                     	src: 'resources/images/baby_c.png',
-                                                    	height: 40,
+                                                    	height: 35,
                                                     	width: '70%',
                                                     	margin: '15px 16px',
                                                     },
@@ -259,7 +268,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xClothesPict',
                                                     	src: 'resources/images/clothes_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	width: '100%',
                                                     	margin: '15px 0px',
                                                     },
@@ -346,7 +355,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xComputerPict',
                                                     	src: 'resources/images/computer_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	align: 'center',
                                                     	margin: '15px 0px',
                                                     },
@@ -376,7 +385,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xEco_FriendlyPict',
                                                     	src: 'resources/images/eco_friendly_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -404,7 +413,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xEduPict',
                                                     	src: 'resources/images/edu_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	width: '60%',
                                                     	margin: '15px 21px',
                                                     },
@@ -488,7 +497,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xMobilePict',
                                                     	src: 'resources/images/mobile_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 35px',
                                                     },
                                                      {
@@ -516,7 +525,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xFinancePict',
                                                     	src: 'resources/images/finance_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 35px',
                                                     },
                                                      {
@@ -545,7 +554,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xFoodPict',
                                                     	src: 'resources/images/food_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 35px',
                                                     },
                                                      {
@@ -637,7 +646,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xHealthPict',
                                                     	src: 'resources/images/health_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -666,7 +675,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xHobbiesPict',
                                                     	src: 'resources/images/hobbies_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -694,7 +703,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xHomePict',
                                                     	src: 'resources/images/home_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -797,7 +806,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xMediaPict',
                                                     	src: 'resources/images/media_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -825,7 +834,7 @@ Ext.define('smiley360.view.Browse', {
 														id: 'xMusicPict',
 														xtype: 'image',
 														src: 'resources/images/music_c.png',
-														height: 50,
+														height: 35,
 														margin: '15px 0px',
 													},
 													 {
@@ -853,7 +862,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xNon-profitPict',
                                                     	src: 'resources/images/non-profit_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -943,7 +952,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xPeoplePict',
                                                     	src: 'resources/images/people_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -971,7 +980,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xPetsPict',
                                                     	src: 'resources/images/pets_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -999,7 +1008,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xSportsPict',
                                                     	src: 'resources/images/sports_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -1092,7 +1101,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xTravelPict',
                                                     	src: 'resources/images/travel_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -1120,7 +1129,7 @@ Ext.define('smiley360.view.Browse', {
                                                     	xtype: 'image',
                                                     	id: 'xWorkPict',
                                                     	src: 'resources/images/work_c.png',
-                                                    	height: 50,
+                                                    	height: 35,
                                                     	margin: '15px 0px',
                                                     },
                                                      {
@@ -1213,7 +1222,6 @@ Ext.define('smiley360.view.Browse', {
 	},
 	setFavoritedItem: function (oneItem) {
 		var FavoritedItem = new Ext.Container({
-			//id: id + 'container',
 			layout: 'vbox',
 			cls: 'has-shadow',
 			style: 'background: #f7f5f6; border-radius: 5px;margin-right: 20px;',
@@ -1226,8 +1234,7 @@ Ext.define('smiley360.view.Browse', {
 		}));
 		var Item = ContItem.add(new Ext.Img(
 		{
-			//src: 'resources/images/secret-logo.png',
-			style: 'border-radius: 5px;',
+			style: 'border-radius: 5px;background-color: white;',
 			src: smiley360.configuration.getResourceDomain() + '/' + oneItem.imageURL,
 			padding: 50,
 			listeners: {
@@ -1239,9 +1246,8 @@ Ext.define('smiley360.view.Browse', {
 
 		var NextItem = FavoritedItem.add(new Ext.Label(
 		{
-			//html: 'McDonald\'s',
 			html: oneItem.title,
-			style: 'text-align: center; font-size:1.1em; padding: 10px; word-wrap: break-all; color:#413f40; font-family: \'din medium\';',
+			style: 'text-align: center; font-size:1em; padding: 10px; word-wrap: break-all; color:#413f40; font-family: \'din medium\';',
 
 		}));
 
@@ -1264,7 +1270,7 @@ Ext.define('smiley360.view.Browse', {
 	},
 	setHotItem: function (oneItem) {
 		var HotItem = new Ext.Container({
-			//id: id + 'container',
+
 			layout: 'vbox',
 			cls: 'has-shadow',
 			style: 'background: #f7f5f6; border-radius: 5px;margin-right: 20px;',
@@ -1277,8 +1283,8 @@ Ext.define('smiley360.view.Browse', {
 		}));
 		var Item = ContItem.add(new Ext.Img(
 		{
-			//src: 'resources/images/secret-logo.png',
-			style: 'border-radius: 5px;',
+			cls: 'browse-pict',
+			style: 'border-radius: 5px; background-color: white;',
 			src: smiley360.configuration.getResourceDomain() + '/' + oneItem.imageURL,
 			padding: 50,
 			listeners: {
@@ -1290,9 +1296,8 @@ Ext.define('smiley360.view.Browse', {
 
 		var NextItem = HotItem.add(new Ext.Label(
 		{
-			//html: 'McDonald\'s',
 			html: oneItem.title,
-			style: 'text-align: center; font-size:1.1em; padding: 10px; word-wrap: break-all; color:#413f40; font-family: \'din medium\';',
+			style: 'text-align: center; font-size:1em; padding: 10px; word-wrap: break-all; color:#413f40; font-family: \'din medium\';',
 
 		}));
 
@@ -1330,7 +1335,6 @@ Ext.define('smiley360.view.Browse', {
 		}
 		for (var cat_item in categoryArray)
 			if (categoryArray[cat_item] != id) {
-				//console.log(categoryArray[cat_item]);
 				Ext.getCmp(categoryArray[cat_item]).setCls('has-shadow browse_container');
 				Ext.getCmp('x' + categoryArray[cat_item] + '_panel_browse').hide();
 				Ext.getCmp('x' + categoryArray[cat_item] + 'Pict').setSrc('resources/images/' + categoryArray[cat_item].toLowerCase() + '_c.png');

@@ -51,13 +51,10 @@
                     autoSelect: false,
                     value: null,
                     required: true,
-                    placeHolder: 'How many peolpe you talked to?',
+                    placeHolder: 'How many people you talked to?',
                     cls: 'popup-input popup-input-selector',
                     options: [
                         //{ text: '', value: '' },
-                        { text: '1', value: '1' },
-                        { text: '2', value: '2' },
-                        { text: '3', value: '3' }
                     ]
                 }, {
                     xtype: 'textareafield',
@@ -124,6 +121,16 @@
         listeners: {
             initialize: function () {
                 smiley360.adjustPopupSize(this);
+            },
+            painted: function() {
+            	var stateIdTemp = [];
+            	for (var i = 1; i < 22; i++) {
+            		var temp_array = new Array();
+            		temp_array["text"] = i;
+            		temp_array["value"] = i;
+            		stateIdTemp.push(temp_array);
+            	};
+            	Ext.getCmp('xPeoplesSelector').setOptions(stateIdTemp, true);
             },
             hide: function () {
                 this.destroy();

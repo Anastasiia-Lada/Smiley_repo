@@ -49,7 +49,7 @@
 						this.up('#xMainView').showExternalView('editprofileview');
 					}
 				}
-			}, {
+			}, /*{
 				xtype: 'button',
 				text: 'Refer Friends',
 				margin: '20px 0px 0px 0px',
@@ -61,7 +61,7 @@
 						alert('refer a friend is not avaliable now');//this.up('#xHomeView').fireEvent('getProfileHomeCommand', this);
 					}
 				}
-			}, {
+			}, */{
 				xtype: 'button',
 				text: 'Terms of Use',
 				margin: '20px 0px 0px 0px',

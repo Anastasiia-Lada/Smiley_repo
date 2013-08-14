@@ -458,6 +458,7 @@ Ext.define('smiley360.controller.Index', {
 		smiley360.services.getContactUs(
 			function (response) {
 				if (response.success) {
+					delete response.success;
 					smiley360.ContactUs = response;
 
 					Ext.widget('contactusview').show();
@@ -566,7 +567,7 @@ Ext.define('smiley360.controller.Index', {
 				}
 				else {
 					console.log('Login unsuccessful!');
-
+					Ext.Msg.alert('Wrong login or password!<br>Try again!<br>');
 					Ext.getCmp('login_btn').enable();//show error on view
 				};
 			});

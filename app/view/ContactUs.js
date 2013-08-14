@@ -49,12 +49,10 @@ Ext.define('smiley360.view.ContactUs', {
 				items: [{
 					xtype: 'textfield',
 					id: 'xUserName',
-					disabled: true,
 					cls: 'contactus-input',
 				}, {
 					xtype: 'textfield',
 					id: 'xUserEmail',
-					disabled: true,
 					cls: 'contactus-input',
 				}, {
 					xtype: 'selectfield',
@@ -63,8 +61,8 @@ Ext.define('smiley360.view.ContactUs', {
 					value: null,
 					required: true,
 					placeHolder: 'Inquiring about',
-					style: 'color: black !impoprtant;',
-					cls: 'popup-input popup-input-selector',
+					style: 'margin-top: 20px;',
+					cls: 'contactus-input popup-input-selector',
 				}, {
 					xtype: 'textareafield',
 					id: 'xCommentText',
@@ -102,12 +100,11 @@ Ext.define('smiley360.view.ContactUs', {
 				this.destroy();
 			},
 			painted: function () {
-				console.log(smiley360.ContactUs.valueOf());
 				this.setContactUs();
 			}
 		},
 	},
-	setContactUs: function(){
+	setContactUs: function () {
 		Ext.getCmp('xUserName').setValue(smiley360.memberData.Profile.fName + ' ' + smiley360.memberData.Profile.lName);
 		Ext.getCmp('xUserEmail').setValue(smiley360.memberData.Profile.email);
 		var stateIdTemp = [];

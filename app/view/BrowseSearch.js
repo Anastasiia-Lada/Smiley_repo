@@ -12,6 +12,7 @@ Ext.define('smiley360.view.BrowseSearch', {
 	config: {
 		id: 'xBrowseSearch',
 		title: 'CONNECT/search',
+		cls: 'browse-pict',
 		items: [
                     {
                     	xtype: 'spacer',
@@ -171,7 +172,7 @@ Ext.define('smiley360.view.BrowseSearch', {
 
 				Ext.getCmp('addtest').add(Ext.create(
 						'Ext.List', {
-							cls: 'searchlist',
+							cls: 'searchlist browse-pict',
 							style: 'background: #e2ddda;',
 							inline: { wrap: false },
 							width: 400,
@@ -180,17 +181,17 @@ Ext.define('smiley360.view.BrowseSearch', {
 							//itemTpl: '<div id="xSearchResults" style="height: 60px;" ><img src="{title}"' +
 							//' width=20px height=22px /></div>',
 							itemTpl: '<div id="xSearchResults" style="margin: 10px 20px; float: left; background: white; border-radius: 5px;" ><img style="border-radius: 5px;"src="{img_src}"' +
-							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.9em; color: rgb(65, 63, 64); font-family: din medium;" >{title}</p></div>' +
+							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.8em; color: rgb(65, 63, 64); font-family: din medium;" >{title}</p></div>' +
 							 '<div id="xSearchResults" style="margin: 10px 20px; float: left; background: white; border-radius: 5px;" ><img style="border-radius: 5px;"src="{img_src2}"' +
-							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.9em; color: rgb(65, 63, 64); font-family: din medium;" >{title2}</p></div>' +
+							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.8em; color: rgb(65, 63, 64); font-family: din medium;" >{title2}</p></div>' +
 							 '<div id="xSearchResults" style="margin: 10px 20px; float: left; background: white; border-radius: 5px;" ><img style="border-radius: 5px;"src="{img_src3}"' +
-							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.9em; color: rgb(65, 63, 64); font-family: din medium;" >{title3}</p></div>' +
+							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.8em; color: rgb(65, 63, 64); font-family: din medium;" >{title3}</p></div>' +
 							 '<div id="xSearchResults" style="margin: 10px 20px; float: left; background: white; border-radius: 5px;" ><img style="border-radius: 5px;"src="{img_src4}"' +
-							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.9em; color: rgb(65, 63, 64); font-family: din medium;" >{title4}</p></div>' +
+							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.8em; color: rgb(65, 63, 64); font-family: din medium;" >{title4}</p></div>' +
 							'<div id="xSearchResults" style="margin: 10px 20px; float: left; background: white; border-radius: 5px;" ><img style="border-radius: 5px;"src="{img_src5}"' +
-							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.9em; color: rgb(65, 63, 64); font-family: din medium;" >{title5}</p></div>' +
+							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.8em; color: rgb(65, 63, 64); font-family: din medium;" >{title5}</p></div>' +
 							'<div id="xSearchResults" style="margin: 10px 20px; float: left; background: white; border-radius: 5px;" ><img style="border-radius: 5px;"src="{img_src6}"' +
-							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.9em; color: rgb(65, 63, 64); font-family: din medium;" >{title6}</p></div>',
+							' width=80 height=80 /><p style="text-align: center; margin-top:-10px; font-size: 0.8em; color: rgb(65, 63, 64); font-family: din medium;" >{title6}</p></div>',
 							//itemTpl: '<div ><div id="left" style="width: 25%; float:left; font-size: 20px; "><p>{title}</p><p>{title}</p></div><div id="center" style="width: 25%; float:left; font-size: 20px; ">{title}</div><div id="semi-center" style="width: 25%; float:left; font-size: 20px; ">{img_src}</div><div id="right" style="width: 25%; float:left; font-size: 20px; ">{img_src}</div></div>',
 							//itemTpl: '<div>{title}<br />verified star<br />" "</div>"
 							//itemTpl: myTpl,

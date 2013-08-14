@@ -48,6 +48,35 @@ Ext.define('smiley360.view.ReviewForFender', {
                 id: 'xReviewPanel',
                 cls: 'popup-middle-panel popup-status-container',
                 items: [{
+                    xtype: 'fileupload',
+                    id: 'xAddPhotoButton',
+                    cls: 'popup-photo-button',
+                    style: 'height: 30px; padding: 5px; margin-top: -3px;',
+                    autoUpload: true,
+                    states: {
+                        browse: {
+                            text: 'ADD PHOTO'
+                        },
+                        uploading: {
+                            text: 'Uploading',
+                            loading: true// Enable loading spinner on button
+                        }
+                    },
+                    listeners: {
+                        success: function (response) {
+                            this.disable();
+
+                            //var xView = this.up('#xView');
+                            //var xAddedImage = xView.down('#xAddedImage');
+                            //var xReviewText = xView.down('#xReviewText');
+
+                            //xAddedImage.show();
+                            //xAddedImage.setHeight(xReviewText.element.getHeight());
+                            //xAddedImage.setWidth(xReviewText.element.getWidth() * 0.4);
+                            //xAddedImage.setSrc(smiley360.configuration.getServerDomain() + response.filepath);
+                        }
+                    }
+                }, {
                     xtype: 'panel',
                     layout: 'hbox',
                     items: [{
@@ -58,36 +87,6 @@ Ext.define('smiley360.view.ReviewForFender', {
                         itemsCount: 5,
                         itemCls: 'x-rating-star',
                         itemHoverCls: 'x-rating-star-hover',
-                    }, {
-                        xtype: 'fileupload',
-                        id: 'xAddPhotoButton',
-                        docked: 'right',
-                        cls: 'popup-photo-button',
-                        style: 'height: 30px; padding: 5px; margin-top: -3px;',
-                        autoUpload: true,
-                        states: {
-                            browse: {
-                                text: 'ADD PHOTO'
-                            },
-                            uploading: {
-                                text: 'Uploading',
-                                loading: true// Enable loading spinner on button
-                            }
-                        },
-                        listeners: {
-                            success: function (response) {
-                                this.hide();
-
-                                var xView = this.up('#xView');
-                                var xAddedImage = xView.down('#xAddedImage');
-                                var xReviewText = xView.down('#xReviewText');
-
-                                xAddedImage.show();
-                                xAddedImage.setHeight(xReviewText.element.getHeight());
-                                xAddedImage.setWidth(xReviewText.element.getWidth() * 0.4);
-                                xAddedImage.setSrc(smiley360.configuration.getServerDomain() + response.filepath);
-                            }
-                        }
                     }]
                 }, {
                     xtype: 'panel',
@@ -101,9 +100,11 @@ Ext.define('smiley360.view.ReviewForFender', {
                         cls: 'popup-input popup-input-text',
                         listeners: {
                             keyup: function () {
+                                var xView = this.up('#xView');
                                 var postLenght = this.getValue().length;
 
-                                this.up('#xView').down('#xReviewCountLabel').setHtml(postLenght.toString());
+                                xView.down('#xReviewCountLabel').setHtml(postLenght.toString());
+                                xView.validateForm();
                             }
                         }
                     }, {
@@ -132,7 +133,7 @@ Ext.define('smiley360.view.ReviewForFender', {
             }, {
                 xtype: 'panel',
                 id: 'xGuidelinesPanel',
-                cls: 'popup-middle-panel',
+                cls: 'popup-middle-panel popup-status-container',
                 hidden: true,
                 items: [{
                     xtype: 'panel',
@@ -241,11 +242,20 @@ Ext.define('smiley360.view.ReviewForFender', {
                     layout: 'hbox',
                     items: [{
                         xtype: 'checkboxfield',
+                        id: 'xAgreementCheckbox',
                         label: 'You agree to the ',
                         labelAlign: 'right',
                         labelWidth: '100%',
                         labelCls: 'popup-checkbox-grey-label',
                         cls: 'popup-checkbox',
+                        listeners: {
+                            check: function () {
+                                this.up('#xView').validateForm();
+                            },
+                            uncheck: function () {
+                                this.up('#xView').validateForm();
+                            },
+                        }
                     }, {
                         xtype: 'button',
                         ui: 'plain',
@@ -253,7 +263,10 @@ Ext.define('smiley360.view.ReviewForFender', {
                         html: 'Review Guidelines',
                         listeners: {
                             tap: function () {
-                                this.up('#xView').showGuidelines();
+                                var xView = this.up('#xView');
+
+                                xView.showGuidelines();
+                                xView.down('#xShareButton').enable();
                             }
                         }
                     }],
@@ -266,13 +279,17 @@ Ext.define('smiley360.view.ReviewForFender', {
                     text: 'ADD REVIEW',
                     id: 'xShareButton',
                     cls: 'popup-submit-button',
+                    disabled: true,
                     listeners: {
                         tap: function () {
+                            var xView = this.up('#xView');
+
                             if (xIsReviewState) {
-                                this.up('#xView').doAddReview();
+                                xView.doAddReview();
                             }
                             else {
-                                this.up('#xView').showReviewForm();
+                                xView.showReviewForm();
+                                xView.validateForm();
                             }
                         }
                     },
@@ -333,4 +350,14 @@ Ext.define('smiley360.view.ReviewForFender', {
 
         smiley360.adjustPopupSize(this);
     },
+
+    validateForm: function () {
+        var postLenght = this.down('#xReviewText').getValue().length;
+        if (postLenght < 70 || this.down('#xAgreementCheckbox').getChecked() == false) {
+            this.down('#xShareButton').disable();
+        }
+        else {
+            this.down('#xShareButton').enable();
+        }
+    }
 });

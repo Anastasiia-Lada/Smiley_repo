@@ -94,7 +94,7 @@ Ext.define('smiley360.view.OfferAccept', {
 						listeners: {
 							tap: function () {
 								Ext.getCmp('xOfferView').fireEvent('LoadContactUsCommand', this);								
-								Ext.widget('offeracceptview').hide();
+								Ext.getCmp('xOAView').hide();
 							}
 						}
 					}, {
@@ -109,7 +109,7 @@ Ext.define('smiley360.view.OfferAccept', {
 						listeners: {
 							tap: function () {
 								Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
-								Ext.widget('offeracceptview').hide();
+								Ext.getCmp('xOAView').hide();
 							}
 						}
 					}],
@@ -124,18 +124,17 @@ Ext.define('smiley360.view.OfferAccept', {
 					cls: 'addr-accept-btn',
 					listeners: {
 						tap: function () {
-							Ext.widget('offeracceptview').hide();
+							Ext.getCmp('xOAView').hide();
 							//go accept mission
 							Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
 							//if accepted go to
 							if (smiley360.missionData.MissionDetails.MissionDetails.mission_full) {
 								//if (Ext.widget('offeracceptaddressview')) Ext.widget('offeracceptviewaddress').hide();
-								Ext.widget('offeracceptview').hide;
+								
 								Ext.widget('missionisfull').show();
 							}
 							else {
 								//if (Ext.widget('offeracceptaddressview')) Ext.widget('offeracceptviewaddress').hide();
-								Ext.widget('offeracceptview').hide;
 								Ext.getCmp('xOfferView').fireEvent('LoadMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, smiley360.memberData.UserId);
 							};
 						}

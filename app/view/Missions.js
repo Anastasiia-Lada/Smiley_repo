@@ -92,6 +92,7 @@ Ext.define('smiley360.view.Missions', {
 
 			var includeContainerImage = new Ext.Container({
 
+				cls: 'browse-pict',
 				style: 'background-color: #efecea; padding-top: 15px;',
 				layout: {
 					type: 'vbox',
@@ -100,7 +101,7 @@ Ext.define('smiley360.view.Missions', {
 			});
 			includeContainerImage.add(new Ext.Img(
             {
-            	style: 'padding: 20px 0px 0px 0px;background-color: #efecea; border-radius: 5px;',
+            	style: 'padding: 20px 0px 0px 0px;background-color: white; border-radius: 5px;',
             	cls: 'has-shadow',
             	width: 100,
             	height: 100,

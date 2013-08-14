@@ -271,7 +271,7 @@ Ext.define('smiley360.view.Offers', {
 			var allContainer = new Ext.Container({
 				id: 'OfferID_pane' + oneItem.missionID,
 				layout: { type: 'hbox' },
-				style: 'padding: 0px 15px 0px 15px; background-color: #efecea;',
+				style: 'padding: 3px 15px 3px 15px; background-color: #efecea;',
 				flex: 1,
 				listeners: {
 					element: 'element',
@@ -291,6 +291,7 @@ Ext.define('smiley360.view.Offers', {
 
 			var includeContainerImage = new Ext.Container({
 
+				cls: 'browse-pict',
 				style: 'background-color: #efecea; padding-top: 15px;',
 				layout: {
 					type: 'vbox',
@@ -299,7 +300,7 @@ Ext.define('smiley360.view.Offers', {
 			});
 			includeContainerImage.add(new Ext.Img(
 			{
-				style: 'padding: 20px 0px 0px 0px;background-color: #efecea; border-radius: 5px;',
+				style: 'padding: 20px 0px 0px 0px;background-color: white; border-radius: 5px;',
 				cls: 'has-shadow',
 				width: 100,
 				height: 100,
@@ -324,7 +325,7 @@ Ext.define('smiley360.view.Offers', {
 			{
 				html: oneItem.descr,
 				//html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel malesuada odio. Phasellus aliquam dignissim scelerisque. Sed ullamcorper libero nec placerat posuere.',
-				style: 'font-size:1.1em; margin-top: -10px; padding: 0px 15px 10px 0px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'din medium\';',
+				style: 'font-size:1.1em; margin-top: -10px; padding: 5px 15px 10px 0px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'din medium\';',
 			}));
 
 			allContainer.add(includeContainerImage);
