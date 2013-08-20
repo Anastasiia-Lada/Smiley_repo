@@ -153,7 +153,6 @@ Ext.define('smiley360.view.Signup', {
 
 						var formData = this.up('#Signup').getValues();
 						formData.calDob = Ext.getCmp('birthdate_signup').getFormattedValue();
-						alert(formData.calDob);
 						var usr = Ext.create('smiley360.model.SignupModel', {
 							txtFirstName: formData.txtFirstName,
 							txtLastName: formData.txtLastName,
