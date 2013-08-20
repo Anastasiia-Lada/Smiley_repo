@@ -21,7 +21,7 @@ Ext.define("smiley360.model.SignupModel", {
 					{ name: 'txtCPassword', type: 'password' },
 					{ name: 'txtEmail', type: 'string' },
 					{ name: 'txtZip', type: 'string' },
-					{ name: 'txtBirthdate', type: 'date', dateFormat: 'YYYY-mm-dd' },
+					{ name: 'txtBirthdate', type: 'auto'/*, dateFormat: 'YYYY-mm-dd'*/ },
 					{ name: 'txtGender', type: 'auto' }
 		],
 		validations: [

@@ -32,15 +32,7 @@ Ext.define('smiley360.view.Connect', {
 						cls: 'heading-text active-sign',
 						style: 'padding-left: 15px;',
 						flex: 2,
-					},
-					//{
-                    //    xtype: 'label',
-                    //    html: '13/92',
-                    //    cls: 'heading-text',
-                    //    style: 'padding-left: 15px; padding-right: 10px;',
-                    //    flex: 0.2,
-					//}
-					],
+					},],
 				}, {
 					xtype: 'container',
 					style: 'background-color: #efecea',
@@ -53,7 +45,7 @@ Ext.define('smiley360.view.Connect', {
 						dragable: false,
 						indicator: false,
 						width: '100%',
-						height: 100,
+						height: 120,
 						defaults: {
 							styleHtmlContent: true
 						},
@@ -67,8 +59,6 @@ Ext.define('smiley360.view.Connect', {
 									else {
 										me.next();
 									}
-									//console.log(me.pageTurner.valueOf());
-									//me.pageTurner.delay(3000); //comment this to avoid js-bug
 								}, carousel);
 
 								carousel.pageTurner.delay(3000);
@@ -84,7 +74,6 @@ Ext.define('smiley360.view.Connect', {
 					},
 					{
 						xtype: 'container',
-						//margin: '20px 25px',
 						style: 'background-color: #F4F3F1; padding: 40px 25px;',
 						layout: 'vbox',
 						items: [{
@@ -101,20 +90,29 @@ Ext.define('smiley360.view.Connect', {
 							items: [{
 								xtype: 'container',
 								docked: 'left',
+								style: 'margin-top:-5px; ',
 								items: [{
-									xtype: 'label', style: 'padding: 15px 2px 15px 15px;',
+									xtype: 'label', style: 'border-radius: 5px 0px 0px 0px; margin-top:-5px; padding: 15px 2px 15px 15px; background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%);',
 									html: 'SEARCH',
 								}],
 							}, {
 								xtype: 'spacer',
-								style: 'background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%); height: 50px;',
+								style: 'margin-top:-5px; background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%); height: 45px;',
 							}, {
 								xtype: 'container',
-								docked: 'right',
+								width: 40,
+								style: 'margin-top:-5px; height: 45px; border-radius: 0px 5px 0px 0px; background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%); ',
+								//docked: 'right',
+								//cls: 'btn-icon-special',
 								items: [{
 									xtype: 'image',
+									height: 20,
+									width: 20,
+									style: 'margin-top: 10px;',
+									//cls: 'btn-icon-special',
+									//style: 'background-position: 5px 5px;',
 									src: 'resources/images/search_connect.png',
-									padding: '14px 15px',
+									//padding: '14px 15px',
 								}],
 							}],
 						},
@@ -158,7 +156,7 @@ Ext.define('smiley360.view.Connect', {
 						{
 							xtype: 'panel',
 							layout: 'hbox',
-							cls: 'menu-list-btn-recieve',
+							cls: 'menu-list-btn-recieve btn-icon-special',
 							listeners: {
 								element: 'element',
 								tap: function () {
@@ -178,10 +176,13 @@ Ext.define('smiley360.view.Connect', {
 							}, {
 								xtype: 'container',
 								docked: 'right',
+								style: 'margin-top: 8px;',
 								items: [{
 									xtype: 'image',
+									style: 'margin-right: 15px;',
+									//style: 'background-position: 5px 5px;',
 									src: 'resources/images/all_files_connect.png',
-									padding: '15px 25px',
+									padding: 14,
 
 								}],
 							}],
@@ -242,10 +243,11 @@ Ext.define('smiley360.view.Connect', {
 				//id: 'xHomeBrandImage',
 				style: 'background-color: white; margin-left: 10px; border-radius: 5px; border-style: solid; border-width: 1px; border-color: white;',
 				src: smiley360.configuration.getResourceDomain() + '/' + oneItem.imageURL,//'resources/images/offers_logo3.png',
-				width: '40%',
+				width: 100,
+			    height: 100,
 				listeners: {
 					tap: function () {
-						this.up('#xConnectView').fireEvent('onBrandTapCommand', this, smiley360.memberData.UserId, oneItem.smileyconnectID, 0, 10);
+						this.up('#xConnectView').fireEvent('onBrandTapCommand', this, smiley360.memberData.UserId, oneItem.smileyconnectID, 0, 100);
 					}
 				}
 			}));

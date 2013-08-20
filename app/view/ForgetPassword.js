@@ -134,8 +134,11 @@ Ext.define('smiley360.view.ForgetPassword', {
             }
             case smiley360.viewStatus.unsuccessful: {
                 xTitleImage.setSrc('resources/images/smile-unsuccessful.png');
-                xMessageText.setHtml('Oops, the email address you entered is not found in our member accouns. Try again, or contact us for assistance.');
+                xMessageText.setHtml('Oops, the email address you entered is not found in our member accounts. Try again, or <a id="xConactUsRef" style="text-decoration: underline;">contact us</a> for assistance.');
                 //xShareStatus.setStyle('background-color: #ED1C24;');
+                xMessageText.element.down('a#xConactUsRef').on('tap', function () {
+                    Ext.getCmp('xOfferView').fireEvent('LoadContactUsCommand', this);
+                });
 
                 break;
             }

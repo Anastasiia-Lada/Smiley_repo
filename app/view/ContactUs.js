@@ -68,6 +68,7 @@ Ext.define('smiley360.view.ContactUs', {
 					id: 'xCommentText',
 					maxRows: 5,
 					required: true,
+					isFocused: false,
 					style: 'color: black !impoprtant;',
 					placeHolder: 'Insert question or comment',
 					cls: 'popup-input popup-input-text',

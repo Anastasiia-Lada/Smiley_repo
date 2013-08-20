@@ -1,7 +1,7 @@
 Ext.define('smiley360.view.BrandImage', {
 	extend: 'Ext.Container',
 	alias: 'widget.brandimageview',
-	requires:[
+	requires: [
 	'Ext.util.DelayedTask'
 	],
 	config: {
@@ -27,7 +27,8 @@ Ext.define('smiley360.view.BrandImage', {
 			}, {
 				xtype: 'carousel',
 				height: 300,
-				id:'xBrandImageCarousel',
+				indicator: false,
+				id: 'xBrandImageCarousel',
 				items: [{
 					xtype: 'container',
 					layout: 'vbox',
@@ -44,57 +45,11 @@ Ext.define('smiley360.view.BrandImage', {
 								},
 					],
 				},
-				///first
-				{
-					xtype: 'container',
-					layout: 'vbox',
-					style: 'background: transparent;',
-					items: [
-								{
-									xtype: 'image',
-									height: '100%',
-									src: 'resources/images/guitar_3.png',
-								},
-								{
-									xtype: 'panel',
-									html: '<div class="left-btn-brandimage"></div><div class="right-btn-brandimage"></div>'
-								},
-					],
-				},///second
-				{
-					xtype: 'container',
-					layout: 'vbox',
-					style: 'background: transparent;',
-					items: [
-								{
-									xtype: 'image',
-									height: '100%',
-									src: 'resources/images/guitar_4.png',
-								},
-								{
-									xtype: 'panel',
-									html: '<div class="left-btn-brandimage"></div><div class="right-btn-brandimage"></div>'
-								},
-					],
-				},///third
-				{
-					xtype: 'container',
-					layout: 'vbox',
-					style: 'background: transparent;',
-					items: [
-								{
-									xtype: 'image',
-									height: '100%',
-									src: 'resources/images/guitar_5.png',
-								},
-								{
-									xtype: 'panel',
-									html: '<div class="left-btn-brandimage"></div><div class="right-btn-brandimage"></div>'
-								},
-					],
-				},///fourth
-				],},
-			],},
+				///first	
+				],
+			},
+			],
+		},
 		],
 		listeners: {
 			initialize: function () {
@@ -112,13 +67,44 @@ Ext.define('smiley360.view.BrandImage', {
 						}
 						else {
 							slide_carousel.next();
-
 						}
 						//console.log(slide_carousel.pageTurner.valueOf());
-						slide_carousel.pageTurner.delay(3000); //comment this to avoid js-bug
+						//slide_carousel.pageTurner.delay(3000); //comment this to avoid js-bug
 					}, carousel);
 					carousel.pageTurner.delay(3000);
-				}
+				},
+			show: function () {
+				this.setItem(smiley360.slideShowImages);
+				Ext.getCmp('xBrandImageCarousel').setActiveItem(Ext.getCmp('xBrandImage_Pict' + smiley360.slideShowImages));
+			},
 		},
+	},
+	setItem: function (item_pict) {
+		var brandTopImages = smiley360.brandData.BrandDetails.smileyConnect_topTenCommentImages;
+		Ext.getCmp('xBrandImageCarousel').removeAll(true, true);
+		for (var item in brandTopImages) {
+			//alert('i am showed' + brandTopImages[item].sc_commentID);
+			this.addItem(Ext.getCmp('xBrandImageCarousel'), brandTopImages[item].fullImage_URL, brandTopImages[item].sc_commentID);
+		};
+		
+	},
+	addItem: function (control, imageURL, id) {
+		//alert('i add pict');
+		Ext.getCmp('xBrandImageCarousel').add(new Ext.Container({
+			layout: 'vbox',
+			style: 'background: transparent;',
+			items: [
+						{
+							id: 'xBrandImage_Pict' + id,
+							xtype: 'image',
+							height: '100%',
+							src: smiley360.configuration.getResourceDomain() + '/' + imageURL,
+						},
+						{
+							xtype: 'panel',
+							html: '<div class="left-btn-brandimage"></div><div class="right-btn-brandimage"></div>'
+						},
+			],
+		}));
 	},
 });

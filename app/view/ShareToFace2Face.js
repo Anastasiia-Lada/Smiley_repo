@@ -35,7 +35,7 @@
                     xtype: 'image',
                     docked: 'right',
                     cls: 'popup-title-image',
-                    src: 'resources/images/share-f2f.png',
+                    src: 'resources/images/f2f_share.png',
                 }],
             }, {
                 xtype: 'panel',
@@ -53,17 +53,55 @@
                     required: true,
                     placeHolder: 'How many people you talked to?',
                     cls: 'popup-input popup-input-selector',
-                    options: [
-                        //{ text: '', value: '' },
-                    ]
+                    listeners: {
+                        initialize: function () {
+                            this.addCls('popup-input-required');
+                        },
+                        change: function () {
+                            var xView = this.up('#xView');
+                            if (xView) {
+                                xView.doShareValidation();
+                            }
+                        }
+                    }
                 }, {
                     xtype: 'textareafield',
                     id: 'xReviewText',
-                    maxRows: 5,
-                    //maxLength: 84,
-                    required: true,
                     placeHolder: 'Write your review',
                     cls: 'popup-input popup-input-text',
+                    maxRows: 5,
+                    minLength: 70,
+                    required: true,
+                    isFocused: false,
+                    listeners: {
+                        initialize: function () {
+                            this.addCls('popup-input-required');
+                        },
+                        keyup: function () {
+                            var postLenght = this.getValue().length;
+
+                            var xView = this.up('#xView');
+                            if (xView) {
+                                xView.down('#xPostCountLabel').setHtml(postLenght.toString());
+                                xView.doShareValidation();
+                            }
+                        }
+                    }
+                }, {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    items: [{
+                        xtype: 'label',
+                        cls: 'popup-post-bottom-text',
+                        style: 'color: #878789;',
+                        html: 'Post must contain at least 70 characters.',
+                    }, {
+                        xtype: 'label',
+                        id: 'xPostCountLabel',
+                        docked: 'right',
+                        cls: 'popup-post-bottom-text',
+                        html: '0',
+                    }],
                 }, {
                     xtype: 'rating',
                     id: 'xRating',
@@ -73,6 +111,9 @@
                     itemCls: 'x-rating-star',
                     itemHoverCls: 'x-rating-star-hover',
                     listeners: {
+                        initialize: function () {
+                            this.addCls('x-rating-field-required');
+                        },
                         change: function (rate, value, currentValue) {
                             var logMessage = Ext.String.format(
                                 'ShareToFace2Face -> Rating changed: { value: {0}, currentValue: {1} }', value, currentValue);
@@ -80,21 +121,21 @@
                             console.log(logMessage);
 
                             var xView = this.up('#xView');
-                            if (xView){
+                            if (xView) {
                                 if (value < 0) {
                                     this.addCls('x-rating-field-required');
 
                                     xView.down('#xReviewText').addCls('popup-input-required');
                                     xView.down('#xPeoplesSelector').addCls('popup-input-required');
-                                    xView.down('#xShareButton').disable();
                                 }
                                 else {
                                     this.removeCls('x-rating-field-required');
 
                                     xView.down('#xReviewText').removeCls('popup-input-required');
                                     xView.down('#xPeoplesSelector').removeCls('popup-input-required');
-                                    xView.down('#xShareButton').enable();
                                 }
+
+                                xView.doShareValidation();
                             }
                         }
                     }
@@ -110,6 +151,7 @@
                     iconAlign: 'right',
                     iconCls: 'popup-post-icon',
                     cls: 'popup-post-button',
+                    disabled: true,
                     listeners: {
                         tap: function () {
                             this.up('#xView').doShare();
@@ -122,15 +164,15 @@
             initialize: function () {
                 smiley360.adjustPopupSize(this);
             },
-            painted: function() {
-            	var stateIdTemp = [];
-            	for (var i = 1; i < 22; i++) {
-            		var temp_array = new Array();
-            		temp_array["text"] = i;
-            		temp_array["value"] = i;
-            		stateIdTemp.push(temp_array);
-            	};
-            	Ext.getCmp('xPeoplesSelector').setOptions(stateIdTemp, true);
+            painted: function () {
+                var stateIdTemp = [];
+                for (var i = 1; i < 22; i++) {
+                    var temp_array = new Array();
+                    temp_array["text"] = i;
+                    temp_array["value"] = i;
+                    stateIdTemp.push(temp_array);
+                };
+                Ext.getCmp('xPeoplesSelector').setOptions(stateIdTemp, true);
             },
             hide: function () {
                 this.destroy();
@@ -153,4 +195,15 @@
             smiley360.setResponseStatus(shareView, response);
         });
     },
+
+    doShareValidation: function () {
+        if (this.down('#xPeoplesSelector').getValue() > 0 &&
+            this.down('#xRating').getValue() > -1 &&
+            this.down('#xReviewText').getValue().length >= 70) {
+            this.down('#xShareButton').enable();
+        }
+        else {
+            this.down('#xShareButton').disable();
+        }
+    }
 });

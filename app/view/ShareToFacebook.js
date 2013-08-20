@@ -37,7 +37,7 @@
                     xtype: 'image',
                     docked: 'right',
                     cls: 'popup-title-image',
-                    src: 'resources/images/fb.png',
+                    src: 'resources/images/share_all.png',
                 }],
             }, {
                 xtype: 'panel',
@@ -54,17 +54,45 @@
                     itemsCount: 5,
                     itemCls: 'x-rating-star',
                     itemHoverCls: 'x-rating-star-hover',
+                    listeners: {
+                        initialize: function () {
+                            this.addCls('x-rating-field-required');
+                        },
+                        change: function (rate, value, currentValue) {
+                            var logMessage = Ext.String.format(
+                                'ShareToFacebook -> Rating changed: { value: {0}, currentValue: {1} }', value, currentValue);
+
+                            console.log(logMessage);
+
+                            var xView = this.up('#xView');
+                            if (xView) {
+                                if (value < 0) {
+                                    this.addCls('x-rating-field-required');
+                                }
+                                else {
+                                    this.removeCls('x-rating-field-required');
+                                }
+
+                                xView.doShareValidation();
+                            }
+                        }
+                    }
                 }, {
                     xtype: 'textareafield',
-                    maxRows: 5,
-                    minLength: 70,
                     id: 'xPostText',
                     cls: 'popup-input popup-input-text',
+                    maxRows: 5,
+                    minLength: 70,
+                    isFocused: false,
                     listeners: {
                         keyup: function () {
                             var postLenght = this.getValue().length;
 
-                            Ext.getCmp('xPostCountLabel').setHtml(postLenght.toString());
+                            var xView = this.up('#xView');
+                            if (xView) {
+                                xView.down('#xPostCountLabel').setHtml(postLenght.toString());
+                                xView.doShareValidation();
+                            }
                         }
                     }
                 }, {
@@ -100,12 +128,28 @@
                         label: 'Post to Profile Wall.',
                         labelCls: 'popup-checkbox-grey-label',
                         cls: 'popup-checkbox',
+                        listeners: {
+                            check: function () {
+                                this.up('#xView').doShareValidation();
+                            },
+                            uncheck: function () {
+                                this.up('#xView').doShareValidation();
+                            }
+                        }
                     }, {
                         xtype: 'checkboxfield',
                         id: 'xToBrandPageCheckbox',
                         label: 'Post to Brand Page.',
                         labelCls: 'popup-checkbox-grey-label',
                         cls: 'popup-checkbox',
+                        listeners: {
+                            check: function () {
+                                this.up('#xView').doShareValidation();
+                            },
+                            uncheck: function () {
+                                this.up('#xView').doShareValidation();
+                            }
+                        }
                     }],
                 }, {
                     xtype: 'label',
@@ -127,6 +171,7 @@
                     iconCls: 'popup-post-icon',
                     id: 'xShareButton',
                     cls: 'popup-post-button',
+                    disabled: true,
                     listeners: {
                         tap: function () {
                             this.up('#xView').doShare();
@@ -170,4 +215,16 @@
             smiley360.setResponseStatus(shareView, response);
         });
     },
+
+    doShareValidation: function () {
+        if (this.down('#xRating').getValue() > -1 &&
+            this.down('#xPostText').getValue().length >= 70 && (
+            this.down('#xToProfileCheckbox').getChecked() == true ||
+            this.down('#xToBrandPageCheckbox').getChecked() == true)) {
+            this.down('#xShareButton').enable();
+        }
+        else {
+            this.down('#xShareButton').disable();
+        }
+    }
 });

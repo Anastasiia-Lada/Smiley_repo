@@ -10,8 +10,8 @@
          * while other resources are still being loaded for the first time
          */
         html, body {
-            background: url("resources/images/splash.png") no-repeat center center;
-            background-size: cover;
+            background: url("resources/images/loadingimage-r2.jpg") no-repeat center center;
+            background-size:cover;
         }
 
         #appLoadingIndicator {
@@ -62,11 +62,6 @@
         // Global variable for Sencha Application object
         var _App = undefined;
 
-        var deviceId = getCookie('deviceId');
-        if (deviceId == null) {
-            setCookie('deviceId', guid());
-        }
-
         // Create IE + others compatible event handler
         var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
         var eventer = window[eventMethod];
@@ -81,35 +76,6 @@
                 _App.getController('Index').onShowOffersView(true);
             }
         }, false);
-
-        function setCookie(name, value, expires, path, domain, secure) {
-            document.cookie = name + "=" + escape(value) +
-              ((expires) ? "; expires=" + expires : "") +
-              ((path) ? "; path=" + path : "") +
-              ((domain) ? "; domain=" + domain : "") +
-              ((secure) ? "; secure" : "");
-        }
-
-
-        function getCookie(name) {
-            var cookie = " " + document.cookie;
-            var search = " " + name + "=";
-            var setStr = null;
-            var offset = 0;
-            var end = 0;
-            if (cookie.length > 0) {
-                offset = cookie.indexOf(search);
-                if (offset != -1) {
-                    offset += search.length;
-                    end = cookie.indexOf(";", offset)
-                    if (end == -1) {
-                        end = cookie.length;
-                    }
-                    setStr = unescape(cookie.substring(offset, end));
-                }
-            }
-            return (setStr);
-        }
 
         function guid() {
             return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();

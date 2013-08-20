@@ -36,7 +36,7 @@
                         xtype: 'image',
                         docked: 'right',
                         cls: 'popup-title-image',
-                        src: 'resources/images/share-link.png',
+                        src: 'resources/images/share_link.png',
                     }],
             }, {
                 xtype: 'panel',
@@ -51,6 +51,7 @@
                     id: 'xLinkField',
                     cls: 'cust-input',
                     value: 'http://smiley360.com/768768768',
+                    readOnly: true,
                 }]
             }, {
                 xtype: 'panel',

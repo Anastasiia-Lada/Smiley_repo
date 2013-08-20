@@ -1,151 +1,130 @@
-var hide_panel, first_time, dock_panel;
-
 Ext.define('smiley360.view.Missions', {
-	extend: 'Ext.Panel',
-	alias: 'widget.missionsview',
-	requires: ['Ext.carousel.Carousel'],
-	config: {
-		id: 'xMissionView',
-		items: [{
-			xtype: 'container',
-			layout: 'hbox',
-			id: 'missions-cont',
-			items: [{
-				xtype: 'container',
-				layout: 'vbox',
-				flex: 1,
-				items: [{
-					xtype: 'spacer',
-					height: '14px',
-					style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 5px 5px 0px 0px;'
-				}, {
-					xtype: 'spacer',
-					height: '7px',
-					style: 'background-color: #efecea;'
-				}, {
-					xtype: 'container',
-					laytout: 'vbox',
-					items: [{
-						xtype: 'container',
-						cls: 'has-shadow',
-						layout: 'hbox',
-						items: [{
-							xtype: 'label',
-							html: 'CURRENT MISSIONS',
-							cls: 'heading-text active-sign',
-							style: 'padding-left: 15px;',
-							flex: 1
-						}]
-					}, {
-						xtype: 'container',
-						id: 'xMissionList',
-						layout: 'vbox',
-					},
+    extend: 'Ext.Panel',
+    alias: 'widget.missionsview',
+    requires: ['Ext.carousel.Carousel'],
+    config: {
+        id: 'xMissionView',
+        items: [{
+            xtype: 'container',
+            layout: 'hbox',
+            id: 'missions-cont',
+            items: [{
+                xtype: 'container',
+                layout: 'vbox',
+                flex: 1,
+                items: [{
+                    xtype: 'spacer',
+                    height: '14px',
+                    style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 5px 5px 0px 0px;'
+                }, {
+                    xtype: 'spacer',
+                    height: '7px',
+                    style: 'background-color: #efecea;'
+                }, {
+                    xtype: 'container',
+                    laytout: 'vbox',
+                    items: [{
+                        xtype: 'container',
+                        cls: 'has-shadow',
+                        layout: 'hbox',
+                        items: [{
+                            xtype: 'label',
+                            html: 'CURRENT MISSIONS',
+                            cls: 'heading-text active-sign',
+                            style: 'padding-left: 15px;',
+                            flex: 1
+                        }]
+                    }, {
+                        xtype: 'container',
+                        id: 'xMissionList',
+                        layout: 'vbox',
+                    }, {
+                        xtype: 'spacer',
+                        height: '7px',
+                        style: 'background-color: #efecea;',
+                        cls: 'has-shadow',
+                    }, {
+                        xtype: 'spacer',
+                        height: '7px',
+                        style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 0px 0px 5px 5px;'
 
-					{
-						xtype: 'spacer',
-						height: '7px',
-						style: 'background-color: #efecea;',
-						cls: 'has-shadow',
-					}, {
-						xtype: 'spacer',
-						height: '7px',
-						style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 0px 0px 5px 5px;'
+                    }, {
+                        xtype: 'spacer',
+                        height: '10px',
+                        style: 'background: transparent;'
+                    }]
+                }],
+            }],//end panel added
+        }],//ens strange container
+        listeners: {
+            painted: function () {
+                console.log('Mission view showed!');
+                this.setMissions();
+                //this.setWhatsHappening();
+                //this.setSpecialOffers();
+            },
+        },
+    },
 
-					}, {
-						xtype: 'spacer',
-						height: '10px',
-						style: 'background: transparent;'
-					}]
-				}
-				],
-			}],//end panel added
-		}],//ens strange container
-		listeners: {
-			painted: function () {
-				console.log('Mission view showed!');
-				this.setMissions();
-				//this.setWhatsHappening();
-				//this.setSpecialOffers();
-			},
-		},
-	},
+    setMissions: function () {
+        Ext.getCmp('xMissionList').removeAll(true, true);
+        for (var key in smiley360.memberData.MissionList) {
+            var oneItem = smiley360.memberData.MissionList[key];
 
-	setMissions: function () {
-		Ext.getCmp('xMissionList').removeAll(true, true);
-		for (var key in smiley360.memberData.MissionList) {
-			var oneItem = smiley360.memberData.MissionList[key];
+            var allContainer = new Ext.Container({
+                id: 'MissionID_pane' + oneItem.missionID,
+                cls: 'missions-mission-panel',
+                listeners: {
+                    element: 'element',
+                    tap: function () {
+                        console.log('MissionDetailsCommandPanel', oneItem.missionID, this.valueOf());
 
-			var allContainer = new Ext.Container({
-				id: 'MissionID_pane' + oneItem.missionID,
-				layout: { type: 'hbox' },
-				style: 'padding: 10px 15px /*280px 15px*/; border-bottom: 1px dashed #d7cfcd; background-color: #efecea;',
-				flex: 1,
-				listeners: {
-					element: 'element',
-					tap: function () {
-						console.log('MissionDetailsCommandPanel', oneItem.missionID, this.valueOf());
-						this.up('#xMissionView').fireEvent('LoadMissionDetailsCommand', this, this.getId().substr(14), smiley360.memberData.UserId);
-					}
-				}
-			});
+                        this.up('#xMissionView').fireEvent('showMissionDetailsCommand', this, this.getId().substr(14), false);
+                    }
+                }
+            });
 
-			var includeContainerImage = new Ext.Container({
+            var domContainer = allContainer.element.dom.firstChild;
 
-				cls: 'browse-pict',
-				style: 'background-color: #efecea; padding-top: 15px;',
-				layout: {
-					type: 'vbox',
-					align: 'middle',
-				},
-			});
-			includeContainerImage.add(new Ext.Img(
-            {
-            	style: 'padding: 20px 0px 0px 0px;background-color: white; border-radius: 5px;',
-            	cls: 'has-shadow',
-            	width: 100,
-            	height: 100,
-            	id: 'MissionID_pict' + oneItem.missionID,
-            	src: smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link),
-            	listeners: {
-            		//element: 'element',
-            		tap: function () {
-            			console.log('MissionDetailsCommand', oneItem.missionID, this.valueOf());
-            			this.up('#xMissionView').fireEvent('LoadMissionDetailsCommand', this, this.getId().substr(14), smiley360.memberData.UserId);
-            		}
-            	}//'resources/images/lays.png',
-            }));
+            var imgTag = document.createElement("img");
+            imgTag.style.marginRight = '5px',
+			imgTag.style.float = 'left';
+            imgTag.setAttribute('id', 'OfferID_pict' + oneItem.missionID);
+            imgTag.setAttribute('src', smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link));
+            imgTag.setAttribute('class', 'has-shadow');
+            imgTag.style.borderRadius = '5px';
 
-			var includeContainerLabels = new Ext.Container({
+            domContainer.appendChild(imgTag);
 
-				layout: { type: 'vbox' },
-				flex: 4,
-				style: 'padding-left: 10px;',
-			});
-			includeContainerLabels.add(new Ext.Label(
-            {
-            	html: oneItem.title,
-            	//html: 'Survey Title',
-            	style: 'font-size:1.4em; padding: 10px 15px 10px 0px; background-color: #efecea; color:#413f40; font-family: \'din bold\';',
-            }));
+            var titleTag = document.createElement("p");
+            titleTag.style.margin = '0px';
+            titleTag.style.fontSize = '1.3em';
+            titleTag.style.fontFamily = 'din bold';
+            titleTag.style.color = '#413f40';
+            titleTag.innerText = oneItem.title;
+            titleTag.setAttribute('class', 'set-height');
 
-			includeContainerLabels.add(new Ext.Label(
-            {
-            	html: oneItem.descr,
-            	//html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel malesuada odio. Phasellus aliquam dignissim scelerisque. Sed ullamcorper libero nec placerat posuere.',
-            	style: 'font-size:1.1em; margin-top: -10px; padding: 0px 15px 10px 0px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'din medium\';',
-            }));
+            domContainer.appendChild(titleTag);
 
-			allContainer.add(includeContainerImage);
-			allContainer.add(includeContainerLabels);
-			var xMissionList = this.down('#xMissionList')// + oneItem.mission_typeID);
-			if (xMissionList) {//&& smiley360.memberData.isProfileComplete.complete) {
-				//xOfferList.removeAll(true, true);
-				xMissionList.add(allContainer);
+            var descTag = document.createElement("p");
+            titleTag.style.margin = '0px';
+            descTag.style.paddingTop = '10px';
+            descTag.style.fontSize = '1em';
+            descTag.style.fontFamily = 'din medium';
+            descTag.style.color = '#413f40';
+            descTag.innerText = oneItem.descr;
+            descTag.setAttribute('class', 'set-height');
 
-				//this.down('#xMissionListHeader' + oneItem.mission_typeID).setCls('heading-text active-sign');
-			}
-			//else Ext.widget('missingoffersview').show();
-		}
-	},
+            domContainer.appendChild(descTag);
+
+            var xMissionList = this.down('#xMissionList')// + oneItem.mission_typeID);
+            if (xMissionList) {//&& smiley360.memberData.isProfileComplete.complete) {
+                //xOfferList.removeAll(true, true);
+                xMissionList.add(allContainer);
+
+                //this.down('#xMissionListHeader' + oneItem.mission_typeID).setCls('heading-text active-sign');
+            }
+            //else Ext.widget('missingoffersview').show();
+        }
+    },
 });

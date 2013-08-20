@@ -38,6 +38,7 @@
 
 .popup-title-image {
 	min-width: 50px;
+	min-height: 50px;
 	background-size: contain !important;
 	background-position: right !important;
 }
@@ -321,7 +322,7 @@
 .popup-survey-iframe {
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 /********************************************************************************************/
@@ -578,7 +579,7 @@
 .menu-list-btn-recieve {
 	background: -webkit-linear-gradient(top, #9f9a98 0%, #423c39 100%);
 	height: 50px;
-	margin: -10px -10px 20px -10px;
+	margin: -10px -10px 10px -10px;
 	font-size: 12pt;
 	font-family: din medium;
 	color: white;
@@ -640,13 +641,11 @@
 	font-size: .80em;
 	height: 30px;
 	padding-top: 8px;
-	background-color: white;
 }
 
 .x-level-field#xMissionUserLevelRating {
 	min-width: 0px;
 	min-height: 0px;
-	background-color: white;
 }
 
 /*OFFERS styles*/
@@ -708,6 +707,25 @@
 	color: white;
 }
 
+.offers-offer-panel {
+	padding: 15px;
+	background-color: #efecea;
+}
+
+	.offers-offer-panel .x-inner {
+		display: inline-block !important;
+	}
+
+.missions-mission-panel {
+	padding: 15px;
+	background-color: #efecea;
+	border-bottom: 1px dashed #d7cfcd;
+}
+
+	.missions-mission-panel .x-inner {
+		display: inline-block !important;
+	}
+
 .accept-btn {
 	background: -webkit-linear-gradient(top, #5e9d45 0%, #4d7b35 100%);
 	height: 50px;
@@ -719,7 +737,6 @@
 .browse_container {
 	background: #e2ddda;
 	border-radius: 5px;
-	margin-right: 20px;
 	width: 100px;
 	height: 100px;
 }
@@ -727,7 +744,7 @@
 .after_browse_container {
 	background: #534b48;
 	border-radius: 5px;
-	margin-right: 20px;
+	margin-right: 18px;
 	width: 100px;
 	height: 100px;
 }
@@ -884,7 +901,7 @@
 	display: block;
 	text-align: center;
 	font-family: din bold;
-    margin-top: -6px;
+	margin-top: -6px;
 }
 
 .share-badge-btn {
@@ -1056,3 +1073,43 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
+
+.btn-icon-special .x-img.x-img-background  {
+	background-size: 25px;
+}
+
+/*.marriage-status .x-input-el .x-form-field .x-input-text:before{
+	content: url("../images/bullet-13.png");
+    position: absolute;
+    left: 18px;
+}*/
+
+.x-field-select.marriage-status .x-input-el:before {
+	content: url("../images/bullet-13.png");
+	position: absolute;
+	left: 18px;
+}
+
+.x-field-mask.marriage-status {
+	content: url("../images/bullet-13.png");
+	position: absolute;
+	left: 18px;
+}
+
+.custom-ddl-label {
+	background: white;
+}
+
+.x-form-label.custom-ddl-label span {
+	color: #b9b9b9;
+	background: white;
+	font-family: 'franklin' !important;
+	font-weight: normal !important;
+	font-size: 1em !important;
+}
+.set-height {
+	line-height: 110%;
+}
+/*.x-field-input .x-clear-icon{
+
+}*/

@@ -35,7 +35,7 @@
                     xtype: 'image',
                     docked: 'right',
                     cls: 'popup-title-image',
-                    src: 'resources/images/tw-1.png',
+                    src: 'resources/images/twi_share.png',
                 }],
             }, {
                 xtype: 'panel',
@@ -45,27 +45,6 @@
                 xtype: 'panel',
                 cls: 'popup-middle-panel popup-status-container',
                 items: [{
-                    xtype: 'textareafield',
-                    id: 'xPostText',
-                    maxRows: 5,
-                    //maxLength: 84,
-                    cls: 'popup-input popup-input-text',
-                    listeners: {
-                        keyup: function () {
-                            var postLenght = this.getValue().length;
-                            var xPostCountLabel = Ext.getCmp('xPostCountLabel');
-
-                            xPostCountLabel.setHtml(postLenght.toString());
-
-                            if (postLenght > 84) {
-                                xPostCountLabel.setStyle('color: red;')
-                            }
-                            else {
-                                xPostCountLabel.setStyle('color: #878789;')
-                            }
-                        }
-                    }
-                }, {
                     xtype: 'panel',
                     layout: 'hbox',
                     items: [{
@@ -80,6 +59,32 @@
                         cls: 'popup-post-bottom-text',
                         html: '0',
                     }],
+                }, {
+                    xtype: 'textareafield',
+                    id: 'xPostText',
+                    maxRows: 5,
+                    //maxLength: 84,
+                    isFocused: false,
+                    cls: 'popup-input popup-input-text',
+                    listeners: {
+                        keyup: function () {
+                            var postLenght = this.getValue().length;
+
+                            var xView = this.up('#xView')
+                            var xPostCountLabel = xView.down('#xPostCountLabel');
+
+                            xPostCountLabel.setHtml(postLenght.toString());
+
+                            if (postLenght > 84) {
+                                xPostCountLabel.setStyle('color: red;')
+                                xView.down('#xShareButton').disable();
+                            }
+                            else {
+                                xPostCountLabel.setStyle('color: #878789;')
+                                xView.down('#xShareButton').enable();
+                            }
+                        }
+                    }
                 }],
             }, {
                 xtype: 'panel',
@@ -99,11 +104,11 @@
                 cls: 'popup-button-panel',
                 items: [{
                     xtype: 'button',
+                    id: 'xShareButton',
                     text: 'POST',
                     icon: 'resources/images/share-initial.png',
                     iconAlign: 'right',
                     iconCls: 'popup-post-icon',
-                    id: 'xShareButton',
                     cls: 'popup-post-button',
                     listeners: {
                         tap: function () {

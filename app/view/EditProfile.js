@@ -93,7 +93,13 @@ Ext.define('smiley360.view.EditProfile', {
 					//	yearFrom: 1900,
 					//},
 					placeHolder: 'Date of birth',
-					required: true
+					required: true,
+					listeners: {
+						painted: function () {
+							if (smiley360.memberData.Profile.birthdate == null)
+								this.setReadOnly(false);
+						}
+					}
 				}, {
 					xtype: 'selectfield',
 					itemId: 'ddlGender',
@@ -101,10 +107,14 @@ Ext.define('smiley360.view.EditProfile', {
 					id: 'gender',
 					cls: 'cust-input cust-input-ddl',
 					placeHolder: 'Gender',
+					autoSelect: false,
 					readOnly: true,
-					options: [
-                        { text: '', value: '' },
-					]
+					listeners: {
+						painted: function () {
+							if (smiley360.memberData.Profile.gender == null)
+								this.setReadOnly(false);
+						}
+					}
 				}],//end items top vbox
 			}, {
 				xtype: 'spacer',
@@ -177,6 +187,7 @@ Ext.define('smiley360.view.EditProfile', {
 						id: 'stateID',
 						name: 'ddlState',
 						cls: 'cust-input cust-input-ddl',
+						autoSelect: false,
 						placeHolder: 'State',
 						options: [
                             { text: '', value: '' },
@@ -184,7 +195,7 @@ Ext.define('smiley360.view.EditProfile', {
 					}],
 				}, {
 					xtype: 'textfield',
-					placeHolder: 'CityStateZip',
+					placeHolder: 'Zip',
 					itemId: 'txtCityStateZip',
 					id: 'zip',
 					name: 'txtCityStateZip',
@@ -201,6 +212,7 @@ Ext.define('smiley360.view.EditProfile', {
 					id: 'country',
 					name: 'ddlCountry',
 					cls: 'cust-input cust-input-ddl',
+					autoSelect: true,
 					placeHolder: 'Country',
 					options: [
                         { text: '', value: '' },
@@ -227,28 +239,48 @@ Ext.define('smiley360.view.EditProfile', {
 				}],
 			}, {
 				xtype: 'container',
-				cls: 'has-shadow',
+				cls: 'has-shadow ',
 				layout: { type: 'vbox' },
 				style: 'background-color: #efecea;',
 				padding: 10,
 				items: [{
 					xtype: 'selectfield',
+					label: 'Marital status - ',
+					labelCls: 'custom-ddl-label',
 					itemId: 'ddlStatus',
 					name: 'ddlStatus',
 					id: 'marital',
-					cls: 'cust-input cust-input-ddl',
+					cls: 'cust-input cust-input-ddl marriage-status',
+					autoSelect: false,
 					placeHolder: 'Single',
 					options: [
                         { text: '', value: '' }
-					]
+					],
+					listeners: {
+						painted: function () {
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('Marital status - '); this.setLabelWidth('30%'); }
+						},
+						change: function () {
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('Marital status - '); this.setLabelWidth('30%'); }
+						}
+					},
 				}, {
 					xtype: 'selectfield',
 					itemId: 'ddlChildren',
 					name: 'ddlChildren',
+					label: 'Children? - ',
+					labelCls: 'custom-ddl-label',
 					id: 'children',
+					autoSelect: false,
 					cls: 'cust-input cust-input-ddl',
 					placeHolder: 'Do you have children?',
 					listeners: {
+						painted: function () {
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('Children? - '); this.setLabelWidth('30%'); }
+						},
 						change: function (selectbox, newValue, oldValue) {
 							//first_time = false;//check if custom variable has been set to false
 							if (newValue == 1) {
@@ -259,20 +291,30 @@ Ext.define('smiley360.view.EditProfile', {
 								Ext.getCmp('howmanychildren').hide();
 								Ext.getCmp('howmanychildren').setValue('');
 							}
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('Children? - '); this.setLabelWidth('30%'); }
 						},
 					},
 				}, {
 					xtype: 'selectfield',
 					itemId: 'ddlHaveChildren',
 					name: 'ddlHaveChildren',
+					label: 'How Many? - ',
+					labelCls: 'custom-ddl-label',
 					id: 'howmanychildren',
 					//style: 'my-ddl-color',
 					cls: 'cust-input cust-input-ddl',
+					autoSelect: false,
 					placeHolder: 'How many children do you have?',
 					listeners: {
-						element: 'element',
 						painted: function () {
+							if (this.getValue() == null) {this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('How Many? - '); this.setLabelWidth('30%'); }
 						},
+						change: function () {
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('How Many? - '); this.setLabelWidth('30%'); }
+						}
 					},
 					options: [
                         { text: '', value: '' },
@@ -281,12 +323,25 @@ Ext.define('smiley360.view.EditProfile', {
 					xtype: 'selectfield',
 					itemId: 'ddlHousehold',
 					name: 'ddlHousehold',
+					label: 'Income - ',
+					labelCls: 'custom-ddl-label',
 					id: 'income',
+					autoSelect: false,
 					cls: 'cust-input cust-input-ddl',
 					placeHolder: 'Household Income',
 					options: [
                         { text: '', value: '' },
-					]
+					],
+					listeners: {
+						painted: function () {
+							if (this.getValue() == null) {this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('Income - '); this.setLabelWidth('30%'); }
+						},
+						change: function () {
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
+							else { this.setLabel('Income - '); this.setLabelWidth('30%'); }
+						}
+					}
 				}, {
 					xtype: 'textfield',
 					itemId: 'ddlRace',
@@ -297,8 +352,9 @@ Ext.define('smiley360.view.EditProfile', {
 					placeHolder: 'Race / Ethnicity',
 					id: 'race_etn',
 					listeners: {
-						element: 'element',						
+						element: 'element',
 						mousedown: function () {
+							//alert('race tap');
 							this.setValue('Race / Ethnicity');
 							this.setReadOnly(true);
 							//this.setCls('cust-input cust-input-ddl my-ddl-color');
@@ -313,7 +369,9 @@ Ext.define('smiley360.view.EditProfile', {
 							}
 							else {
 								Ext.getCmp('ddlCheckboxes').hide();
-								field_about.setValue(smiley360.memberData.Profile.aboutself);
+								if (smiley360.memberData.Profile.aboutself)
+									field_about.setValue(smiley360.memberData.Profile.aboutself);
+								if (smiley360.memberData.Profile.blogURL)
 								field_url.setValue(smiley360.memberData.Profile.blogURL);
 								field_about.setReadOnly(false);
 								field_url.setReadOnly(false);
@@ -344,11 +402,12 @@ Ext.define('smiley360.view.EditProfile', {
 						xtype: 'label',
 						html: '(please select all that apply)',
 						cls: 'my-checkbox-label',
-						style: 'font-family: \'franklin\';font-size: 0.8em; color: black; background-color:transparent; padding-left: 120px;',
-						margin: '-19px 0px 0px 0px',
+						style: 'padding-top: 10px; font-family: \'franklin\';font-size: 0.8em; color: black; background-color:transparent; padding-left: 120px;',
+						margin: '-30px 0px 0px 0px',
 						listeners: {
 							element: 'element',
 							tap: function () {
+								//alert('lbl tap');
 								Ext.getCmp('race_etn').setValue('Race / Ethnicity');
 								Ext.getCmp('race_etn').setReadOnly(true);
 								//this.setCls('cust-input cust-input-ddl my-ddl-color');

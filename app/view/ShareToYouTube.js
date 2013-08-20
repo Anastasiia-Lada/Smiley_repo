@@ -29,8 +29,9 @@
                 items: [
                     {
                         xtype: 'label',
+                        id: 'xTitleLabel',
                         cls: 'popup-title-text',
-                        html: 'Earn 5 Smiles Sharing on YouTube',
+                        html: 'Submit a Link to Your YouTube video to earn {0} Smiles',
                     }, {
                         xtype: 'image',
                         docked: 'right',
@@ -116,9 +117,16 @@
             youtubeURL: this.down('#xUrlField').getValue(),
         };
 
-        smiley360.setViewStatus(shareView, smiley360.viewStatus.progress);
+        smiley360.setViewStatus(shareView, smiley360.viewStatus.progress, { progress: 'SUBMIT' });
         smiley360.services.postToYoutube(shareData, function (response) {
-            smiley360.setResponseStatus(shareView, response);
+            smiley360.setResponseStatus(shareView, response, { successful: 'DONE' });
         });
     },
+
+    setEarnSmiles: function (smiles) {
+        var xTitleLabel = this.down('#xTitleLabel');
+
+        xTitleLabel.setHtml(Ext.String.format(
+            xTitleLabel.getHtml(), smiles));
+    }
 });

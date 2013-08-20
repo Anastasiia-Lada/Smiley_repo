@@ -4,6 +4,7 @@
         identifier: 'sequential',
         fields: [
             { name: 'memberId', type: 'string' },
+            { name: 'deviceId', type: 'string' },
         ],
         proxy: {
             type: 'localstorage',

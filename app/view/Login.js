@@ -68,31 +68,22 @@ Ext.define('smiley360.view.Login', {
             }, {
                 xtype: 'spacer',
                 cls: 'clear',
-                height: '27px'
+                height: '27px',
             }, {
                 xtype: 'button',
+                id: 'xFacebookLoginButton',
                 text: 'LOG IN WITH FACEBOOK',
                 ui: 'action',
-                listeners: {
-                    tap: function () {
-                        window.location = 'http://smileys.ekonx.net.ua/oauth/Facebook.html?deviceId=' + getCookie('deviceId');
-                    }
-                }
-            }, {
-                xtype: 'button',
-                text: 'LOG IN WITH TWITTER',
-                ui: 'action',
-                listeners: {
-                    tap: function () {
-                        window.location = 'http://smileys.ekonx.net.ua/oauth/Twitter.html?deviceId=' + getCookie('deviceId');
-                    }
-                }
             }],
         }],
 
         listeners: [{
             delegate: "#xLogin",
             fn: "onLoginTap",
+            event: "tap",
+        }, {
+            delegate: "#xFacebookLoginButton",
+            fn: "onFacebookLoginTap",
             event: "tap",
         }, {
             delegate: 'div#xSignup',
@@ -109,8 +100,28 @@ Ext.define('smiley360.view.Login', {
 
     onLoginTap: function () {
         Ext.getCmp('login_btn').setDisabled(true);
-        this.fireEvent('AuthentificateCommand', this, this.down("#txtLogin").getValue(), this.down("#txtPassword").getValue());
+        this.fireEvent('AuthentificateCommand', this, this.down("#txtLogin").getValue(), this.down("#txtPassword").getValue(), 'xLoginView');
     },
+
+    onFacebookLoginTap: function () {
+        var deviceId = Ext.getStore('membersStore').getAt(0).data.deviceId;
+
+        console.log('Login -> login to Facebook with deviceId: ', deviceId);
+
+        window.location =
+            smiley360.configuration.getServerDomain() +
+            'oauth/Facebook.html?deviceId=' + deviceId;
+    },
+
+    //onTwitterLoginTap: function () {
+    //    var deviceId = Ext.getStore('membersStore').getAt(0).data.deviceId;
+
+    //    console.log('Login -> login to Twitter with deviceId: ', deviceId);
+
+    //    window.location =
+    //        smiley360.configuration.getServerDomain() +
+    //        'oauth/Twitter.html?deviceId=' + deviceId;
+    //},
 
     onSignupTap: function () {
         //================================

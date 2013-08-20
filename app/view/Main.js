@@ -93,6 +93,8 @@ Ext.define('smiley360.view.Main', {
 
             listeners: {
                 activeitemchange: function (tabbar, value, oldValue, eOpts) {
+                    if (!value.tab) return;
+
                     xMainView.setTitle(value.tab.getTitle());
 
                     if (!xSidePanel.getHidden()) {
@@ -130,29 +132,10 @@ Ext.define('smiley360.view.Main', {
                 var shareButton = xTabpanel.getTabBar().getComponent(2);
 
                 shareButton.on('tap', function () {
-                    if (smiley360.missionData.MissionDetails == null) {
-                        smiley360.services.getMissionDetails(
-                            smiley360.memberData.MissionList['0'].missionID,
-                            smiley360.memberData.UserId, function (response) {
-                                if (response.success) {
-                                    smiley360.missionData.MissionDetails = response;
-
-                                    if (smiley360.missionData.MissionDetails.MissionDetails.mission_full == true) {
-                                        xTabpanel.down('#xDetailsView').setMissionDetails();
-                                        xTabpanel.down('#xDetailsView').showSharePanel();
-                                    };
-                                }
-                                else {
-                                    console.log('Missiondetails is corrupted!');//show error on view
-                                }
-                            });
-                    }
-                    else {
-                        xTabpanel.down('#xDetailsView').showSharePanel();
-                    }
+                    xTabpanel.down('#xDetailsView').showSharePanel();
                 });
 
-                if (!Object.keys(smiley360.memberData.MissionList).length) {
+                if (smiley360.memberData.MissionList[0] == null) {
                     shareButton.disable();
                 }
             },

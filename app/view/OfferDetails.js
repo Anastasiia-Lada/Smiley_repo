@@ -94,13 +94,14 @@ Ext.define('smiley360.view.OfferDetails', {
 							},
 							{
 								xtype: 'panel',
+								hidden: true,
 								html: '<div class="left-btn-mission"></div><div class="right-btn-mission"></div>'
 							},
-					{
-						xtype: 'spacer',
-						style: 'background-color: #efecea; border-bottom: 1px dashed #d7cfcd;',
-						height: 20,
-					},
+					//{
+					//	xtype: 'spacer',
+					//	style: 'background-color: #efecea; border-bottom: 1px dashed #d7cfcd;',
+					//	height: 20,
+					//},
 
 							{
 								xtype: 'container',
@@ -153,8 +154,10 @@ Ext.define('smiley360.view.OfferDetails', {
 										}, {
 											xtype: 'container',
 											docked: 'right',
+											style: 'padding-top: 5px;',
 											items: [{
 												xtype: 'image',
+												style: 'margin: 10px;',
 												src: 'resources/images/offer_offer_btn.png',
 												padding: 14,
 											}],
@@ -228,6 +231,7 @@ Ext.define('smiley360.view.OfferDetails', {
 										}, {
 											xtype: 'container',
 											docked: 'right',
+											style: 'padding-top: 5px;',
 											items: [{
 												xtype: 'image',
 												style: 'margin-right: 5px;',
@@ -304,6 +308,7 @@ Ext.define('smiley360.view.OfferDetails', {
 												}, {
 													xtype: 'container',
 													docked: 'right',
+													style: 'padding-top: 5px;',
 													items: [{
 														xtype: 'image',
 														src: 'resources/images/missions-box.png',
@@ -324,60 +329,27 @@ Ext.define('smiley360.view.OfferDetails', {
 												},
 												items:
 													[
-									{
-										xtype: 'label',
-										height: '3px',
-										style: 'background-color:#fba00a; margin: 0px 0px 0px 0px; '
-									},
-									//{
-									//    xtype: 'label',
-									//    html: 'JOIN THIS MISSION AND RECIEVE:',
-									//    style: 'background-color:#e2ddda; font-family: din bold; font-size:1em;',
-									//    padding: '10px 20px',
-									//},
-											//{
-											//	xtype: 'label',
-											//    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-											//    cls: 'mission-t',
-											//    html: '1 Campbell\'s Go&trade; soup in the bold flavour that you chose',
-											//    padding: '10px 20px',
-											//},
-							{
-								xtype: 'label',
-								id: 'OfferDetailsWhatYoullRecieve',
-								style: 'font-family: franklin; font-size:1em;',
-								cls: 'mission-t',
-								html: 'Fun items to use when sharing about your Campbell\'s GO&trade; experience',
-								padding: '10px 20px',
-							},
-												//{
-												//    xtype: 'label',
-												//    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-												//    cls: 'mission-t',
-												//    html: '10 coupons to share with your friends for $2 off GoCampbell\'s Go&trade; soup',
-												//    padding: '10px 20px',
-												//},
-												//{
-												//    xtype: 'label',
-												//    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-												//    cls: 'mission-t',
-												//    html: '$1 off Digital Coupon to share',
-												//    padding: '10px 20px',
-												//},
-												//{
-												//    xtype: 'label',
-												//    style: 'background-color:#e2ddda;font-family: franklin; font-size:1.1em;',
-												//    cls: 'mission-t',
-												//    html: 'Smiley360 Sharing Guide',
-												//    padding: '10px 20px',
-												//},
+												{
+													xtype: 'label',
+													height: '3px',
+													style: 'background-color:#fba00a; margin: 0px 0px 0px 0px; '
+												},
+												{
+													xtype: 'label',
+													id: 'OfferDetailsWhatYoullRecieve',
+													style: 'font-family: franklin; font-size:1em;',
+													cls: 'mission-t',
+													html: 'Fun items to use when sharing about your Campbell\'s GO&trade; experience',
+													padding: '10px 20px',
+												},
+								
 													],
 											},
 									  {
 									  	xtype: 'label',
 									  	html: 'NO THANKS, REMOVE THIS OFFER.',
 									  	style: 'text-decoration:underline; background-color:#efecea; font-family: din bold; font-size:1em;',
-									  	padding: '20px 30px',
+									  	padding: '10px 0px',
 									  	listeners: {
 									  		element: 'element',
 									  		tap: function () {
@@ -386,9 +358,7 @@ Ext.define('smiley360.view.OfferDetails', {
 									  	},
 									  },
 								],
-
 							},
-
 					{
 						xtype: 'button',
 						style: 'margin: 10px 10px 0px 10px;',
@@ -401,7 +371,10 @@ Ext.define('smiley360.view.OfferDetails', {
 										Ext.widget('offeracceptview').show()
 									else Ext.widget('offeracceptaddressview').show();
 								}
-
+								else {
+									Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
+									Ext.getCmp('xOfferView').fireEvent('showMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, false);
+								};
 							},
 						}
 					},
@@ -413,20 +386,16 @@ Ext.define('smiley360.view.OfferDetails', {
 						style: 'background-color: #efecea;',
 						cls: 'has-shadow',
 					},
-
-
 					{
 						xtype: 'spacer',
 						height: '7px',
 						style: 'background-color: #f4f3f1; margin: 0px 2px; -webkit-border-radius: 0px 0px 5px 5px;'
-
 					},
 					{
 						xtype: 'spacer',
 						height: '10px',
 						style: 'background: transparent;'
 					}
-
 				]
 			},
 
@@ -439,10 +408,6 @@ Ext.define('smiley360.view.OfferDetails', {
 				//this.setSpecialOffers();
 			},
 		},
-	},
-	onBackButtonTap: function () {
-		console.log('back button tapped');
-		this.fireEvent('backButtonCommandOfferDetails', this);
 	},
 	onGoToProfileTap: function () {
 		console.log('GoToProfile button tapped');

@@ -3118,7 +3118,7 @@ html, body {
 
 .x-input-el {
     padding: .4em;
-    min-height: 2.5em;
+    /*min-height: 2.5em;*/
     display: block;
     border-width: 0;
     background: transparent;
@@ -4187,6 +4187,10 @@ input {
         .x-toolbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-button-label, .x-toolbar-dark.x-docked-bottom .x-tab#ext-tab-3 .x-hasbadge span.x-badge, .x-hasbadge .x-toolbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-badge, .x-tabbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-button-label, .x-tabbar-dark.x-docked-bottom .x-tab#ext-tab-3 .x-hasbadge span.x-badge, .x-hasbadge .x-tabbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-badge {
             color: #FFF;
             margin-top: 4px;
+        }
+
+        .x-toolbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-button-icon, .x-toolbar-dark.x-docked-bottom .x-tab#ext-tab-3 .x-hasbadge span.x-badge, .x-hasbadge .x-toolbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-badge, .x-tabbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-button-icon, .x-tabbar-dark.x-docked-bottom .x-tab#ext-tab-3 .x-hasbadge span.x-badge, .x-hasbadge .x-tabbar-dark.x-docked-bottom .x-tab#ext-tab-3 span.x-badge {
+            background-color: #FFF;
         }
 
     .x-toolbar-dark.x-docked-bottom .x-tab, .x-tabbar-dark.x-docked-bottom .x-tab {

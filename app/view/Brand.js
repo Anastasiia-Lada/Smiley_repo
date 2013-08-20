@@ -40,7 +40,7 @@ Ext.define('smiley360.view.Brand', {
                                         {
                                         	xtype: 'container',
                                         	layout: { type: 'hbox' },
-                                        	style: 'padding: 10px 15px; background-color: #efecea;',
+                                        	style: 'background-color: #efecea;',
                                         	items: [
                                                 {
                                                 	xtype: 'container',
@@ -53,44 +53,36 @@ Ext.define('smiley360.view.Brand', {
                                                         	xtype: 'label',
                                                         	id: 'xBrandTitle',
                                                         	html: 'FENDER',
-                                                        	style: 'text-align:left;font-size:1.4em; padding: 10px 15px 10px 0px; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
+                                                        	style: 'text-align:left;font-size:1.4em; padding: 10px 15px 10px 10px; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
 
                                                         },
                                                         {
                                                         	xtype: 'label',
-                                                        	width: 220,
+                                                        	width: 200,
                                                         	id: 'xBrandDescription',
                                                         	html: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
-                                                        	style: 'font-size:1em; margin-top: -10px; padding: 0px 15px 10px 0px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
+                                                        	style: 'font-size:1em; margin-top: -10px; padding: 0px 0px 10px 10px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'franklin\';',
 
                                                         },
 														{
 															xtype: 'container',
 															layout: 'hbox',
-															items: [{
-																xtype: 'image',
-																width: 50,
-																height: 50,
-																style: 'border-radius:0px; margin-left:-4px;',
-																src: 'resources/images/brands_1.png',
-																listeners: {
-																	tap: function () {
-																		Ext.widget('brandimageview').show();
-																	}
-																},
-															},//1
-															{
-																xtype: 'image',
-																width: 50,
-																height: 50,
-																style: 'border-radius:0px; margin-left:-4px;',
-																src: 'resources/images/brands_2.png',
-																listeners: {
-																	tap: function () {
-																		Ext.widget('brandimageview').show();
-																	}
-																},
-															},//2
+															id: 'Top10Container',
+															style: 'padding-left: 15px;',
+															items: [
+															//	{
+															//	xtype: 'image',
+															//	width: 50,
+															//	height: 50,
+															//	style: 'border-radius:0px; margin-left:-4px;',
+															//	src: 'resources/images/brands_1.png',
+															//	listeners: {
+															//		tap: function () {
+															//			Ext.widget('brandimageview').show();
+															//		}
+															//	},
+															//},//1
+															
 															],
 														}
                                                 	],
@@ -139,12 +131,13 @@ Ext.define('smiley360.view.Brand', {
 																listeners: {
 																	tap: function () {
 																		if (this.getCls() == 'has-shadow follow-btn') {
-																			this.setCls('has-shadow after-follow-btn');
-																			this.setText('FOLLOWING');
+																			Ext.getCmp('xBrandView').fireEvent('goFollow', this, smiley360.memberData.UserId, smiley360.brandData.BrandId);
+																			//this.setText('FOLLOWING');
 																		}
 																		else {
-																			this.setCls('has-shadow follow-btn');
-																			this.setText('FOLLOW');
+																			
+																			Ext.getCmp('xBrandView').fireEvent('goUnFollow', this, smiley360.memberData.UserId, smiley360.brandData.BrandId);
+																			//this.setText('FOLLOW');
 																		}
 																	}
 																}
@@ -278,9 +271,36 @@ Ext.define('smiley360.view.Brand', {
 		else {
 			Ext.getCmp('xBrandIsFollow').setCls('has-shadow follow-btn');
 			Ext.getCmp('xBrandIsFollow').setText('FOLLOW');
-		}
-
+		};
+		Ext.getCmp('xBrandView').setTop10();
 	},
+
+	setTop10: function () {
+		var brandTopImages = smiley360.brandData.BrandDetails.smileyConnect_topTenCommentImages;
+		//xt.getCmp('xBrandImageCarousel').removeAll(true, true);
+		//another removal
+		//console.log(brandTopImages.valueOf());
+		for (var item in brandTopImages) {
+			//alert('add thumb' + brandTopImages[item].sc_commentID);
+			Ext.getCmp('Top10Container').add(new Ext.Img(
+				{
+					width: 50,
+					height: 50,
+					id: 'Top10_' + brandTopImages[item].sc_commentID,
+					style: 'border-radius:0px; margin-left:-4px;',
+					src: smiley360.configuration.getResourceDomain() + '/' + brandTopImages[item].thumbnailImage_URL,
+					listeners: {
+						tap: function () {
+							//Ext.getCmp('xBrandView').setItem(brandTopImages[item].sc_commentID);
+							smiley360.slideShowImages = brandTopImages[item].sc_commentID;
+							Ext.widget('brandimageview').show();
+							//Ext.getCmp('xBrandImageCarousel').setActiveItem(Ext.getCmp('xBrandImage_Pict' + brandTopImages[item].sc_commentID));
+						},
+					},
+				}));
+		};
+	},
+	
 	setBrandComments: function () {
 		Ext.getCmp('xAllCommentsContainer').removeAll(true, true);
 		var BrComments = smiley360.brandData.BrandComments;
@@ -381,7 +401,8 @@ Ext.define('smiley360.view.Brand', {
 				cls: 'has-shadow',
 				width: 70,
 				height: 70,
-				src: 'resources/images/brands_1.png',
+				id: 'comment_img_' + oneItem.sc_commentID,
+				src: smiley360.configuration.getResourceDomain() + '/' + oneItem.thumbnailImage_URL,//'resources/images/brands_1.png',
 				listeners: {
 					tap: function () {
 						Ext.widget('brandimageview').show();

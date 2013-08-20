@@ -3,10 +3,16 @@ Ext.define('smiley360.view.Survey', {
     alias: 'widget.surveyview',
     config: {
         title: 'Take This Survey',
+        layout: 'fit',
         items: [{
-            xtype: 'container',
+            xtype: 'panel',
+            scrollable: 'vertical',
             cls: 'popup-survey-innerpanel',
-            html: '<iframe id="xSurveyFrame" frameborder="0" scrolling="no" class="popup-survey-iframe"></iframe>'
+            items: [{
+                xtype: 'panel',
+                margin: '0px -16px 0px 0px',
+                html: '<iframe id="xSurveyFrame" frameborder="0" scrolling="yes" class="popup-survey-iframe"></iframe>',
+            }]
         }],
     },
 });

@@ -23,7 +23,7 @@ Ext.define('smiley360.view.BrowseInstruments', {
         }, {
             xtype: 'container',
             layout: 'hbox',
-            id: 'browseinst-cont',
+            id: 'browseinst-cont',            
             style: 'box-shadow: 0px 1px 2px rgba(0,0,0,0.5);',
             items: [{
                 xtype: 'container',
@@ -124,7 +124,7 @@ Ext.define('smiley360.view.BrowseInstruments', {
             layout: 'vbox',
             cls: 'has-shadow',
             width: 100,
-            style: 'background: #f7f5f6; border-radius: 5px;margin-right: 20px;',
+            style: 'background: #f7f5f6; border-radius: 5px;margin-right: 15px;',
         });
         var ContItem = BrowseItem.add(new Ext.Container(
 		{

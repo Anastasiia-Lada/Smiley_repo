@@ -29,13 +29,14 @@
                 items: [
                     {
                         xtype: 'label',
+                        id: 'xTitleLabel',
                         cls: 'popup-title-text',
-                        html: 'Earn 5 Smiles Sharing on your Blog',
+                        html: 'Submit a Link to Your Blog Review to earn {0} Smiles',
                     }, {
                         xtype: 'image',
                         docked: 'right',
                         cls: 'popup-title-image',
-                        src: 'resources/images/share-blog.png',
+                        src: 'resources/images/share_blog.png',
                     }],
             }, {
                 xtype: 'panel',
@@ -106,17 +107,47 @@
         },
     },
 
-    doShare: function () {
-        var shareView = this;
-        var shareData = {
-            missionID: smiley360.missionData.MissionDetails.MissionId,
-            memberID: smiley360.memberData.UserId,
-            blogURL: this.down('#xBlogUrlField').getValue(),
-        };
-
-        smiley360.setViewStatus(shareView, smiley360.viewStatus.progress);
-        smiley360.services.postToBlog(shareData, function (response) {
-            smiley360.setResponseStatus(shareView, response);
+    isValid: function () {
+        var urlModel = Ext.create('smiley360.model.UrlModel', {
+            url: this.down('#xBlogUrlField').getValue()
         });
+
+        var urlModelErrors = urlModel.validate();
+        if (urlModelErrors.isValid()) {
+            return true;
+        } else {
+            var msg = '';
+
+            urlModelErrors.each(function (err) {
+                msg += err.getMessage() + '\n\n';
+            });
+
+            Ext.Msg.alert('ERROR', msg);
+
+            return false;
+        }
+    },
+
+    doShare: function () {
+        if (this.isValid()) {
+            var shareView = this;
+            var shareData = {
+                missionID: smiley360.missionData.MissionDetails.MissionId,
+                memberID: smiley360.memberData.UserId,
+                blogURL: this.down('#xBlogUrlField').getValue(),
+            };
+
+            smiley360.setViewStatus(shareView, smiley360.viewStatus.progress, { progress: 'SUBMIT' });
+            smiley360.services.postToBlog(shareData, function (response) {
+                smiley360.setResponseStatus(shareView, response, { successful: 'DONE' });
+            });
+        }
+    },
+
+    setEarnSmiles: function (smiles) {
+        var xTitleLabel = this.down('#xTitleLabel');
+
+        xTitleLabel.setHtml(Ext.String.format(
+            xTitleLabel.getHtml(), smiles));
     },
 });

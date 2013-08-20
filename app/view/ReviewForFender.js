@@ -13,7 +13,7 @@ Ext.define('smiley360.view.ReviewForFender', {
         centered: true,
         fullscreen: true,
         hideOnMaskTap: true,
-        id: 'xView',
+        id: 'xReviewView',
         scrollable: 'vertical',
         cls: 'popup-panel',
         items: [{
@@ -26,7 +26,7 @@ Ext.define('smiley360.view.ReviewForFender', {
                 cls: 'popup-close-button',
                 listeners: {
                     tap: function () {
-                        this.up('#xView').destroy();
+                        this.up('#xReviewView').destroy();
                     }
                 }
             }, {
@@ -37,7 +37,7 @@ Ext.define('smiley360.view.ReviewForFender', {
                     xtype: 'label',
                     id: 'xTitleLabel',
                     cls: 'popup-title-text',
-                    html: 'Add your Review for Fender',
+                    html: 'Add your review for Fender',
                 }],
             }, {
                 xtype: 'panel',
@@ -96,15 +96,16 @@ Ext.define('smiley360.view.ReviewForFender', {
                         flex: 1,
                         maxRows: 5,
                         minLength: 70,
+                        isFocused: false,
                         id: 'xReviewText',
                         cls: 'popup-input popup-input-text',
                         listeners: {
                             keyup: function () {
-                                var xView = this.up('#xView');
+                            	var xReviewView = this.up('#xReviewView');
                                 var postLenght = this.getValue().length;
 
-                                xView.down('#xReviewCountLabel').setHtml(postLenght.toString());
-                                xView.validateForm();
+                                xReviewView.down('#xReviewCountLabel').setHtml(postLenght.toString());
+                                xReviewView.validateForm();
                             }
                         }
                     }, {
@@ -250,10 +251,10 @@ Ext.define('smiley360.view.ReviewForFender', {
                         cls: 'popup-checkbox',
                         listeners: {
                             check: function () {
-                                this.up('#xView').validateForm();
+                            	this.up('#xReviewView').validateForm();
                             },
                             uncheck: function () {
-                                this.up('#xView').validateForm();
+                            	this.up('#xReviewView').validateForm();
                             },
                         }
                     }, {
@@ -263,10 +264,10 @@ Ext.define('smiley360.view.ReviewForFender', {
                         html: 'Review Guidelines',
                         listeners: {
                             tap: function () {
-                                var xView = this.up('#xView');
+                            	var xReviewView = this.up('#xReviewView');
 
-                                xView.showGuidelines();
-                                xView.down('#xShareButton').enable();
+                            	xReviewView.showGuidelines();
+                            	xReviewView.down('#xShareButton').enable();
                             }
                         }
                     }],
@@ -282,14 +283,14 @@ Ext.define('smiley360.view.ReviewForFender', {
                     disabled: true,
                     listeners: {
                         tap: function () {
-                            var xView = this.up('#xView');
+                        	var xReviewView = this.up('#xReviewView');
 
                             if (xIsReviewState) {
-                                xView.doAddReview();
+                            	xReviewView.doAddReview();
                             }
                             else {
-                                xView.showReviewForm();
-                                xView.validateForm();
+                            	xReviewView.showReviewForm();
+                            	xReviewView.validateForm();
                             }
                         }
                     },

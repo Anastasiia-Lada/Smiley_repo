@@ -270,9 +270,7 @@ Ext.define('smiley360.view.Offers', {
 			var oneItem = smiley360.memberData.Offers[key];
 			var allContainer = new Ext.Container({
 				id: 'OfferID_pane' + oneItem.missionID,
-				layout: { type: 'hbox' },
-				style: 'padding: 3px 15px 3px 15px; background-color: #efecea;',
-				flex: 1,
+				cls: 'offers-offer-panel',
 				listeners: {
 					element: 'element',
 					tap: function () {
@@ -286,61 +284,53 @@ Ext.define('smiley360.view.Offers', {
 							this.up('#xOfferView').fireEvent('LoadOfferSurveyCommand', this, this.getId().substr(12));
 						}
 					}
-				}//'resources/images/lays.png',
+				}
 			});
 
-			var includeContainerImage = new Ext.Container({
+			var domContainer = allContainer.element.dom.firstChild;
 
-				cls: 'browse-pict',
-				style: 'background-color: #efecea; padding-top: 15px;',
-				layout: {
-					type: 'vbox',
-					align: 'middle',
-				},
-			});
-			includeContainerImage.add(new Ext.Img(
-			{
-				style: 'padding: 20px 0px 0px 0px;background-color: white; border-radius: 5px;',
-				cls: 'has-shadow',
-				width: 100,
-				height: 100,
-				id: 'OfferID_pict' + oneItem.missionID,
-				src: smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link),//'resources/images/lays.png',
-			}));
+			var imgTag = document.createElement("img");
+			imgTag.style.marginRight = '5px',
+			imgTag.style.float = 'left';
+			imgTag.setAttribute('id', 'OfferID_pict' + oneItem.missionID);
+			imgTag.setAttribute('src', smiley360.configuration.getOfferImagesUrl(oneItem.missionID, oneItem.link));
+			imgTag.setAttribute('class', 'has-shadow');
+			imgTag.style.borderRadius = '5px';
 
-			var includeContainerLabels = new Ext.Container({
+			domContainer.appendChild(imgTag);
 
-				layout: { type: 'vbox' },
-				flex: 4,
-				style: 'padding-left: 10px;',
-			});
-			includeContainerLabels.add(new Ext.Label(
-			{
-				html: oneItem.title,
-				//html: 'Survey Title',
-				style: 'font-size:1.4em; padding: 10px 15px 10px 0px; background-color: #efecea; color:#413f40; font-family: \'din bold\';',
-			}));
+			var titleTag = document.createElement("p");
+			titleTag.style.margin = '0px';
+			titleTag.style.fontSize = '1.3em';
+			titleTag.style.fontFamily = 'din bold';
+			titleTag.style.color = '#413f40';
+			titleTag.innerText = oneItem.title;
+			titleTag.setAttribute('class', 'set-height');
 
-			includeContainerLabels.add(new Ext.Label(
-			{
-				html: oneItem.descr,
-				//html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel malesuada odio. Phasellus aliquam dignissim scelerisque. Sed ullamcorper libero nec placerat posuere.',
-				style: 'font-size:1.1em; margin-top: -10px; padding: 5px 15px 10px 0px; word-wrap: break-all; background-color: #efecea; color:#413f40; font-family: \'din medium\';',
-			}));
+			domContainer.appendChild(titleTag);
 
-			allContainer.add(includeContainerImage);
-			allContainer.add(includeContainerLabels);
-			//if (oneItem.mission_typeID != 1)
-			//{ oneItem.mission_typeID -= 1 };
+			var descTag = document.createElement("p");
+			descTag.style.margin = '0px';
+			descTag.style.paddingTop = '10px';
+			descTag.style.fontSize = '1em';
+			descTag.style.fontFamily = 'din medium';
+			descTag.style.color = '#413f40';
+			descTag.innerText = oneItem.descr;
+			descTag.setAttribute('class', 'set-height');
+
+			domContainer.appendChild(descTag);
+
 			var xOfferList = this.down('#xOfferList' + oneItem.mission_categoryID);
 			if (xOfferList)
-				//xOfferList.removeAll(true, true);
 			{
 				//xOfferList.removeAll(true, true);
 				xOfferList.add(allContainer);
 				this.down('#xOfferListHeader' + oneItem.mission_categoryID).setCls('heading-text active-sign');
 			}
 		}
-		if (smiley360.memberData.isProfileComplete.complete == 'false') { Ext.widget('missingoffersview').show(); }
+
+		if (smiley360.memberData.isProfileComplete.complete == 'false') {
+		    Ext.widget('missingoffersview').show();
+		}
 	},
 });

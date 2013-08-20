@@ -39,7 +39,7 @@
                     xtype: 'image',
                     docked: 'right',
                     cls: 'popup-title-image',
-                    src: 'resources/images/photo.png',
+                    src: 'resources/images/photo_share.png',
                 }],
             }, {
                 xtype: 'panel',
@@ -94,6 +94,7 @@
                         flex: 1,
                         maxRows: 5,
                         //maxLength: 84,
+                        isFocused: false,
                         cls: 'popup-input popup-input-text',
                         listeners: {
                             keyup: function () {

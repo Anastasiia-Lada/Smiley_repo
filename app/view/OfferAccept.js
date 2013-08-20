@@ -135,7 +135,7 @@ Ext.define('smiley360.view.OfferAccept', {
 							}
 							else {
 								//if (Ext.widget('offeracceptaddressview')) Ext.widget('offeracceptviewaddress').hide();
-								Ext.getCmp('xOfferView').fireEvent('LoadMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, smiley360.memberData.UserId);
+								Ext.getCmp('xOfferView').fireEvent('showMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, false);
 							};
 						}
 					},

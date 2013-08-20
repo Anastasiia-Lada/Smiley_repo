@@ -11,7 +11,7 @@
 			xtype: 'container',
 			layout: 'vbox',
 			style: 'color: #333132; text-align: right; min-height: 60px; min-width: 90px; background-color:white;border-style: solid; border-color: white; border-radius: 3px; border-width: 2px;',
-			margin: '0px 10px 0px 38px ',
+			margin: '0px 10px 0px 10px ',
 			cls: 'has-shadow',
 			docked: 'top',
 			items: [{
@@ -23,7 +23,7 @@
 				style: 'padding-top: 10px;',
 				id: 'xFirstLastName',
 				html: 'Noel Zahra',
-				style: 'font-size:1.4em; margin-bottom: -8px;text-align: right;',
+				style: 'font-size:1.1em; margin-bottom: -4px;text-align: right;',
 			}, {
 				xtype: 'label',
 				id: 'xCityState',
@@ -106,11 +106,16 @@
 				cls: 'listmenuitem',
 				ui: 'plain',
 				listeners: {
-					tap: function () {
-						var members = Ext.getStore('Members');
-						members.removeAll();
-						alert('Log out!');
-						smiley360.animateViewLeft('loginview');//Ext.widget('contactusview').show();//this.up('#xHomeView').fireEvent('getProfileHomeCommand', this);
+				    tap: function () {
+				        Ext.getCmp('xMainView').hideSidePanel();
+
+				        var members = Ext.getStore('membersStore');
+				        if (members.getCount() > 0) {
+				            members.getAt(0).data.memberId = null;
+				            members.sync();
+                        }
+
+					    smiley360.animateViewLeft('loginview');
 					}
 				}
 			}],

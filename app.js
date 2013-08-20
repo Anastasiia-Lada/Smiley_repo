@@ -106,5 +106,5 @@ Ext.application({
                 }
             }
         );
-    }
+    },
 });

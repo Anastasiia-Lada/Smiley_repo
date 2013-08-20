@@ -96,11 +96,11 @@ Ext.define('smiley360.view.MissingOffers', {
 	setMOUser: function () {
 		this.down('#xProfileImage').setSrc(smiley360.userProfileImage);
 		this.down('#xFirstLastName').setHtml(smiley360.memberData.Profile.fName + ' ' + smiley360.memberData.Profile.lName);
-
-		var stateElement = Ext.getCmp('stateID');
-		if (stateElement) {
-		    this.down('#xCityState').setHtml(
-                smiley360.memberData.Profile.city + ', ' + stateElement.getOptions()[stateElement.getValue() - 1].text);
-		}
+		var tmpStateId = '';
+		for (var item in smiley360.ProfileDropdowns.stateID) {
+			if (smiley360.ProfileDropdowns.stateID[item] == smiley360.memberData.Profile.stateID)
+				tmpStateId = item;
+		};
+		this.down('#xCityState').setHtml(smiley360.memberData.Profile.city + ', ' + tmpStateId);
 	},
 });
