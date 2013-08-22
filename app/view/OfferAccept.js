@@ -93,7 +93,7 @@ Ext.define('smiley360.view.OfferAccept', {
 						cls: 'popup-post-icon',
 						listeners: {
 							tap: function () {
-								Ext.getCmp('xOfferView').fireEvent('LoadContactUsCommand', this);								
+								Ext.getCmp('xOfferView').fireEvent('LoadContactUsCommand', this);
 								Ext.getCmp('xOAView').hide();
 							}
 						}
@@ -108,7 +108,7 @@ Ext.define('smiley360.view.OfferAccept', {
 						//iconCls: 'popup-post-icon',
 						listeners: {
 							tap: function () {
-								Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
+								//Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
 								Ext.getCmp('xOAView').hide();
 							}
 						}
@@ -128,9 +128,11 @@ Ext.define('smiley360.view.OfferAccept', {
 							//go accept mission
 							Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
 							//if accepted go to
+
+							
 							if (smiley360.missionData.MissionDetails.MissionDetails.mission_full) {
 								//if (Ext.widget('offeracceptaddressview')) Ext.widget('offeracceptviewaddress').hide();
-								
+
 								Ext.widget('missionisfull').show();
 							}
 							else {
@@ -149,8 +151,9 @@ Ext.define('smiley360.view.OfferAccept', {
 			hide: function () {
 				this.destroy();
 			},
+			painted: function () {
+			},
 			show: function () {
-				Ext.getCmp('xOfferView').fireEvent('getAddressCommand', this, smiley360.memberData.UserId);
 				var profile = smiley360.memberData.Profile;
 				var setstr = '';
 				for (var field in profile) {
@@ -171,8 +174,7 @@ Ext.define('smiley360.view.OfferAccept', {
 						element.setHtml(profile[field]);
 					}
 				}
-
-			}
+			},
 		},
 	},
 	doEditAddress: function () {

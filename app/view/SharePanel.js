@@ -41,7 +41,6 @@
                         break;
                     case smiley360.sharingType.smileyConnect:
                         oneItem.currentBrand = currentBrand;
-                        alert(oneItem.currentBrand);
                         oneItem.currentBrandId = currentBrandId;
                         oneButton = this.createShareButton(oneItem, 'share-sm_conn-btn', 'reviewforfenderview');
                         break;
@@ -88,7 +87,7 @@
                             shareView.setEarnSmiles(this.getSmilesCurrent());
                         if (shareViewAlias == 'reviewforfenderview')
                             //alert('fendercommand');
-                            Ext.getCmp('xDetailsView').fireEvent('onShareConnectTapCommand', this, smiley360.memberData.UserId, shareItem.currentBrand, shareItem.currentBrandId);
+                            Ext.getCmp('xDetailsView').fireEvent('onShareConnectTapCommand', 'Share', smiley360.memberData.UserId, shareItem.currentBrand, shareItem.currentBrandId);
                     }
                 }
             });

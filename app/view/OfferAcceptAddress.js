@@ -170,6 +170,8 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 							//go accept mission
 							Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
 							//if accepted to go
+
+							
 							if (smiley360.missionData.MissionDetails.MissionDetails.mission_full) {
 								//if (Ext.widget('offeracceptview')) Ext.widget('offeracceptview').hide();
 								Ext.getCmp('xOAView').hide();
@@ -177,7 +179,7 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 							}
 							else {
 								//if (Ext.widget('offeracceptview')) Ext.widget('offeracceptview').hide();
-								Ext.getCmp('xOAView').hide();
+								Ext.getCmp('xOAView').hide();								
 								Ext.getCmp('xOfferView').fireEvent('showMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, false);
 							};							
 						}
@@ -189,7 +191,10 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 			initialize: function () {
 				smiley360.adjustPopupSize(this);
 			},
-			painted: function () {
+			painted: function() {
+			},
+			show: function () {
+
 				if (smiley360.memberData.Profile.address_status == '1') {
 					Ext.getCmp('verify-label').setHtml('This address is VERIFIED!');
 					Ext.getCmp('verify-label').setCls('popup-address-comment');
@@ -210,7 +215,7 @@ Ext.define('smiley360.view.OfferAcceptAddress', {
 
 				Ext.getCmp('address_countryID').setValue('United States of America');
 
-				Ext.getCmp('xOfferView').fireEvent('getAddressCommand', this, smiley360.memberData.UserId);
+				//Ext.getCmp('xOfferView').fireEvent('getAddressCommand', this, smiley360.memberData.UserId);
 				var profile = smiley360.memberData.Profile;
 
 				for (var field in profile) {

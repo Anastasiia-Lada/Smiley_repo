@@ -152,6 +152,7 @@ Ext.define('smiley360.view.Brand', {
 																listeners: {
 																	tap: function () {
 																		Ext.widget('reviewforfenderview').show();
+																		Ext.getCmp('xDetailsView').fireEvent('onShareConnectTapCommand', 'Brand', smiley360.memberData.UserId, smiley360.brandData.BrandDetails.smileyConnect_title, smiley360.brandData.BrandId);																		
 																	}
 																}
 															},

@@ -278,7 +278,6 @@ Ext.define('smiley360.view.Offers', {
 
 						if (this.parent.valueOf().getId().substr(10) == '1') {
 							this.up('#xOfferView').fireEvent('LoadOfferDetailsCommand', this, this.getId().substr(12));
-
 						}
 						else {
 							this.up('#xOfferView').fireEvent('LoadOfferSurveyCommand', this, this.getId().substr(12));

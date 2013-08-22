@@ -308,7 +308,7 @@ Ext.define('smiley360.view.EditProfile', {
 					placeHolder: 'How many children do you have?',
 					listeners: {
 						painted: function () {
-							if (this.getValue() == null) {this.setLabel(''); this.setLabelWidth('0px'); }
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
 							else { this.setLabel('How Many? - '); this.setLabelWidth('30%'); }
 						},
 						change: function () {
@@ -334,7 +334,7 @@ Ext.define('smiley360.view.EditProfile', {
 					],
 					listeners: {
 						painted: function () {
-							if (this.getValue() == null) {this.setLabel(''); this.setLabelWidth('0px'); }
+							if (this.getValue() == null) { this.setLabel(''); this.setLabelWidth('0px'); }
 							else { this.setLabel('Income - '); this.setLabelWidth('30%'); }
 						},
 						change: function () {
@@ -372,7 +372,7 @@ Ext.define('smiley360.view.EditProfile', {
 								if (smiley360.memberData.Profile.aboutself)
 									field_about.setValue(smiley360.memberData.Profile.aboutself);
 								if (smiley360.memberData.Profile.blogURL)
-								field_url.setValue(smiley360.memberData.Profile.blogURL);
+									field_url.setValue(smiley360.memberData.Profile.blogURL);
 								field_about.setReadOnly(false);
 								field_url.setReadOnly(false);
 								field_about.setPadding('0px 0px');
@@ -421,13 +421,7 @@ Ext.define('smiley360.view.EditProfile', {
 									field_url.setPadding('0px 20px');
 								}
 								else {
-									Ext.getCmp('ddlCheckboxes').hide();
-									field_about.setValue(smiley360.memberData.Profile.aboutself);
-									field_url.setValue(smiley360.memberData.Profile.blogURL);
-									field_about.setReadOnly(false);
-									field_url.setReadOnly(false);
-									field_about.setPadding('0px 0px');
-									field_url.setPadding('0px 0px');
+									Ext.getCmp('xEditProfile').doHide();
 								};
 							},
 						}
@@ -503,6 +497,9 @@ Ext.define('smiley360.view.EditProfile', {
 				this.setDropdownLists();
 				this.setDropdownRace();
 				var profile = smiley360.memberData.Profile;
+				Ext.getCmp('xEditProfile').doHide();
+				//Ext.getCmp('xEditProfile').getScrollable().getScroller().refresh();
+				Ext.getCmp('xEditProfile').getScrollable().getScroller().scrollTo(0, 0);
 
 				for (var field in profile) {
 
@@ -633,5 +630,14 @@ Ext.define('smiley360.view.EditProfile', {
 			}));
 			Ext.getCmp('ddlCheckboxes').add(allContainer);
 		});
+	},
+	doHide: function () {
+		Ext.getCmp('ddlCheckboxes').hide();
+		field_about.setValue(smiley360.memberData.Profile.aboutself);
+		field_url.setValue(smiley360.memberData.Profile.blogURL);
+		field_about.setReadOnly(false);
+		field_url.setReadOnly(false);
+		field_about.setPadding('0px 0px');
+		field_url.setPadding('0px 0px');
 	},
 });

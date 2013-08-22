@@ -373,6 +373,8 @@ Ext.define('smiley360.view.OfferDetails', {
 								}
 								else {
 									Ext.getCmp('xOfferView').fireEvent('acceptMissionCommand', this, smiley360.memberData.UserId, smiley360.missionData.MissionDetails.MissionId);
+
+									
 									Ext.getCmp('xOfferView').fireEvent('showMissionDetailsCommand', this, smiley360.missionData.MissionDetails.MissionId, false);
 								};
 							},
@@ -402,10 +404,9 @@ Ext.define('smiley360.view.OfferDetails', {
 		],
 		listeners: {
 			show: function () {
+				Ext.getCmp('xOfferView').fireEvent('getAddressCommand', this, smiley360.memberData.UserId);
 				console.log('OfferDetails view showed!');
 				this.setOfferDetails();
-				//this.setWhatsHappening();
-				//this.setSpecialOffers();
 			},
 		},
 	},

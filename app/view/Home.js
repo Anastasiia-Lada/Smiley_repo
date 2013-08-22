@@ -219,7 +219,7 @@ Ext.define('smiley360.view.Home', {
 				}
 			}));
 			var incImg = oneItemContainer.add(new Ext.Img({
-				src: smiley360.configuration.getResourceDomain() + '/' + smiley360.memberData.specialOffersBrands[0].smileyConnect_detailsImage_URL,//'resources/images/offers_logo3.png',
+				src: smiley360.configuration.getResourceDomain() + '/' + oneItem.image_URL,//'resources/images/offers_logo3.png',
 				width: 100,
 				height: 100,
 				cls: 'has-shadow',
